@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proposed System — RIS-Aided Dual Antenna | 22EC711</title>
+  <meta name="description" content="Interactive system architecture of the RIS-aided dual antenna configuration with direct and RIS-reflected path visualization." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style>
+    /* SYSTEM PAGE */
+    .sys-hero {
+      padding-top: calc(var(--nav-h) + var(--sp-20));
+      padding-bottom: var(--sp-12);
+      background: var(--c-bg-dark);
+      color: var(--c-text-inv);
+      border-bottom: 1px solid var(--c-border-dark);
+    }
+
+    /* Interactive diagram section */
+    .diagram-section {
+      background: var(--c-bg-dark);
+      border-bottom: 1px solid var(--c-border-dark);
+      padding-block: var(--sp-12) var(--sp-16);
+    }
+
+    /* Controls bar */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-8);
+      flex-wrap: wrap;
+      padding: var(--sp-4) var(--sp-6);
+      background: var(--c-surface-dark);
+      border: 1px solid var(--c-border-dark);
+      border-radius: 3px;
+      margin-bottom: var(--sp-8);
+    }
+
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      flex-wrap: wrap;
+    }
+
+    .ctrl-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-text-inv-muted);
+    }
+
+    .ctrl-btn {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: 1px solid var(--c-border-dark);
+      border-radius: 2px;
+      color: var(--c-text-inv-muted);
+      background: transparent;
+      cursor: pointer;
+      transition: all var(--dur-fast);
+    }
+
+    .ctrl-btn.active {
+      background: var(--c-accent);
+      border-color: var(--c-accent);
+      color: white;
+    }
+
+    .ctrl-btn.blue.active {
+      background: var(--c-ris);
+      border-color: var(--c-ris);
+    }
+
+    .ctrl-btn:hover:not(.active) {
+      border-color: var(--c-text-inv-muted);
+      color: var(--c-text-inv);
+    }
+
+    /* Main diagram */
+    #system-svg-container {
+      width: 100%;
+      border: 1px solid var(--c-border-dark);
+      background: #141412;
+      overflow: hidden;
+    }
+
+    #system-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Workflow - Light Theme */
+    .workflow-section {
+      background: var(--c-surface);
+      color: var(--c-text);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .workflow-section .workflow-step {
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .workflow-section .workflow-step:last-child {
+      border-bottom: none;
+    }
+
+    .workflow-section .step-num {
+      color: var(--c-border);
+    }
+
+    .workflow-section .step-title {
+      color: var(--c-text);
+    }
+
+    .workflow-section .step-desc {
+      color: var(--c-text-muted);
+    }
+
+    /* Dual antenna explainer - Dark Theme */
+    .dual-section {
+      background: var(--c-bg-dark);
+      color: var(--c-text-inv);
+      border-bottom: 1px solid var(--c-border-dark);
+    }
+
+    .dual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-12);
+      align-items: center;
+    }
+
+    .antenna-card {
+      background: var(--c-surface-dark);
+      border: 1px solid var(--c-border-dark);
+      padding: var(--sp-8);
+      border-radius: 2px;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .antenna-card:hover {
+      border-color: var(--c-text-faint);
+    }
+
+    .antenna-card-bar {
+      width: 100%;
+      height: 2px;
+      margin-bottom: var(--sp-6);
+    }
+
+    .ant1 { background: var(--c-direct); }
+    .ant2 { background: var(--c-ris); }
+
+    .ant-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: var(--sp-3);
+    }
+
+    .ant-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--c-text-inv);
+      margin-bottom: var(--sp-4);
+      letter-spacing: -0.02em;
+    }
+
+    .ant-desc {
+      font-size: var(--text-sm);
+      color: var(--c-text-inv-muted);
+      line-height: 1.75;
+    }
+
+    .diversity-box {
+      border: 1px solid var(--c-border-dark);
+      padding: var(--sp-6);
+      background: var(--c-surface-dark);
+      border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .controls-bar { flex-direction: column; align-items: start; }
+      .dual-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="page-theme">
+
+<!-- HEADER -->
+<header class="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="RIS AIDED SENSING Home">
+      <span class="nav-logo-main">RIS AIDED SENSING</span>
+      <span class="nav-logo-sub">22EC711 · Engineering Project</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="problem.html">Problem</a></li>
+      <li><a href="system.html">System</a></li>
+      <li><a href="simulation.html">Simulation</a></li>
+      <li><a href="detection.html">Detection Lab</a></li>
+      <li><a href="results.html">Results</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-cta-wrap">
+      <a href="detection.html" class="nav-cta">Launch Detection Lab</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<nav id="mobile-menu" class="nav-mobile" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="problem.html">Problem</a>
+  <a href="system.html">System</a>
+  <a href="simulation.html">Simulation</a>
+  <a href="detection.html">Detection Lab</a>
+  <a href="results.html">Results</a>
+  <a href="about.html">About</a>
+</nav>
+
+<!-- HERO -->
+<section class="sys-hero theme-light" aria-labelledby="sys-hero-heading">
+  <div class="container">
+    <div class="eyebrow">
+      <div class="eyebrow-bar"></div>
+      <span class="label-accent">Proposed System</span>
+    </div>
+    <h1 class="heading-display" id="sys-hero-heading" style="color:var(--c-text);margin-bottom:var(--sp-6);">
+      Two paths. One sensing system.
+    </h1>
+    <p style="font-size:var(--text-md);color:var(--c-text-muted);max-width:600px;line-height:1.75;margin-bottom:var(--sp-8);">
+      An RIS-aided dual antenna architecture that simultaneously exploits direct and reflected propagation paths, providing resilient sensing in both LOS and NLOS scenarios.
+    </p>
+    <div style="display:flex;gap:var(--sp-4);flex-wrap:wrap;">
+      <a href="detection.html" class="btn btn-accent">Try Detection Lab →</a>
+      <a href="simulation.html" class="btn btn-outline">Simulation →</a>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE DIAGRAM -->
+<section class="diagram-section theme-dark" aria-labelledby="diag-heading">
+  <div class="container">
+    <div style="margin-bottom:var(--sp-6);">
+      <h2 class="heading-sm" id="diag-heading" style="color:var(--c-text-inv);margin-bottom:var(--sp-2);">System Architecture</h2>
+      <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-text-inv-muted);letter-spacing:0.08em;">Use the controls below to toggle scenario and path visibility</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-bar" role="group" aria-label="Diagram controls">
+      <div class="controls-group">
+        <span class="ctrl-label">Scenario</span>
+        <button class="ctrl-btn active" data-ctrl="scenario" data-val="los" id="btn-los" aria-pressed="true">LOS</button>
+        <button class="ctrl-btn" data-ctrl="scenario" data-val="nlos" id="btn-nlos" aria-pressed="false">NLOS</button>
+      </div>
+      <div style="width:1px;height:24px;background:var(--c-border-dark);" aria-hidden="true"></div>
+      <div class="controls-group">
+        <span class="ctrl-label">Paths</span>
+        <button class="ctrl-btn active" data-ctrl="path" data-val="direct" id="btn-direct" aria-pressed="true">Direct Path</button>
+        <button class="ctrl-btn blue active" data-ctrl="path" data-val="ris" id="btn-ris" aria-pressed="true">RIS Path</button>
+      </div>
+    </div>
+
+    <!-- Diagram -->
+    <div id="system-svg-container" role="img" aria-label="Interactive system architecture diagram">
+      <svg id="system-svg" viewBox="0 0 800 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ar-direct" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+            <path d="M0,0 L7,2.5 L0,5 Z" fill="#c94f2a"/>
+          </marker>
+          <marker id="ar-ris" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+            <path d="M0,0 L7,2.5 L0,5 Z" fill="#3a7ebf"/>
+          </marker>
+          <marker id="ar-tx" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+            <path d="M0,0 L7,2.5 L0,5 Z" fill="#6b6865"/>
+          </marker>
+        </defs>
+
+        <!-- Background -->
+        <rect width="800" height="420" fill="#141412"/>
+
+        <!-- Grid -->
+        <pattern id="sys-grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M40,0 L0,0 L0,40" stroke="rgba(255,255,255,0.025)" stroke-width="0.5" fill="none"/>
+        </pattern>
+        <rect width="800" height="420" fill="url(#sys-grid)"/>
+
+        <!-- TRANSMITTER -->
+        <g id="sys-tx">
+          <rect x="30" y="170" width="90" height="56" rx="2" fill="#252420" stroke="#4a4845" stroke-width="1.5"/>
+          <text x="75" y="194" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6865" letter-spacing="2">TRANSMITTER</text>
+          <text x="75" y="213" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="18" font-weight="600" fill="#a8a59f">TX</text>
+          <!-- Antenna symbol -->
+          <line x1="75" y1="170" x2="75" y2="152" stroke="#4a4845" stroke-width="1.5"/>
+          <line x1="62" y1="156" x2="88" y2="156" stroke="#4a4845" stroke-width="1.5"/>
+          <line x1="66" y1="160" x2="84" y2="160" stroke="#4a4845" stroke-width="1"/>
+        </g>
+
+        <!-- TX output line -->
+        <line x1="120" y1="198" x2="160" y2="198" stroke="#4a4845" stroke-width="1.5" marker-end="url(#ar-tx)"/>
+
+        <!-- SPLITTER / COUPLER -->
+        <g id="sys-split">
+          <rect x="162" y="176" width="64" height="44" rx="2" fill="#252420" stroke="#5a5855" stroke-width="1"/>
+          <text x="194" y="199" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6865">SPLITTER</text>
+          <text x="194" y="212" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#4a4845">2-PORT</text>
+        </g>
+
+        <!-- ANT 1 (top direct path) -->
+        <line id="sys-split-top" x1="226" y1="188" x2="274" y2="188" stroke="#4a4845" stroke-width="1.5" marker-end="url(#ar-tx)"/>
+
+        <!-- ANT 2 (bottom to RIS path) -->
+        <line id="sys-split-bot" x1="194" y1="220" x2="194" y2="260" stroke="#4a4845" stroke-width="1.5" marker-end="url(#ar-tx)"/>
+
+        <!-- ANTENNA 1 -->
+        <g id="sys-ant1">
+          <rect x="276" y="166" width="80" height="44" rx="2" fill="#252420" stroke="#c94f2a" stroke-width="1.5"/>
+          <text x="316" y="185" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6865">ANTENNA 1</text>
+          <text x="316" y="200" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c94f2a">ANT-1</text>
+        </g>
+
+        <!-- ANTENNA 2 (below, goes to RIS) -->
+        <g id="sys-ant2">
+          <rect x="154" y="262" width="80" height="44" rx="2" fill="#252420" stroke="#3a7ebf" stroke-width="1.5"/>
+          <text x="194" y="281" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6865">ANTENNA 2</text>
+          <text x="194" y="296" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#3a7ebf">ANT-2</text>
+        </g>
+
+        <!-- ANT2 → RIS line -->
+        <line id="sys-ant2-ris" x1="194" y1="306" x2="194" y2="342" stroke="#3a7ebf" stroke-width="1.5" marker-end="url(#ar-ris)" opacity="1"/>
+
+        <!-- RIS PANEL -->
+        <g id="sys-ris">
+          <rect x="154" y="344" width="80" height="52" rx="2" fill="#1a2535" stroke="#3a7ebf" stroke-width="1.5"/>
+          <!-- RIS cells -->
+          <g stroke="#3a7ebf" stroke-width="0.5" opacity="0.7">
+            <line x1="174" y1="344" x2="174" y2="396"/>
+            <line x1="194" y1="344" x2="194" y2="396"/>
+            <line x1="214" y1="344" x2="214" y2="396"/>
+            <line x1="154" y1="360" x2="234" y2="360"/>
+            <line x1="154" y1="376" x2="234" y2="376"/>
+          </g>
+          <text x="194" y="408" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#3a7ebf">RIS PANEL</text>
+        </g>
+
+        <!-- OBSTACLE -->
+        <g id="sys-obstacle">
+          <rect x="390" y="110" width="50" height="180" rx="2" fill="#2e2c2a" stroke="#4a4845" stroke-width="1.5"/>
+          <text x="415" y="204" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b6865" transform="rotate(-90,415,204)">OBSTACLE</text>
+        </g>
+
+        <!-- DIRECT PATH: ANT1 → (past/through obstacle) → RX -->
+        <g id="path-direct-line">
+          <!-- LOS: solid; NLOS: dashed blocked -->
+          <line x1="356" y1="188" x2="444" y2="188" stroke="#c94f2a" stroke-width="2" marker-end="url(#ar-direct)" stroke-dasharray="5 4" opacity="0.5"/>
+          <text id="direct-block-label" x="418" y="178" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="12" fill="#c94f2a" opacity="0.7">✕</text>
+          <line x1="440" y1="188" x2="530" y2="188" stroke="#c94f2a" stroke-width="2" marker-end="url(#ar-direct)"/>
+        </g>
+
+        <!-- Direct path label -->
+        <text id="label-direct" x="420" y="204" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#c94f2a" opacity="0.7">DIRECT PATH / LOS</text>
+
+        <!-- RIS-REFLECTED PATH: ANT2 → RIS → arc → RX -->
+        <g id="path-ris-line">
+          <path d="M234,370 Q380,370 450,250 Q500,170 530,188"
+            stroke="#3a7ebf" stroke-width="2.5"
+            marker-end="url(#ar-ris)" fill="none"/>
+        </g>
+
+        <!-- RIS path label -->
+        <text id="label-ris" x="380" y="310" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#3a7ebf">RIS-REFLECTED PATH</text>
+
+        <!-- COMBINER -->
+        <g id="sys-combiner">
+          <rect x="532" y="166" width="72" height="44" rx="2" fill="#252420" stroke="#4aab6d" stroke-width="1.5"/>
+          <text x="568" y="186" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6865">COMBINER</text>
+          <text x="568" y="200" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#4aab6d">MRC</text>
+        </g>
+
+        <!-- Combiner → Processor -->
+        <line x1="604" y1="188" x2="640" y2="188" stroke="#4aab6d" stroke-width="1.5" marker-end="url(#ar-tx)"/>
+
+        <!-- SIGNAL PROCESSOR -->
+        <g id="sys-proc">
+          <rect x="642" y="166" width="80" height="44" rx="2" fill="#252420" stroke="#4aab6d" stroke-width="1"/>
+          <text x="682" y="186" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6865">PROCESSOR</text>
+          <text x="682" y="200" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#4aab6d">DETECT</text>
+        </g>
+
+        <!-- Processor → Output -->
+        <line x1="722" y1="188" x2="755" y2="188" stroke="#4aab6d" stroke-width="1.5" marker-end="url(#ar-tx)"/>
+        <rect x="757" y="176" width="36" height="24" rx="2" fill="#1a2a1a" stroke="#4aab6d" stroke-width="1"/>
+        <text x="775" y="191" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4aab6d">OUT</text>
+
+        <!-- STATUS label (scenario) -->
+        <text id="scenario-label" x="400" y="30" text-anchor="middle"
+          font-family="JetBrains Mono,monospace" font-size="10" fill="#4aab6d" letter-spacing="2">
+          SCENARIO: LOS
+        </text>
+
+        <!-- GROUND LINE -->
+        <line x1="30" y1="415" x2="770" y2="415" stroke="#2a2825" stroke-width="1"/>
+
+        <!-- Corner annotation -->
+        <text x="30" y="415" font-family="JetBrains Mono,monospace" font-size="7" fill="#333230">8–12 GHz</text>
+        <text x="640" y="415" font-family="JetBrains Mono,monospace" font-size="7" fill="#333230">PROJECT REFERENCE VISUALIZATION</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW STEPS -->
+<section class="workflow-section section theme-light" aria-labelledby="workflow-heading">
+  <div class="container">
+    <div class="grid-2" style="gap:var(--sp-16);align-items:start;">
+      <div class="reveal">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="label-accent">Sensing Workflow</span>
+        </div>
+        <h2 class="heading-md" id="workflow-heading" style="color:var(--c-text);margin-bottom:var(--sp-4);">
+          How the system operates.
+        </h2>
+        <p style="font-size:var(--text-base);color:var(--c-text-muted);line-height:1.75;">
+          The sensing workflow exploits both paths simultaneously, combining received signals to make a reliable detection decision regardless of individual path quality.
+        </p>
+      </div>
+
+      <div class="workflow-steps reveal reveal-d2">
+        <div class="workflow-step">
+          <span class="step-num">01</span>
+          <div>
+            <h3 class="step-title">Transmit</h3>
+            <p class="step-desc">The transmitter generates the sensing signal, which is split between the two antennas via a 2-port power splitter.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <span class="step-num">02</span>
+          <div>
+            <h3 class="step-title">Direct Path Propagation</h3>
+            <p class="step-desc">Antenna 1 sends the signal along the direct LOS path. In unobstructed conditions, this provides the primary detection signal.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <span class="step-num">03</span>
+          <div>
+            <h3 class="step-title">RIS-Assisted Reflection</h3>
+            <p class="step-desc">Antenna 2 illuminates the RIS panel. The RIS phase-shifts and redirects the signal around obstacles, enabling NLOS coverage.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <span class="step-num">04</span>
+          <div>
+            <h3 class="step-title">Signal Reception</h3>
+            <p class="step-desc">The receiver collects both the direct and RIS-reflected signals from the environment.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <span class="step-num">05</span>
+          <div>
+            <h3 class="step-title">Signal Combination</h3>
+            <p class="step-desc">A combiner (e.g., Maximum Ratio Combining) merges both paths to maximize SNR and exploit signal diversity.</p>
+          </div>
+        </div>
+        <div class="workflow-step">
+          <span class="step-num">06</span>
+          <div>
+            <h3 class="step-title">Obstacle Detection</h3>
+            <p class="step-desc">The signal processor analyzes the combined signal to detect, classify, and locate obstacles in the sensing environment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY DUAL ANTENNA -->
+<section class="dual-section section theme-dark" aria-labelledby="dual-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line dark"></div>
+      <span class="label-accent">Signal Diversity</span>
+    </div>
+    <h2 class="heading-md reveal" id="dual-heading" style="color:var(--c-text-inv);margin-bottom:var(--sp-10);">
+      Why dual antenna?
+    </h2>
+
+    <div class="dual-grid">
+      <div class="reveal">
+        <div class="antenna-card">
+          <div class="antenna-card-bar ant1"></div>
+          <p class="ant-label" style="color:var(--c-direct);">Antenna 1 — Direct Path</p>
+          <h3 class="ant-title">Primary LOS Signal</h3>
+          <p class="ant-desc">
+            When a clear line-of-sight exists, Antenna 1 provides the strongest, most direct signal path. Low attenuation and minimal delay make it the primary sensing channel in unobstructed scenarios.
+          </p>
+        </div>
+
+        <div class="antenna-card" style="margin-top:var(--sp-4);">
+          <div class="antenna-card-bar ant2"></div>
+          <p class="ant-label" style="color:var(--c-ris);">Antenna 2 — RIS-Reflected Path</p>
+          <h3 class="ant-title">NLOS Coverage via RIS</h3>
+          <p class="ant-desc">
+            The RIS-assisted path creates an intelligent bypass around obstacles. When the direct path is blocked, this path maintains signal reception, preventing total detection failure.
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <h3 class="heading-sm" style="color:var(--c-text-inv);margin-bottom:var(--sp-6);">Signal diversity: the core advantage.</h3>
+        <p class="body-base" style="color:var(--c-text-inv-muted);margin-bottom:var(--sp-6);">
+          By maintaining two independent propagation paths, the system exploits spatial diversity. When one path experiences a deep fade or is physically blocked, the other maintains reception quality.
+        </p>
+        <p class="body-base" style="color:var(--c-text-inv-muted);margin-bottom:var(--sp-6);">
+          The key insight is that the two paths rarely fail simultaneously — a direct blockage that eliminates the LOS path typically still allows the RIS-reflected path to function. This independence is the foundation of the system's improved reliability.
+        </p>
+        <div class="diversity-box">
+          <p class="label-mono" style="margin-bottom:var(--sp-3);color:var(--c-text-faint);">Diversity Principle</p>
+          <p style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;color:var(--c-text-inv);line-height:1.4;letter-spacing:-0.015em;">
+            "Two paths that fail independently provide more reliable communication than one strong path alone."
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NAV -->
+<div style="background:var(--c-surface);border-top:1px solid var(--c-border);padding-block:var(--sp-8);">
+  <div class="container flex-between">
+    <div>
+      <p class="label-mono" style="color:var(--c-text-muted);">Next</p>
+      <p style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;color:var(--c-text);margin-top:4px;">CST Simulation Results</p>
+    </div>
+    <a href="simulation.html" class="btn btn-accent">View Simulation →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-main-container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="index.html" class="footer-logo-link" aria-label="RIS AIDED SENSING Home">
+          <div class="footer-logo-main">RIS AIDED SENSING</div>
+        </a>
+        <p class="footer-desc">
+          Engineering research project — RIS-aided dual antenna for obstacle detection in LOS and NLOS environments.
+        </p>
+        <div class="footer-badge-tag">
+          <span class="footer-badge-dot"></span>
+          <span>ELECTRONICS &amp; COMMUNICATION ENGINEERING</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-hd">Navigation</div>
+        <ul class="footer-nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="problem.html">The Problem</a></li>
+          <li><a href="system.html">Proposed System</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-project-col">
+        <div class="footer-col-hd">Project</div>
+        <ul class="footer-nav-links">
+          <li><a href="simulation.html">Simulation</a></li>
+          <li><a href="detection.html">Detection Lab</a></li>
+          <li><a href="results.html">Results</a></li>
+          <li><a href="about.html#team">Team</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+(function() {
+  const svg = document.getElementById('system-svg');
+  const btnLOS = document.getElementById('btn-los');
+  const btnNLOS = document.getElementById('btn-nlos');
+  const btnDirect = document.getElementById('btn-direct');
+  const btnRIS = document.getElementById('btn-ris');
+  const scenarioLabel = document.getElementById('scenario-label');
+  const directLine = document.getElementById('path-direct-line');
+  const risLine = document.getElementById('path-ris-line');
+  const blockLabel = document.getElementById('direct-block-label');
+  const labelDirect = document.getElementById('label-direct');
+  const labelRIS = document.getElementById('label-ris');
+
+  let scenario = 'los';
+  let showDirect = true;
+  let showRIS = true;
+
+  function updateDiagram() {
+    // Scenario
+    if (scenarioLabel) {
+      scenarioLabel.textContent = `SCENARIO: ${scenario.toUpperCase()}`;
+      scenarioLabel.setAttribute('fill', scenario === 'los' ? '#4aab6d' : '#d4a017');
+    }
+
+    // Direct path visibility
+    if (directLine) {
+      directLine.style.opacity = showDirect ? '1' : '0';
+    }
+    if (labelDirect) labelDirect.style.opacity = showDirect ? '1' : '0';
+
+    // In NLOS, direct path is blocked
+    if (blockLabel) {
+      blockLabel.style.opacity = (scenario === 'nlos' && showDirect) ? '1' : '0';
+    }
+
+    // RIS path visibility
+    if (risLine) {
+      risLine.style.opacity = showRIS ? '1' : '0';
+    }
+    if (labelRIS) labelRIS.style.opacity = showRIS ? '1' : '0';
+
+    // Direct path opacity in NLOS
+    if (directLine && scenario === 'nlos') {
+      directLine.style.opacity = showDirect ? '0.3' : '0';
+    }
+  }
+
+  // Scenario buttons
+  [btnLOS, btnNLOS].forEach(btn => {
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      scenario = btn.dataset.val;
+      btnLOS.classList.toggle('active', scenario === 'los');
+      btnNLOS.classList.toggle('active', scenario === 'nlos');
+      btnLOS.setAttribute('aria-pressed', scenario === 'los');
+      btnNLOS.setAttribute('aria-pressed', scenario === 'nlos');
+      updateDiagram();
+    });
+  });
+
+  // Path buttons
+  if (btnDirect) {
+    btnDirect.addEventListener('click', () => {
+      showDirect = !showDirect;
+      btnDirect.classList.toggle('active', showDirect);
+      btnDirect.setAttribute('aria-pressed', showDirect);
+      updateDiagram();
+    });
+  }
+
+  if (btnRIS) {
+    btnRIS.addEventListener('click', () => {
+      showRIS = !showRIS;
+      btnRIS.classList.toggle('active', showRIS);
+      btnRIS.setAttribute('aria-pressed', showRIS);
+      updateDiagram();
+    });
+  }
+
+  updateDiagram();
+
+  // Animate signal pulses
+  let t = 0;
+  function animate(ts) {
+    t = ts;
+
+    // Direct path pulse
+    if (showDirect) {
+      const dp = document.getElementById('sys-dp');
+      if (!dp) {
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('id', 'sys-dp');
+        c.setAttribute('r', '5');
+        c.setAttribute('fill', '#c94f2a');
+        svg.appendChild(c);
+      }
+      const prog = (ts % 2000) / 2000;
+      const x = 356 + prog * (530 - 356);
+      const dpEl = document.getElementById('sys-dp');
+      if (dpEl) {
+        dpEl.setAttribute('cx', x);
+        dpEl.setAttribute('cy', 188);
+        dpEl.setAttribute('opacity', showDirect && scenario === 'los' ? (prog > 0.05 && prog < 0.95 ? '0.9' : '0') : '0');
+      }
+    }
+
+    // RIS path pulse (along curve)
+    if (showRIS) {
+      const rp = document.getElementById('sys-rp');
+      if (!rp) {
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('id', 'sys-rp');
+        c.setAttribute('r', '5');
+        c.setAttribute('fill', '#3a7ebf');
+        svg.appendChild(c);
+      }
+      const prog2 = (ts % 2800) / 2800;
+      // Approximate arc from (234,370) to (530,188)
+      const t2 = prog2;
+      const x1 = 234, y1 = 370;
+      const cx1 = 380, cy1 = 370;
+      const cx2 = 500, cy2 = 170;
+      const x2 = 530, y2 = 188;
+      // Cubic bezier approximation
+      const bx = Math.pow(1-t2,3)*x1 + 3*Math.pow(1-t2,2)*t2*cx1 + 3*(1-t2)*t2*t2*cx2 + t2*t2*t2*x2;
+      const by = Math.pow(1-t2,3)*y1 + 3*Math.pow(1-t2,2)*t2*cy1 + 3*(1-t2)*t2*t2*cy2 + t2*t2*t2*y2;
+      const rpEl = document.getElementById('sys-rp');
+      if (rpEl) {
+        rpEl.setAttribute('cx', bx);
+        rpEl.setAttribute('cy', by);
+        rpEl.setAttribute('opacity', showRIS ? (t2 > 0.02 && t2 < 0.98 ? '0.9' : '0') : '0');
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+})();
+</script>
+</body>
+</html>

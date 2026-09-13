@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Header &amp; Footer Components — RIS AIDED SENSING Engineering System</title>
+  <meta name="description" content="Design system specification, interactive preview, and code partials for the RIS AIDED SENSING Header and Footer components." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style>
+    /* COMPONENT SHOWCASE SPECIFIC STYLES */
+    .comp-hero {
+      padding-top: calc(var(--nav-h) + var(--sp-12));
+      padding-bottom: var(--sp-12);
+      background: var(--c-surface);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .comp-section {
+      padding-block: var(--sp-16);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .comp-section-alt {
+      background: var(--c-bg-alt);
+    }
+
+    .comp-grid-preview {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sp-8);
+      margin-top: var(--sp-8);
+    }
+
+    .preview-box {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      overflow: hidden;
+    }
+
+    .preview-box-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--sp-3) var(--sp-5);
+      background: var(--c-bg-alt);
+      border-bottom: 1px solid var(--c-border);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--c-text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .preview-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+    }
+
+    .preview-btn {
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      color: var(--c-text);
+      cursor: pointer;
+      transition: all var(--dur-fast);
+    }
+    .preview-btn:hover, .preview-btn.active {
+      background: var(--c-text);
+      color: var(--c-surface);
+      border-color: var(--c-text);
+    }
+
+    .preview-canvas {
+      padding: 0;
+      position: relative;
+      background: var(--c-bg);
+      min-height: 120px;
+    }
+
+    .preview-canvas.dark-mode {
+      background: #111110;
+    }
+
+    /* Isolated Preview Components */
+    .preview-header-wrap {
+      position: relative !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+    }
+
+    .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+      margin-top: var(--sp-6);
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+    }
+
+    .specs-table th, .specs-table td {
+      padding: var(--sp-3) var(--sp-4);
+      text-align: left;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .specs-table th {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--c-bg-alt);
+      color: var(--c-text-muted);
+    }
+
+    .specs-table td code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: rgba(0,0,0,0.04);
+      padding: 2px 6px;
+      border: 1px solid var(--c-border);
+    }
+
+    .code-snippet-box {
+      margin-top: var(--sp-6);
+      background: #0d0d0c;
+      color: #e5e2dc;
+      border: 1px solid var(--c-border-dark);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-snippet-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: #171715;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #8c8983;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    .code-snippet-content {
+      padding: 16px;
+      overflow-x: auto;
+      max-height: 380px;
+      white-space: pre;
+    }
+
+    .copy-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 3px 8px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: all var(--dur-fast);
+    }
+    .copy-btn:hover {
+      background: var(--c-accent);
+      border-color: var(--c-accent);
+    }
+
+    .tag-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 2px 6px;
+      background: rgba(201, 79, 42, 0.1);
+      color: var(--c-accent);
+      border: 1px solid rgba(201, 79, 42, 0.25);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<!-- SITE HEADER -->
+<header class="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="RIS AIDED SENSING Home">
+      <span class="nav-logo-main">RIS AIDED SENSING</span>
+      <span class="nav-logo-sub">22EC711 · Engineering Project</span>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="problem.html">Problem</a></li>
+      <li><a href="system.html">System</a></li>
+      <li><a href="simulation.html">Simulation</a></li>
+      <li><a href="detection.html">Detection Lab</a></li>
+      <li><a href="results.html">Results</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+
+    <div class="nav-cta-wrap">
+      <a href="detection.html" class="nav-cta">Launch Detection Lab</a>
+    </div>
+
+    <button class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<nav id="mobile-menu" class="nav-mobile" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="problem.html">Problem</a>
+  <a href="system.html">System</a>
+  <a href="simulation.html">Simulation</a>
+  <a href="detection.html">Detection Lab</a>
+  <a href="results.html">Results</a>
+  <a href="about.html">About</a>
+  <a href="components.html" style="color:var(--c-accent);font-weight:600;">Components &amp; Specs</a>
+</nav>
+
+<main id="main-content">
+  <!-- PAGE HERO -->
+  <section class="comp-hero">
+    <div class="container">
+      <div class="tag-badge">COMPONENT SPECIFICATIONS &amp; DESIGN SYSTEM</div>
+      <h1 class="page-title" style="margin-top:var(--sp-3); margin-bottom:var(--sp-3);">
+        Header &amp; Footer Architecture
+      </h1>
+      <p class="page-desc" style="max-width:760px;">
+        Engineering specification, live interactive previews, and reusable component partials for the site-wide Navigation Header and Technical Research Footer.
+      </p>
+      <div style="display:flex; gap:var(--sp-3); margin-top:var(--sp-6); flex-wrap:wrap;">
+        <a href="#header-spec" class="btn btn-secondary">Jump to Header Spec ↓</a>
+        <a href="#footer-spec" class="btn btn-secondary">Jump to Footer Spec ↓</a>
+        <a href="partials/header.html" target="_blank" class="btn btn-outline">View Header Partial ↗</a>
+        <a href="partials/footer.html" target="_blank" class="btn btn-outline">View Footer Partial ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 1: HEADER SPECIFICATION -->
+  <section id="header-spec" class="comp-section">
+    <div class="container">
+      <div class="section-label">01 // NAVIGATION COMPONENT</div>
+      <h2 class="section-title">Global Site Header</h2>
+      <p style="color:var(--c-text-muted); max-width:700px; line-height:1.7;">
+        The header delivers clean, high-precision desktop navigation with sticky positioning, backdrop blur filter, active state indicators, and an accessible mobile drawer trigger.
+      </p>
+
+      <!-- Live Interactive Header Preview -->
+      <div class="comp-grid-preview">
+        <div class="preview-box">
+          <div class="preview-box-header">
+            <span>LIVE INTERACTIVE HEADER PREVIEW (FIXED &amp; UNIFIED ACROSS ALL PAGES)</span>
+            <span class="tag-badge">GRAPHITE RESEARCH THEME</span>
+          </div>
+
+          <div class="preview-canvas dark-mode" id="preview-header-canvas">
+            <header class="site-header preview-header-wrap" id="demo-header" role="banner" style="position:relative; top:0;">
+              <nav class="nav-inner" aria-label="Demo navigation">
+                <a href="index.html" class="nav-logo" aria-label="RIS AIDED SENSING Home">
+                  <span class="nav-logo-main">RIS AIDED SENSING</span>
+                  <span class="nav-logo-sub">22EC711 · Engineering Project</span>
+                </a>
+
+                <ul class="nav-links" role="list">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="problem.html">Problem</a></li>
+                  <li><a href="system.html">System</a></li>
+                  <li><a href="simulation.html">Simulation</a></li>
+                  <li><a href="detection.html">Detection Lab</a></li>
+                  <li><a href="results.html">Results</a></li>
+                  <li><a href="about.html">About</a></li>
+                </ul>
+
+                <div class="nav-cta-wrap">
+                  <a href="detection.html" class="nav-cta">Launch Detection Lab</a>
+                </div>
+
+                <button class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false" onclick="alert('Demo mobile drawer button');">
+                  <span></span><span></span><span></span>
+                </button>
+              </nav>
+            </header>
+          </div>
+        </div>
+      </div>
+
+      <!-- Header Specs Table -->
+      <h3 style="margin-top:var(--sp-10); font-family:var(--font-display); font-weight:700;">Design Tokens &amp; Behavior</h3>
+      <table class="specs-table">
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Value</th>
+            <th>Description / Rationale</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Height</strong></td>
+            <td><code>var(--nav-h) = 68px</code></td>
+            <td>Standard compact technical bar height.</td>
+          </tr>
+          <tr>
+            <td><strong>Positioning</strong></td>
+            <td><code>position: fixed; top: 0; z-index: 1000</code></td>
+            <td>Fixed and stable across all scrolling viewports.</td>
+          </tr>
+          <tr>
+            <td><strong>Backdrop Filter</strong></td>
+            <td><code>backdrop-filter: blur(14px)</code></td>
+            <td>Subtle optical blur over high-density content.</td>
+          </tr>
+          <tr>
+            <td><strong>Typography</strong></td>
+            <td><code>Space Grotesk 700</code> (Brand), <code>Inter 500</code> (Links)</td>
+            <td>High legibility and technical hierarchy.</td>
+          </tr>
+          <tr>
+            <td><strong>Hover Micro-interaction</strong></td>
+            <td><code>color: #ffffff</code> + <code>background: rgba(255, 255, 255, 0.08)</code></td>
+            <td>Subtle 160ms ease-out transitions.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- HTML Code Partial Snippet -->
+      <div class="code-snippet-box">
+        <div class="code-snippet-top">
+          <span>PARTIALS / HEADER.HTML</span>
+          <button class="copy-btn" onclick="copySnippet('code-hdr-snippet')">Copy HTML</button>
+        </div>
+        <div class="code-snippet-content" id="code-hdr-snippet">&lt;!-- HEADER --&gt;
+&lt;header class="site-header" role="banner"&gt;
+  &lt;nav class="nav-inner" aria-label="Main navigation"&gt;
+    &lt;a href="index.html" class="nav-logo" aria-label="RIS AIDED SENSING Home"&gt;
+      &lt;span class="nav-logo-main"&gt;RIS AIDED SENSING&lt;/span&gt;
+      &lt;span class="nav-logo-sub"&gt;22EC711 · Engineering Project&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;ul class="nav-links" role="list"&gt;
+      &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="problem.html"&gt;Problem&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="system.html"&gt;System&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="simulation.html"&gt;Simulation&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="detection.html"&gt;Detection Lab&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="results.html"&gt;Results&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="about.html"&gt;About&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;div class="nav-cta-wrap"&gt;
+      &lt;a href="detection.html" class="nav-cta"&gt;Launch Detection Lab&lt;/a&gt;
+    &lt;/div&gt;
+
+    &lt;button class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu"&gt;
+      &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;nav id="mobile-menu" class="nav-mobile" aria-label="Mobile navigation"&gt;
+  &lt;a href="index.html"&gt;Home&lt;/a&gt;
+  &lt;a href="problem.html"&gt;Problem&lt;/a&gt;
+  &lt;a href="system.html"&gt;System&lt;/a&gt;
+  &lt;a href="simulation.html"&gt;Simulation&lt;/a&gt;
+  &lt;a href="detection.html"&gt;Detection Lab&lt;/a&gt;
+  &lt;a href="results.html"&gt;Results&lt;/a&gt;
+  &lt;a href="about.html"&gt;About&lt;/a&gt;
+  &lt;a href="detection.html" style="color: var(--c-accent); font-weight:600;"&gt;Launch Detection Lab →&lt;/a&gt;
+&lt;/nav&gt;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: FOOTER SPECIFICATION -->
+  <section id="footer-spec" class="comp-section comp-section-alt">
+    <div class="container">
+      <div class="section-label">02 // FOOTER COMPONENT</div>
+      <h2 class="section-title">Technical Research Footer</h2>
+      <p style="color:var(--c-text-muted); max-width:700px; line-height:1.7;">
+        The footer provides an architectural closing to each page, styled with deep graphite tones, precision millimeter grid texture, a technical transition ribbon, micro-interactions, and 100% exact project information.
+      </p>
+
+      <!-- Live Interactive Footer Preview -->
+      <div class="comp-grid-preview">
+        <div class="preview-box">
+          <div class="preview-box-header">
+            <span>LIVE INTERACTIVE FOOTER PREVIEW</span>
+            <span class="tag-badge">STANDARDIZED ACROSS ALL 8 PAGES</span>
+          </div>
+
+          <div class="preview-canvas" style="background:#111110;">
+            <footer class="site-footer" role="contentinfo">
+              <div class="container footer-main-container">
+                <div class="footer-grid">
+                  <div class="footer-brand-col">
+                    <a href="index.html" class="footer-logo-link" aria-label="RIS AIDED SENSING Home">
+                      <div class="footer-logo-main">RIS AIDED SENSING</div>
+                    </a>
+                    <p class="footer-desc">
+                      Engineering research project — RIS-aided dual antenna for obstacle detection in LOS and NLOS environments.
+                    </p>
+                    <div class="footer-badge-tag">
+                      <span class="footer-badge-dot"></span>
+                      <span>ELECTRONICS &amp; COMMUNICATION ENGINEERING</span>
+                    </div>
+                  </div>
+
+                  <div class="footer-nav-col">
+                    <div class="footer-col-hd">Navigation</div>
+                    <ul class="footer-nav-links">
+                      <li><a href="index.html">Home</a></li>
+                      <li><a href="problem.html">The Problem</a></li>
+                      <li><a href="system.html">Proposed System</a></li>
+                      <li><a href="about.html">About</a></li>
+                    </ul>
+                  </div>
+
+                  <div class="footer-project-col">
+                    <div class="footer-col-hd">Project</div>
+                    <ul class="footer-nav-links">
+                      <li><a href="simulation.html">Simulation</a></li>
+                      <li><a href="detection.html">Detection Lab</a></li>
+                      <li><a href="results.html">Results</a></li>
+                      <li><a href="about.html#team">Team</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Specs Table -->
+      <h3 style="margin-top:var(--sp-10); font-family:var(--font-display); font-weight:700;">Design Tokens &amp; Layout Behavior</h3>
+      <table class="specs-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Implementation</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Grid Layout</strong></td>
+            <td><code>grid-template-columns: 1.8fr 1fr 1fr</code></td>
+            <td>Asymmetric desktop grid with ample brand prominence.</td>
+          </tr>
+          <tr>
+            <td><strong>Background &amp; Grid</strong></td>
+            <td><code>#111110</code> + 32px CSS linear-gradient grid</td>
+            <td>Barely-visible millimeter coordinate grid texture.</td>
+          </tr>
+
+          <tr>
+            <td><strong>Link Hover State</strong></td>
+            <td><code>transform: translateX(4px)</code> + <code>content: '›'</code></td>
+            <td>Smooth 200ms motion with terracotta chevron mark.</td>
+          </tr>
+          <tr>
+            <td><strong>Responsive Breakpoints</strong></td>
+            <td><code>900px</code> (2 columns), <code>600px</code> (1 column stacked)</td>
+            <td>Zero horizontal overflow with comfortable touch targets.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- HTML Code Partial Snippet -->
+      <div class="code-snippet-box">
+        <div class="code-snippet-top">
+          <span>PARTIALS / FOOTER.HTML</span>
+          <button class="copy-btn" onclick="copySnippet('code-ftr-snippet')">Copy HTML</button>
+        </div>
+        <div class="code-snippet-content" id="code-ftr-snippet">&lt;!-- FOOTER --&gt;
+&lt;footer class="site-footer" role="contentinfo"&gt;
+  &lt;div class="container footer-main-container"&gt;
+    &lt;div class="footer-grid"&gt;
+      &lt;div class="footer-brand-col"&gt;
+        &lt;a href="index.html" class="footer-logo-link" aria-label="RIS AIDED SENSING Home"&gt;
+          &lt;div class="footer-logo-main"&gt;RIS AIDED SENSING&lt;/div&gt;
+        &lt;/a&gt;
+        &lt;p class="footer-desc"&gt;
+          Engineering research project — RIS-aided dual antenna for obstacle detection in LOS and NLOS environments.
+        &lt;/p&gt;
+        &lt;div class="footer-badge-tag"&gt;
+          &lt;span class="footer-badge-dot"&gt;&lt;/span&gt;
+          &lt;span&gt;ELECTRONICS &amp;amp; COMMUNICATION ENGINEERING&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class="footer-nav-col"&gt;
+        &lt;div class="footer-col-hd"&gt;Navigation&lt;/div&gt;
+        &lt;ul class="footer-nav-links"&gt;
+          &lt;li&gt;&lt;a href="index.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="problem.html"&gt;The Problem&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="system.html"&gt;Proposed System&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="about.html"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+
+      &lt;div class="footer-project-col"&gt;
+        &lt;div class="footer-col-hd"&gt;Project&lt;/div&gt;
+        &lt;ul class="footer-nav-links"&gt;
+          &lt;li&gt;&lt;a href="simulation.html"&gt;Simulation&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="detection.html"&gt;Detection Lab&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="results.html"&gt;Results&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="about.html#team"&gt;Team&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-main-container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="index.html" class="footer-logo-link" aria-label="RIS AIDED SENSING Home">
+          <div class="footer-logo-main">RIS AIDED SENSING</div>
+        </a>
+        <p class="footer-desc">
+          Engineering research project — RIS-aided dual antenna for obstacle detection in LOS and NLOS environments.
+        </p>
+        <div class="footer-badge-tag">
+          <span class="footer-badge-dot"></span>
+          <span>ELECTRONICS &amp; COMMUNICATION ENGINEERING</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-hd">Navigation</div>
+        <ul class="footer-nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="problem.html">The Problem</a></li>
+          <li><a href="system.html">Proposed System</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-project-col">
+        <div class="footer-col-hd">Project</div>
+        <ul class="footer-nav-links">
+          <li><a href="simulation.html">Simulation</a></li>
+          <li><a href="detection.html">Detection Lab</a></li>
+          <li><a href="results.html">Results</a></li>
+          <li><a href="about.html#team">Team</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  function setHeaderMode(mode) {
+    const hdr = document.getElementById('demo-header');
+    const canvas = document.getElementById('preview-header-canvas');
+    const btnLight = document.getElementById('btn-hdr-light');
+    const btnDark = document.getElementById('btn-hdr-dark');
+
+    if (mode === 'dark') {
+      hdr.classList.add('dark-nav');
+      canvas.classList.add('dark-mode');
+      btnDark.classList.add('active');
+      btnLight.classList.remove('active');
+    } else {
+      hdr.classList.remove('dark-nav');
+      canvas.classList.remove('dark-mode');
+      btnLight.classList.add('active');
+      btnDark.classList.remove('active');
+    }
+  }
+
+  function copySnippet(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    navigator.clipboard.writeText(el.innerText).then(() => {
+      alert('Copied HTML markup to clipboard!');
+    }).catch(() => {
+      alert('Selected code copied.');
+    });
+  }
+</script>
+</body>
+</html>

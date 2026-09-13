@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Results & Applications — RIS-Aided Dual Antenna | 22EC711</title>
+  <meta name="description" content="Qualitative comparison of RIS-aided dual antenna vs conventional sensing systems, and applications in autonomous vehicles, drones, and V2X." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style>
+    /* RESULTS PAGE */
+    .results-hero {
+      padding-top: calc(var(--nav-h) + var(--sp-20));
+      padding-bottom: var(--sp-16);
+      background: var(--c-bg);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    /* Comparison section */
+    .compare-section {
+      background: var(--c-surface);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .compare-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--c-border);
+      border-bottom: none;
+    }
+
+    .compare-hd-cell {
+      padding: var(--sp-4) var(--sp-6);
+      border-right: 1px solid var(--c-border);
+    }
+
+    .compare-hd-cell:last-child { border-right: none; }
+
+    .compare-col-title {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* Applications */
+    .apps-section {
+      background: var(--c-bg-dark);
+      color: var(--c-text-inv);
+    }
+
+    .apps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-8);
+      margin-top: var(--sp-10);
+    }
+
+    .app-card {
+      border: 1px solid var(--c-border-dark);
+      overflow: hidden;
+    }
+
+    .app-card-visual {
+      background: #111110;
+      padding: var(--sp-8);
+      border-bottom: 1px solid var(--c-border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+    }
+
+    .app-card-body {
+      padding: var(--sp-8);
+    }
+
+    .app-card-number {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      margin-bottom: var(--sp-3);
+    }
+
+    .app-card-title {
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--c-text-inv);
+      margin-bottom: var(--sp-4);
+      letter-spacing: -0.02em;
+    }
+
+    .app-card-desc {
+      font-size: var(--text-sm);
+      color: var(--c-text-inv-muted);
+      line-height: 1.75;
+    }
+
+    /* Final statement */
+    .statement-section {
+      background: var(--c-bg-dark);
+      border-top: 1px solid var(--c-border-dark);
+      padding-block: var(--sp-24);
+      text-align: center;
+    }
+
+    .statement-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--c-text-inv);
+      line-height: 1.25;
+      max-width: 800px;
+      margin-inline: auto;
+    }
+
+    .statement-text em { color: var(--c-accent); font-style: normal; }
+
+    /* Quality indicators */
+    .quality-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    .qi-limited {
+      background: rgba(201,79,42,0.12);
+      color: var(--c-accent);
+      border: 1px solid rgba(201,79,42,0.3);
+    }
+
+    .qi-enhanced {
+      background: rgba(74,171,109,0.12);
+      color: var(--c-signal);
+      border: 1px solid rgba(74,171,109,0.3);
+    }
+
+    .qi-improved {
+      background: rgba(58,126,191,0.12);
+      color: var(--c-ris);
+      border: 1px solid rgba(58,126,191,0.3);
+    }
+
+    @media (max-width: 768px) {
+      .apps-grid { grid-template-columns: 1fr; }
+      .compare-header { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="page-theme">
+
+<!-- HEADER -->
+<header class="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="RIS AIDED SENSING Home">
+      <span class="nav-logo-main">RIS AIDED SENSING</span>
+      <span class="nav-logo-sub">22EC711 · Engineering Project</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="problem.html">Problem</a></li>
+      <li><a href="system.html">System</a></li>
+      <li><a href="simulation.html">Simulation</a></li>
+      <li><a href="detection.html">Detection Lab</a></li>
+      <li><a href="results.html">Results</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-cta-wrap">
+      <a href="detection.html" class="nav-cta">Launch Detection Lab</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<nav id="mobile-menu" class="nav-mobile" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="problem.html">Problem</a>
+  <a href="system.html">System</a>
+  <a href="simulation.html">Simulation</a>
+  <a href="detection.html">Detection Lab</a>
+  <a href="results.html">Results</a>
+  <a href="about.html">About</a>
+</nav>
+
+<!-- HERO -->
+<section class="results-hero theme-light" aria-labelledby="results-hero-heading">
+  <div class="container">
+    <div class="eyebrow">
+      <div class="eyebrow-bar"></div>
+      <span class="label-accent">Results & Applications</span>
+    </div>
+    <h1 class="heading-display" id="results-hero-heading" style="margin-bottom:var(--sp-6);">
+      From blocked paths to resilient sensing.
+    </h1>
+    <p class="body-lg" style="max-width:620px;">
+      The RIS-aided dual antenna architecture addresses the fundamental limitations of conventional single-path sensing systems through intelligent signal diversity and programmable wave control.
+    </p>
+    <div style="margin-top:var(--sp-6);padding:var(--sp-3) var(--sp-6);border:1px solid var(--c-border);display:inline-block;">
+      <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-text-faint);letter-spacing:0.1em;text-transform:uppercase;">
+        Note: Comparison uses qualitative indicators only. No numeric experimental results are claimed.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="compare-section section theme-dark" aria-labelledby="compare-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line"></div>
+      <span class="label-accent">System Comparison</span>
+    </div>
+    <h2 class="heading-md reveal" id="compare-heading" style="margin-bottom:var(--sp-10);">
+      Conventional vs. RIS-aided.
+    </h2>
+
+    <div class="reveal reveal-d1" style="overflow-x:auto;">
+      <table class="compare-table" role="table" aria-label="Comparison of conventional vs RIS-aided dual antenna systems">
+        <thead>
+          <tr>
+            <th scope="col">Performance Aspect</th>
+            <th scope="col" style="color:var(--c-accent);">Conventional System</th>
+            <th scope="col" style="color:var(--c-signal);">RIS-Aided Dual Antenna</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature">NLOS Coverage</td>
+            <td class="limited"><span class="quality-indicator qi-limited">Limited</span></td>
+            <td class="enhanced"><span class="quality-indicator qi-enhanced">Enhanced</span></td>
+          </tr>
+          <tr>
+            <td class="feature">Signal Diversity</td>
+            <td class="limited"><span class="quality-indicator qi-limited">None</span></td>
+            <td class="enhanced"><span class="quality-indicator qi-enhanced">Dual-path diversity</span></td>
+          </tr>
+          <tr>
+            <td class="feature">Obstacle Detection Reliability</td>
+            <td class="limited"><span class="quality-indicator qi-limited">Degrades in NLOS</span></td>
+            <td class="enhanced"><span class="quality-indicator qi-enhanced">Improved</span></td>
+          </tr>
+          <tr>
+            <td class="feature">Multipath Robustness</td>
+            <td class="limited"><span class="quality-indicator qi-limited">Vulnerable to fading</span></td>
+            <td class="enhanced"><span class="quality-indicator qi-improved">Improved via diversity</span></td>
+          </tr>
+          <tr>
+            <td class="feature">Coverage Area</td>
+            <td class="limited"><span class="quality-indicator qi-limited">LOS-limited</span></td>
+            <td class="enhanced"><span class="quality-indicator qi-enhanced">Extended to NLOS zones</span></td>
+          </tr>
+          <tr>
+            <td class="feature">Dynamic Environment Performance</td>
+            <td class="limited"><span class="quality-indicator qi-limited">Limited</span></td>
+            <td class="enhanced"><span class="quality-indicator qi-improved">Supported</span></td>
+          </tr>
+          <tr>
+            <td class="feature">Fallback Path</td>
+            <td class="limited"><span class="quality-indicator qi-limited">None</span></td>
+            <td class="enhanced"><span class="quality-indicator qi-enhanced">RIS path provides backup</span></td>
+          </tr>
+          <tr>
+            <td class="feature">V2X Applicability</td>
+            <td class="limited"><span class="quality-indicator qi-limited">Constrained</span></td>
+            <td class="enhanced"><span class="quality-indicator qi-enhanced">Supported</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Qualitative note -->
+    <div style="margin-top:var(--sp-6);padding:var(--sp-4) var(--sp-6);background:var(--c-bg-alt);border:1px solid var(--c-border);">
+      <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-text-faint);letter-spacing:0.08em;text-transform:uppercase;">
+        All indicators are qualitative. "Enhanced" and "Improved" reflect the architectural advantage of dual-path design over single-path systems. No experimental performance percentages or dB improvements are claimed beyond the reference design parameter S11 &lt; −30 dB and S21 ≈ −3 dB at 10 GHz.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATIONS -->
+<section class="apps-section section theme-light" aria-labelledby="apps-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line dark"></div>
+      <span class="label-accent">Applications</span>
+    </div>
+    <h2 class="heading-md reveal" id="apps-heading" style="color:var(--c-text-inv);margin-bottom:var(--sp-4);">
+      Where RIS-aided sensing delivers value.
+    </h2>
+    <p style="color:var(--c-text-inv-muted);font-size:var(--text-base);max-width:600px;line-height:1.75;" class="reveal">
+      The benefits of NLOS coverage, signal diversity, and programmable reflection are directly applicable across a range of real-world autonomous sensing scenarios.
+    </p>
+
+    <div class="apps-grid">
+
+      <!-- Autonomous Vehicles -->
+      <div class="app-card reveal">
+        <div class="app-card-visual" aria-hidden="true">
+          <svg viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:auto;">
+            <!-- Road -->
+            <rect x="0" y="130" width="400" height="50" fill="#1a1917"/>
+            <line x1="0" y1="130" x2="400" y2="130" stroke="#2a2825" stroke-width="1"/>
+            <line x1="0" y1="155" x2="400" y2="155" stroke="#2a2825" stroke-width="1" stroke-dasharray="20 16"/>
+            <!-- Building (obstacle) -->
+            <rect x="160" y="40" width="60" height="90" fill="#252420" stroke="#4a4845" stroke-width="1"/>
+            <!-- Ego vehicle -->
+            <rect x="20" y="110" width="56" height="22" rx="3" fill="#1a2535" stroke="#3a7ebf" stroke-width="1.5"/>
+            <rect x="30" y="103" width="36" height="12" rx="2" fill="#151e2a"/>
+            <circle cx="34" cy="133" r="5" fill="#111110" stroke="#4a4845"/>
+            <circle cx="64" cy="133" r="5" fill="#111110" stroke="#4a4845"/>
+            <text x="48" y="150" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a7ebf">EGO</text>
+            <!-- Hidden vehicle (behind building) -->
+            <rect x="270" y="110" width="56" height="22" rx="3" fill="#2a2825" stroke="#4a4845" stroke-width="1"/>
+            <rect x="280" y="103" width="36" height="12" rx="2" fill="#222"/>
+            <circle cx="284" cy="133" r="5" fill="#111110" stroke="#4a4845"/>
+            <circle cx="314" cy="133" r="5" fill="#111110" stroke="#4a4845"/>
+            <text x="298" y="150" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6865">TARGET</text>
+            <!-- RIS on building wall -->
+            <rect x="152" y="70" width="10" height="28" rx="1" fill="#1a2535" stroke="#3a7ebf" stroke-width="1"/>
+            <!-- RIS path arc -->
+            <path d="M48,110 Q80,70 152,84" stroke="#3a7ebf" stroke-width="1.5" fill="none"/>
+            <path d="M162,84 Q220,50 270,121" stroke="#3a7ebf" stroke-width="1.5" fill="none"/>
+            <!-- Detected label -->
+            <text x="200" y="25" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4aab6d">OBSTACLE DETECTED IN NLOS</text>
+            <text x="200" y="170" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#4a4845">ILLUSTRATIVE REFERENCE</text>
+          </svg>
+        </div>
+        <div class="app-card-body">
+          <p class="app-card-number">Application 01</p>
+          <h3 class="app-card-title">Autonomous Vehicles</h3>
+          <p class="app-card-desc">
+            In urban environments, vehicles frequently obscure each other and lurk behind buildings at intersections. The RIS-aided system enables detection of other vehicles, pedestrians, and obstacles beyond the direct line of sight — improving collision avoidance and intersection safety where conventional radar systems lose contact with the target.
+          </p>
+        </div>
+      </div>
+
+      <!-- Drones -->
+      <div class="app-card reveal reveal-d2">
+        <div class="app-card-visual" aria-hidden="true">
+          <svg viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:auto;">
+            <!-- Buildings -->
+            <rect x="100" y="20" width="50" height="120" fill="#252420" stroke="#4a4845" stroke-width="1"/>
+            <rect x="240" y="40" width="60" height="100" fill="#252420" stroke="#4a4845" stroke-width="1"/>
+            <!-- Drone (ego) -->
+            <g transform="translate(40,60)">
+              <rect x="-20" y="-8" width="40" height="16" rx="2" fill="#1a2535" stroke="#3a7ebf" stroke-width="1.5"/>
+              <line x1="-22" y1="-10" x2="-30" y2="-18" stroke="#3a7ebf" stroke-width="1"/>
+              <line x1="22" y1="-10" x2="30" y2="-18" stroke="#3a7ebf" stroke-width="1"/>
+              <line x1="-22" y1="8" x2="-30" y2="16" stroke="#3a7ebf" stroke-width="1"/>
+              <line x1="22" y1="8" x2="30" y2="16" stroke="#3a7ebf" stroke-width="1"/>
+              <circle cx="-30" cy="-18" r="4" fill="#3a7ebf" opacity="0.5"/>
+              <circle cx="30" cy="-18" r="4" fill="#3a7ebf" opacity="0.5"/>
+              <circle cx="-30" cy="16" r="4" fill="#3a7ebf" opacity="0.5"/>
+              <circle cx="30" cy="16" r="4" fill="#3a7ebf" opacity="0.5"/>
+            </g>
+            <!-- Hidden object behind buildings -->
+            <rect x="310" y="100" width="30" height="20" rx="2" fill="#c94f2a" fill-opacity="0.6" stroke="#c94f2a" stroke-width="1"/>
+            <text x="325" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#c94f2a">HAZARD</text>
+            <!-- RIS on building -->
+            <rect x="148" y="50" width="8" height="30" rx="1" fill="#1a2535" stroke="#3a7ebf" stroke-width="1"/>
+            <!-- Signal path arc -->
+            <path d="M60,60 Q120,40 148,65" stroke="#3a7ebf" stroke-width="1.5" fill="none"/>
+            <path d="M156,65 Q220,80 310,115" stroke="#3a7ebf" stroke-width="1.5" fill="none"/>
+            <text x="200" y="25" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4aab6d">NLOS DETECTION IN URBAN CANYON</text>
+            <text x="200" y="170" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#4a4845">ILLUSTRATIVE REFERENCE</text>
+          </svg>
+        </div>
+        <div class="app-card-body">
+          <p class="app-card-number">Application 02</p>
+          <h3 class="app-card-title">Drones & UAVs</h3>
+          <p class="app-card-desc">
+            Unmanned aerial vehicles operating in urban canyons, between structures, or inside buildings face significant detection blind spots. RIS panels mounted on building walls extend the drone's sensing reach, enabling detection of obstacles in areas unreachable by the drone's direct sensing path — critical for autonomous flight in complex environments.
+          </p>
+        </div>
+      </div>
+
+      <!-- Industrial Automation -->
+      <div class="app-card reveal">
+        <div class="app-card-visual" aria-hidden="true">
+          <svg viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:auto;">
+            <!-- Factory floor -->
+            <rect x="0" y="140" width="400" height="40" fill="#1a1917"/>
+            <line x1="0" y1="140" x2="400" y2="140" stroke="#2a2825" stroke-width="1"/>
+            <!-- Machine/equipment (obstacle) -->
+            <rect x="150" y="60" width="80" height="80" fill="#252420" stroke="#4a4845" stroke-width="1.5"/>
+            <rect x="165" y="75" width="20" height="20" rx="1" fill="#333230"/>
+            <rect x="195" y="75" width="20" height="20" rx="1" fill="#333230"/>
+            <rect x="165" y="105" width="50" height="15" rx="1" fill="#333230"/>
+            <text x="190" y="155" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#6b6865">MACHINERY</text>
+            <!-- Robot arm (ego sensor) -->
+            <rect x="20" y="100" width="40" height="40" rx="2" fill="#1a2535" stroke="#3a7ebf" stroke-width="1.5"/>
+            <text x="40" y="124" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a7ebf">ROBOT</text>
+            <text x="40" y="155" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a7ebf">ARM</text>
+            <!-- Worker (behind machine) -->
+            <ellipse cx="310" cy="100" rx="16" ry="24" fill="#2a2825" stroke="#4aab6d" stroke-width="1.5"/>
+            <text x="310" y="140" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#4aab6d">WORKER</text>
+            <!-- RIS on wall -->
+            <rect x="10" y="50" width="8" height="36" rx="1" fill="#1a2535" stroke="#3a7ebf" stroke-width="1"/>
+            <!-- Path arc above machine -->
+            <path d="M18,68 Q90,20 230,60 Q280,70 294,100" stroke="#3a7ebf" stroke-width="1.5" fill="none"/>
+            <text x="200" y="20" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4aab6d">WORKER DETECTION BEHIND MACHINERY</text>
+            <text x="200" y="175" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#4a4845">ILLUSTRATIVE REFERENCE</text>
+          </svg>
+        </div>
+        <div class="app-card-body">
+          <p class="app-card-number">Application 03</p>
+          <h3 class="app-card-title">Industrial Automation</h3>
+          <p class="app-card-desc">
+            Factory and warehouse robots operating near human workers require robust proximity sensing — including detection of people partially occluded by equipment or structures. RIS panels deployed on walls and pillars extend the robot's sensing field around obstacles, enabling safety-critical detection of workers in NLOS zones.
+          </p>
+        </div>
+      </div>
+
+      <!-- V2X -->
+      <div class="app-card reveal reveal-d2">
+        <div class="app-card-visual" aria-hidden="true">
+          <svg viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:auto;">
+            <!-- Road grid -->
+            <rect x="0" y="110" width="400" height="70" fill="#1a1917"/>
+            <rect x="150" y="0" width="100" height="180" fill="#1a1917"/>
+            <rect x="0" y="110" width="400" height="70" fill="#111110" fill-opacity="0.5"/>
+            <line x1="200" y1="0" x2="200" y2="180" stroke="#2a2825" stroke-width="1" stroke-dasharray="12 10"/>
+            <line x1="0" y1="145" x2="145" y2="145" stroke="#2a2825" stroke-width="1" stroke-dasharray="12 10"/>
+            <line x1="255" y1="145" x2="400" y2="145" stroke="#2a2825" stroke-width="1" stroke-dasharray="12 10"/>
+            <!-- Buildings at corners -->
+            <rect x="0" y="0" width="140" height="100" fill="#252420" stroke="#4a4845" stroke-width="1"/>
+            <rect x="260" y="0" width="140" height="100" fill="#252420" stroke="#4a4845" stroke-width="1"/>
+            <!-- Vehicle 1 (on horizontal road) -->
+            <rect x="30" y="120" width="50" height="22" rx="3" fill="#1a2535" stroke="#3a7ebf" stroke-width="1.5"/>
+            <text x="55" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a7ebf">V1</text>
+            <!-- Vehicle 2 (on vertical road, hidden) -->
+            <rect x="164" y="20" width="22" height="50" rx="3" fill="#2a2825" stroke="#c94f2a" stroke-width="1.5"/>
+            <text x="175" y="50" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#c94f2a">V2</text>
+            <!-- RSU at corner -->
+            <rect x="130" y="88" width="14" height="22" rx="1" fill="#1a2535" stroke="#3a7ebf" stroke-width="1"/>
+            <text x="137" y="82" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a7ebf">RSU</text>
+            <!-- V2X signals -->
+            <path d="M80,130 Q130,90 137,90 Q174,55 175,70" stroke="#3a7ebf" stroke-width="1.5" fill="none"/>
+            <text x="200" y="172" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4aab6d">V2X NLOS COORDINATION</text>
+          </svg>
+        </div>
+        <div class="app-card-body">
+          <p class="app-card-number">Application 04</p>
+          <h3 class="app-card-title">Vehicle-to-Everything (V2X)</h3>
+          <p class="app-card-desc">
+            At intersections, vehicles approaching from perpendicular roads are obscured until dangerously close. RIS panels at roadside infrastructure units (RSUs) can relay V2X signals around corners, enabling vehicles to detect and coordinate with other traffic participants before direct visual or radar contact is possible — a core V2X safety use case.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOVELTY -->
+<section style="background:var(--c-surface);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);padding-block:var(--sp-16);" aria-labelledby="novelty-heading" class="theme-dark">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line"></div>
+      <span class="label-accent">Novelty</span>
+    </div>
+    <h2 class="heading-md reveal" id="novelty-heading" style="margin-bottom:var(--sp-10);">
+      What distinguishes this approach.
+    </h2>
+
+    <div class="grid-2" style="gap:var(--sp-10);">
+      <div class="reveal">
+        <div style="display:flex;flex-direction:column;gap:var(--sp-4);">
+          <div style="display:flex;gap:var(--sp-4);align-items:start;padding:var(--sp-4);border:1px solid var(--c-border);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-accent);min-width:24px;padding-top:2px;">01</span>
+            <p style="font-size:var(--text-sm);color:var(--c-text-muted);line-height:1.7;">
+              <strong style="color:var(--c-text);">Intelligent reflection:</strong> RIS intelligently reflects and redirects signals to extend coverage without active RF amplification — a fundamentally passive extension of the wireless environment.
+            </p>
+          </div>
+          <div style="display:flex;gap:var(--sp-4);align-items:start;padding:var(--sp-4);border:1px solid var(--c-border);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-accent);min-width:24px;padding-top:2px;">02</span>
+            <p style="font-size:var(--text-sm);color:var(--c-text-muted);line-height:1.7;">
+              <strong style="color:var(--c-text);">Dual antenna configuration:</strong> Unlike single-antenna systems, the dual-path design provides both a direct and a reflected signal path — creating inherent spatial diversity.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-d2">
+        <div style="display:flex;flex-direction:column;gap:var(--sp-4);">
+          <div style="display:flex;gap:var(--sp-4);align-items:start;padding:var(--sp-4);border:1px solid var(--c-border);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-accent);min-width:24px;padding-top:2px;">03</span>
+            <p style="font-size:var(--text-sm);color:var(--c-text-muted);line-height:1.7;">
+              <strong style="color:var(--c-text);">LOS and NLOS performance:</strong> The combined architecture maintains detection capability in both line-of-sight and non-line-of-sight conditions — the latter being the defining failure mode of conventional systems.
+            </p>
+          </div>
+          <div style="display:flex;gap:var(--sp-4);align-items:start;padding:var(--sp-4);border:1px solid var(--c-border);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-accent);min-width:24px;padding-top:2px;">04</span>
+            <p style="font-size:var(--text-sm);color:var(--c-text-muted);line-height:1.7;">
+              <strong style="color:var(--c-text);">Dynamic environment robustness:</strong> The system's resilience to path-specific degradation means it remains reliable even as the environment changes — essential for real-world autonomous sensing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL STATEMENT -->
+<section class="statement-section theme-light" aria-labelledby="statement-heading">
+  <div class="container">
+    <p class="label-accent" style="margin-bottom:var(--sp-6);">Conclusion</p>
+    <h2 class="statement-text" id="statement-heading">
+      "Intelligent reflection turns the environment into <em>part of the sensing system.</em>"
+    </h2>
+    <p style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-text-inv-muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:var(--sp-8);margin-bottom:var(--sp-10);">
+      RIS-Aided Dual Antenna for Obstacle Detection · 22EC711
+    </p>
+    <div style="display:flex;gap:var(--sp-4);justify-content:center;flex-wrap:wrap;">
+      <a href="detection.html" class="btn btn-accent btn-lg">Launch Detection Lab</a>
+      <a href="about.html" class="btn btn-outline-inv">Project Details</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-main-container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="index.html" class="footer-logo-link" aria-label="RIS AIDED SENSING Home">
+          <div class="footer-logo-main">RIS AIDED SENSING</div>
+        </a>
+        <p class="footer-desc">
+          Engineering research project — RIS-aided dual antenna for obstacle detection in LOS and NLOS environments.
+        </p>
+        <div class="footer-badge-tag">
+          <span class="footer-badge-dot"></span>
+          <span>ELECTRONICS &amp; COMMUNICATION ENGINEERING</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-hd">Navigation</div>
+        <ul class="footer-nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="problem.html">The Problem</a></li>
+          <li><a href="system.html">Proposed System</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-project-col">
+        <div class="footer-col-hd">Project</div>
+        <ul class="footer-nav-links">
+          <li><a href="simulation.html">Simulation</a></li>
+          <li><a href="detection.html">Detection Lab</a></li>
+          <li><a href="results.html">Results</a></li>
+          <li><a href="about.html#team">Team</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

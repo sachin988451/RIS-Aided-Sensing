@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inside the Simulation — RIS-Aided Dual Antenna | 22EC711</title>
+  <meta name="description" content="Interactive RF engineering simulation workstation: 3D RIS metasurface, EM wavefront visualization, S-parameters, reflection phase control." />
+  
+  <!-- Design System & Workstation Styles -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="simulation.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Three.js & OrbitControls for Procedural 3D Visualizer -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.163.0/examples/js/controls/OrbitControls.js"></script>
+  
+  <!-- Chart.js for Scientific RF Graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+</head>
+<body class="sim-page-wrapper page-theme">
+
+<!-- HEADER / NAVIGATION -->
+<header class="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="RIS AIDED SENSING Home">
+      <span class="nav-logo-main">RIS AIDED SENSING</span>
+      <span class="nav-logo-sub">22EC711 · Engineering Project</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="problem.html">Problem</a></li>
+      <li><a href="system.html">System</a></li>
+      <li><a href="simulation.html" class="active">Simulation</a></li>
+      <li><a href="detection.html">Detection Lab</a></li>
+      <li><a href="results.html">Results</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-cta-wrap">
+      <a href="detection.html" class="nav-cta">Launch Detection Lab</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<nav id="mobile-menu" class="nav-mobile" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="problem.html">Problem</a>
+  <a href="system.html">System</a>
+  <a href="simulation.html">Simulation</a>
+  <a href="detection.html">Detection Lab</a>
+  <a href="results.html">Results</a>
+  <a href="about.html">About</a>
+</nav>
+
+<!-- EDITORIAL HERO / WORKSTATION HEADER -->
+<section class="sim-hero-section theme-light">
+  <div class="container">
+    <div class="sim-title-group">
+      <div class="eyebrow" style="margin-bottom: var(--sp-2);">
+        <div class="eyebrow-bar"></div>
+        <span class="label-accent">CST-Inspired RF Workstation · 22EC711</span>
+      </div>
+      <h1 class="heading-display" style="color: var(--c-text-inv); margin-bottom: var(--sp-3);">
+        Inside the Simulation.
+      </h1>
+      <p class="body-lg" style="color: var(--c-text-inv-muted); max-width: 720px;">
+        Explore how frequency and RIS phase influence the reflected signal across the 8–12 GHz operating band.
+      </p>
+      
+      <div class="sim-disclaimer-banner">
+        <span class="dot"></span>
+        <span>Interactive simulation visualization · Reference / illustrative data based on project parameters</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN WORKSTATION WORKSPACE -->
+<main class="container sim-workstation-container">
+
+
+
+  <!-- SECTION 01: UNIT CELL INSPECTION -->
+  <section class="sim-section theme-dark" id="sec-01">
+    <div class="sim-section-header">
+      <div>
+        <div class="sim-section-tag">01 // Architecture</div>
+        <h2 class="heading-sm" style="color:var(--c-text-inv);">Unit Cell Electromagnetic Geometry</h2>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--c-text-inv-muted);">
+        Interactive Selection Mode
+      </div>
+    </div>
+
+    <div class="unit-cell-inspect-grid">
+      <div class="cell-visual-preview">
+        <svg viewBox="0 0 200 200" width="180" height="180">
+          <!-- Outer Substrate Cell (10x10 mm) -->
+          <rect x="20" y="20" width="160" height="160" fill="#2b3327" stroke="#4a5544" stroke-width="2" />
+          <!-- Inner Metallic Copper Patch (8x8 mm) -->
+          <rect x="36" y="36" width="128" height="128" fill="#c98144" stroke="#e0995c" stroke-width="1.5" />
+          
+          <!-- Dimensions Annotations -->
+          <line x1="20" y1="12" x2="180" y2="12" stroke="#666" stroke-width="1" />
+          <text x="100" y="9" font-family="JetBrains Mono" font-size="9" fill="#aaa" text-anchor="middle">Period: 10 mm</text>
+          
+          <line x1="188" y1="36" x2="188" y2="164" stroke="#c94f2a" stroke-width="1" />
+          <text x="194" y="104" font-family="JetBrains Mono" font-size="9" fill="#c94f2a" text-anchor="start">Patch: 8 mm</text>
+        </svg>
+        <div style="font-family:var(--font-mono); font-size:11px; color:#888; margin-top:8px;">
+          CROSS-SECTION (TOP VIEW)
+        </div>
+      </div>
+
+      <table class="cell-specs-table">
+        <tbody>
+          <tr>
+            <td class="spec-name">Unit Cell Period</td>
+            <td class="spec-val">10 × 10 mm</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Conductive Patch Size</td>
+            <td class="spec-val" id="inspect-cell-patch">8 × 8 mm (Copper)</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Substrate Material</td>
+            <td class="spec-val">FR-4 Dielectric</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Relative Permittivity (εr)</td>
+            <td class="spec-val" id="inspect-cell-eps">4.4</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Substrate Thickness (h)</td>
+            <td class="spec-val">1.6 mm</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Copper Cladding Thickness</td>
+            <td class="spec-val">0.035 mm (35 µm)</td>
+          </tr>
+          <tr>
+            <td class="spec-name">Current Cell Phase State</td>
+            <td class="spec-val" style="color:var(--c-accent);" id="inspect-cell-phase">180° (Reflection State)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 02: FREQUENCY RESPONSE (S11 & S21 GRAPHS) -->
+  <section class="sim-section theme-light" id="sec-02">
+    <div class="sim-section-header">
+      <div>
+        <div class="sim-section-tag">02 // S-Parameters</div>
+        <h2 class="heading-sm" style="color:var(--c-text-inv);">Frequency Response & Return Loss</h2>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
+        * Reference / illustrative data based on project parameters
+      </div>
+    </div>
+
+    <div class="sim-charts-grid">
+      <!-- S11 Card -->
+      <div class="sim-chart-card">
+        <div class="sim-chart-card-header">
+          <div>
+            <div class="chart-title">S11 (Return Loss) vs Frequency</div>
+            <div class="chart-sub">Project Target: S11 @ 10 GHz &lt; −30 dB</div>
+          </div>
+          <div class="chart-ref-tag">Illustrative Reference</div>
+        </div>
+        <div class="chart-canvas-container">
+          <canvas id="chart-s11"></canvas>
+        </div>
+      </div>
+
+      <!-- S21 Card -->
+      <div class="sim-chart-card">
+        <div class="sim-chart-card-header">
+          <div>
+            <div class="chart-title">S21 (Transmission / Reflected) vs Frequency</div>
+            <div class="chart-sub">Project Reference: S21 @ 10 GHz ≈ −3 dB</div>
+          </div>
+          <div class="chart-ref-tag">Illustrative Reference</div>
+        </div>
+        <div class="chart-canvas-container">
+          <canvas id="chart-s21"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 03: REFLECTION PHASE RESPONSE -->
+  <section class="sim-section theme-dark" id="sec-03">
+    <div class="sim-section-header">
+      <div>
+        <div class="sim-section-tag">03 // Phase Shift</div>
+        <h2 class="heading-sm" style="color:var(--c-text-inv);">Reflection Phase vs Frequency</h2>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
+        Phase Agility across 8–12 GHz Band
+      </div>
+    </div>
+
+    <div class="phase-chart-full-card">
+      <div class="sim-chart-card-header">
+        <div>
+          <div class="chart-title">Continuous Reflection Phase Transition</div>
+          <div class="chart-sub">Configured Phase States: 0°, 60°, 120°, 180°, 240°, 300°</div>
+        </div>
+        <div class="chart-ref-tag">Illustrative Reference</div>
+      </div>
+      <div class="phase-chart-canvas-wrap">
+        <canvas id="chart-phase"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 04: 2D METASURFACE MATRIX -->
+  <section class="sim-section theme-light" id="sec-04">
+    <div class="sim-section-header">
+      <div>
+        <div class="sim-section-tag">04 // Metasurface Topology</div>
+        <h2 class="heading-sm" style="color:var(--c-text-inv);">2D Planar Array Element Matrix</h2>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
+        Click any cell below or on the 3D model to inspect
+      </div>
+    </div>
+
+    <div class="array-2d-view-wrap">
+      <div class="array-matrix-grid" id="array-matrix-2d">
+        <!-- Generated procedurally by simulation.js -->
+      </div>
+      <div style="text-align:center; font-family:var(--font-mono); font-size:11px; color:#777; margin-top:var(--sp-4);">
+        8×8 UNIT CELL ARRAY (10 × 10 mm PERIODICITY · 8 × 8 mm COPPER PATCHES)
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 05: TECHNICAL PARAMETER SPECIFICATIONS -->
+  <section class="sim-section theme-dark" id="sec-05" style="border-bottom:none;">
+    <div class="sim-section-header">
+      <div>
+        <div class="sim-section-tag">05 // Design Specifications</div>
+        <h2 class="heading-sm" style="color:var(--c-text-inv);">Verified Project Parameters</h2>
+      </div>
+      <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
+        Project Code: 22EC711
+      </div>
+    </div>
+
+    <div class="spec-grid-full">
+      <div class="spec-cell-item">
+        <div class="spec-p-label">Operating Frequency Band</div>
+        <div class="spec-p-value">8 – 12 GHz</div>
+        <div class="spec-p-note">X-Band RF radar / sensing spectrum</div>
+      </div>
+      <div class="spec-cell-item">
+        <div class="spec-p-label">Design Frequency (f0)</div>
+        <div class="spec-p-value" style="color:var(--c-accent);">10.00 GHz</div>
+        <div class="spec-p-note">Optimal resonance and impedance match point</div>
+      </div>
+      <div class="spec-cell-item">
+        <div class="spec-p-label">Unit Cell Periodicity</div>
+        <div class="spec-p-value">10 × 10 mm</div>
+        <div class="spec-p-note">Sub-wavelength spatial period at 10 GHz</div>
+      </div>
+      <div class="spec-cell-item">
+        <div class="spec-p-label">Patch Dimensions</div>
+        <div class="spec-p-value">8 × 8 mm</div>
+        <div class="spec-p-note">Conductive square copper radiator</div>
+      </div>
+      <div class="spec-cell-item">
+        <div class="spec-p-label">Substrate Material & εr</div>
+        <div class="spec-p-value">FR-4 (εr = 4.4)</div>
+        <div class="spec-p-note">Cost-effective dielectric substrate</div>
+      </div>
+      <div class="spec-cell-item">
+        <div class="spec-p-label">Substrate Height (h)</div>
+        <div class="spec-p-value">1.6 mm</div>
+        <div class="spec-p-note">Standard industrial PCB fabrication height</div>
+      </div>
+      <div class="spec-cell-item">
+        <div class="spec-p-label">Copper Thickness (t)</div>
+        <div class="spec-p-value">0.035 mm (35 µm)</div>
+        <div class="spec-p-note">1 oz copper foil standard</div>
+      </div>
+      <div class="spec-cell-item">
+        <div class="spec-p-label">Reference S11 @ 10 GHz</div>
+        <div class="spec-p-value" style="color:var(--c-signal);">&lt; −30 dB</div>
+        <div class="spec-p-note">Deep return loss resonance at design frequency</div>
+      </div>
+      <div class="spec-cell-item">
+        <div class="spec-p-label">Reference S21 @ 10 GHz</div>
+        <div class="spec-p-value" style="color:var(--c-ris);">≈ −3 dB</div>
+        <div class="spec-p-note">Reference transmission / reflected amplitude</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Transparency Disclosure Box -->
+  <div style="background:#111110; border:1px solid var(--c-border-dark); padding:var(--sp-6); margin-top:var(--sp-8);">
+    <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; color:var(--c-accent); text-transform:uppercase; margin-bottom:var(--sp-2);">
+      Project Simulation Reference Disclosure
+    </div>
+    <p style="font-size:var(--text-sm); color:var(--c-text-inv-muted); line-height:1.7;">
+      This page is an interactive technical visualization developed to illustrate the electromagnetic principles and design specifications of Project 22EC711 (RIS-Aided Dual Antenna for Obstacle Detection). All S-parameter curves, wavefront fields, and phase states are visual reference representations generated from the project's design parameters (8–12 GHz band, 10 GHz design point, FR-4 substrate, S11 &lt; −30 dB, S21 ≈ −3 dB) and are not real-time CST Microwave Studio solver outputs.
+    </p>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-main-container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="index.html" class="footer-logo-link" aria-label="RIS AIDED SENSING Home">
+          <div class="footer-logo-main">RIS AIDED SENSING</div>
+        </a>
+        <p class="footer-desc">
+          Engineering research project — RIS-aided dual antenna for obstacle detection in LOS and NLOS environments.
+        </p>
+        <div class="footer-badge-tag">
+          <span class="footer-badge-dot"></span>
+          <span>ELECTRONICS &amp; COMMUNICATION ENGINEERING</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-hd">Navigation</div>
+        <ul class="footer-nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="problem.html">The Problem</a></li>
+          <li><a href="system.html">Proposed System</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-project-col">
+        <div class="footer-col-hd">Project</div>
+        <ul class="footer-nav-links">
+          <li><a href="simulation.html">Simulation</a></li>
+          <li><a href="detection.html">Detection Lab</a></li>
+          <li><a href="results.html">Results</a></li>
+          <li><a href="about.html#team">Team</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Shared navigation logic & simulation workstation script -->
+<script src="app.js"></script>
+<script src="simulation.js"></script>
+</body>
+</html>

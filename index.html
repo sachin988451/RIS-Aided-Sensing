@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RIS-Aided Dual Antenna for Obstacle Detection | 22EC711</title>
+  <meta name="description" content="An engineering research project using Reconfigurable Intelligent Surfaces and dual-antenna configurations to improve obstacle detection beyond the line of sight." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style>
+    /* HOME-SPECIFIC */
+
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-top: var(--nav-h);
+      background: var(--c-bg-dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-16);
+      align-items: center;
+      padding-block: var(--sp-20) var(--sp-16);
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-8);
+    }
+
+    .hero-eyebrow-bar {
+      width: 2px;
+      height: 32px;
+      background: var(--c-accent);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 5vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--c-text-inv);
+      margin-bottom: var(--sp-4);
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--c-accent);
+    }
+
+    .hero-sub {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      font-weight: 500;
+      color: var(--c-text-inv-muted);
+      margin-bottom: var(--sp-10);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-4);
+      flex-wrap: wrap;
+    }
+
+    /* ---- HERO DIAGRAM ---- */
+    .hero-diagram-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #hero-svg {
+      width: 100%;
+      max-width: 560px;
+      height: auto;
+    }
+
+    /* Annotation labels */
+    .diagram-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ---- HERO BOTTOM BAR ---- */
+    .hero-bottom {
+      border-top: 1px solid var(--c-border-dark);
+      padding-block: var(--sp-4);
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--sp-4);
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-meta-val {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--c-text-inv);
+      font-weight: 600;
+    }
+
+    .hero-meta-key {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-text-inv-muted);
+    }
+
+    /* ---- SECTIONS ---- */
+    .section-problem {
+      background: var(--c-surface);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .section-problem-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-16);
+      align-items: start;
+    }
+
+    .problem-visual {
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-border);
+      padding: var(--sp-8);
+      position: relative;
+    }
+
+    /* Two paths section */
+    .two-paths {
+      background: var(--c-bg-dark);
+      color: var(--c-text-inv);
+    }
+
+    .two-paths-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 0;
+      border: 1px solid var(--c-border-dark);
+      margin-top: var(--sp-12);
+    }
+
+    .path-card {
+      padding: var(--sp-10);
+    }
+
+    .path-divider {
+      background: var(--c-border-dark);
+    }
+
+    .path-card-icon {
+      width: 40px;
+      height: 2px;
+      margin-bottom: var(--sp-6);
+    }
+
+    .path-card-icon.direct { background: var(--c-direct); }
+    .path-card-icon.ris    { background: var(--c-ris); }
+
+    .path-card-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--c-text-inv);
+      margin-bottom: var(--sp-3);
+    }
+
+    .path-card-desc {
+      font-size: var(--text-sm);
+      color: var(--c-text-inv-muted);
+      line-height: 1.75;
+    }
+
+    /* NLOS comparison */
+    .nlos-section {
+      background: var(--c-bg);
+      border-top: 1px solid var(--c-border);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .nlos-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-8);
+      margin-top: var(--sp-10);
+    }
+
+    .nlos-panel {
+      padding: var(--sp-8);
+      border: 1px solid var(--c-border);
+    }
+
+    .nlos-panel-title {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: var(--sp-6);
+      padding-bottom: var(--sp-3);
+      border-bottom: 2px solid var(--c-border);
+    }
+
+    .nlos-panel.conventional .nlos-panel-title { border-bottom-color: var(--c-accent); color: var(--c-accent); }
+    .nlos-panel.aided .nlos-panel-title { border-bottom-color: var(--c-signal); color: var(--c-signal); }
+
+    /* Objective section */
+    .objectives-section {
+      background: var(--c-bg-dark);
+      color: var(--c-text-inv);
+    }
+
+    .obj-list {
+      margin-top: var(--sp-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+
+    .obj-item {
+      display: flex;
+      align-items: start;
+      gap: var(--sp-4);
+      padding: var(--sp-4) 0;
+      border-bottom: 1px solid var(--c-border-dark);
+    }
+
+    .obj-item:last-child { border-bottom: none; }
+
+    .obj-num {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.12em;
+      color: var(--c-accent);
+      padding-top: 2px;
+      min-width: 24px;
+    }
+
+    .obj-text {
+      font-size: var(--text-sm);
+      color: var(--c-text-inv-muted);
+      line-height: 1.7;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: var(--c-accent);
+      padding-block: var(--sp-20);
+      text-align: center;
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: white;
+      margin-bottom: var(--sp-6);
+      line-height: 1.15;
+    }
+
+    .cta-sub {
+      font-size: var(--text-base);
+      color: rgba(255,255,255,0.75);
+      margin-bottom: var(--sp-10);
+    }
+
+    .btn-white {
+      background: white;
+      color: var(--c-accent);
+      border-color: white;
+      font-weight: 700;
+    }
+    .btn-white:hover { background: var(--c-text); color: white; border-color: var(--c-text); transform: translateY(-2px); }
+
+    @media (max-width: 900px) {
+      .hero-layout { grid-template-columns: 1fr; gap: var(--sp-10); }
+      .hero-diagram-wrap { display: none; }
+      .section-problem-inner { grid-template-columns: 1fr; }
+      .nlos-compare { grid-template-columns: 1fr; }
+      .two-paths-grid { grid-template-columns: 1fr; }
+      .path-divider { height: 1px; width: auto; }
+    }
+  </style>
+</head>
+<body class="page-theme">
+
+<!-- HEADER -->
+<header class="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="RIS AIDED SENSING Home">
+      <span class="nav-logo-main">RIS AIDED SENSING</span>
+      <span class="nav-logo-sub">22EC711 · Engineering Project</span>
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="problem.html">Problem</a></li>
+      <li><a href="system.html">System</a></li>
+      <li><a href="simulation.html">Simulation</a></li>
+      <li><a href="detection.html">Detection Lab</a></li>
+      <li><a href="results.html">Results</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+
+    <div class="nav-cta-wrap">
+      <a href="detection.html" class="nav-cta">Launch Detection Lab</a>
+    </div>
+
+    <button class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<nav id="mobile-menu" class="nav-mobile" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="problem.html">Problem</a>
+  <a href="system.html">System</a>
+  <a href="simulation.html">Simulation</a>
+  <a href="detection.html">Detection Lab</a>
+  <a href="results.html">Results</a>
+  <a href="about.html">About</a>
+  <a href="detection.html" style="color: var(--c-accent); font-weight:600;">Launch Detection Lab →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero theme-dark" aria-label="Project hero">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hero-layout">
+      <!-- Text -->
+      <div>
+        <div class="hero-eyebrow" aria-hidden="true">
+          <div class="hero-eyebrow-bar"></div>
+          <span style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:0.16em;text-transform:uppercase;color:var(--c-text-inv-muted);">22EC711 / Engineering Project</span>
+        </div>
+        <h1 class="hero-title">
+          Seeing Beyond<br><em>the Line of Sight.</em>
+        </h1>
+        <p class="hero-sub">
+          RIS-Aided Dual Antenna for Obstacle Detection —<br>
+          extending sensing coverage into non-line-of-sight environments.
+        </p>
+        <div class="hero-actions">
+          <a href="detection.html" class="btn btn-accent btn-lg">Launch Detection Lab</a>
+          <a href="system.html" class="btn btn-outline-inv">Explore System</a>
+        </div>
+      </div>
+
+      <!-- Diagram -->
+      <div class="hero-diagram-wrap" aria-hidden="true">
+        <svg id="hero-svg" viewBox="0 0 520 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrow-direct" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6 Z" fill="#c94f2a"/>
+            </marker>
+            <marker id="arrow-ris" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6 Z" fill="#3a7ebf"/>
+            </marker>
+            <marker id="arrow-ris2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L8,3 L0,6 Z" fill="#3a7ebf"/>
+            </marker>
+          </defs>
+
+          <!-- Grid texture -->
+          <pattern id="grid-sm" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M20,0 L0,0 L0,20" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none"/>
+          </pattern>
+          <rect width="520" height="420" fill="url(#grid-sm)"/>
+
+          <!-- TRANSMITTER (top-left) -->
+          <g id="tx-group">
+            <rect x="20" y="50" width="100" height="48" rx="2" fill="#252420" stroke="#4a4845" stroke-width="1"/>
+            <text x="70" y="69" text-anchor="middle" class="diagram-tag" fill="#a8a59f" font-size="9">TRANSMITTER</text>
+            <text x="70" y="85" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#f0ede8">TX</text>
+          </g>
+
+          <!-- Antenna symbol at TX -->
+          <line x1="120" y1="74" x2="148" y2="74" stroke="#4a4845" stroke-width="1" stroke-dasharray="3 3"/>
+
+          <!-- OBSTACLE (center-top) -->
+          <g id="obstacle-group">
+            <rect x="218" y="30" width="56" height="90" rx="2" fill="#2e2c2a" stroke="#4a4845" stroke-width="1.5"/>
+            <text x="246" y="78" text-anchor="middle" class="diagram-tag" fill="#f0ede8" font-size="9" font-weight="600">OBSTACLE</text>
+            <text x="246" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="18" fill="#8c8983">▐</text>
+          </g>
+
+          <!-- RECEIVER (top-right) -->
+          <g id="rx-group">
+            <rect x="390" y="50" width="100" height="48" rx="2" fill="#252420" stroke="#4a4845" stroke-width="1"/>
+            <text x="440" y="69" text-anchor="middle" class="diagram-tag" fill="#a8a59f" font-size="9">RECEIVER</text>
+            <text x="440" y="85" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#f0ede8">RX</text>
+          </g>
+
+          <!-- DIRECT PATH — dashed (blocked) -->
+          <line id="path-direct" x1="274" y1="74" x2="389" y2="74"
+            stroke="#c94f2a" stroke-width="1.5" stroke-dasharray="5 4"
+            marker-end="url(#arrow-direct)" opacity="0.5"/>
+          <text x="330" y="67" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c94f2a" opacity="0.7">DIRECT / LOS</text>
+
+          <!-- X symbol = blocked -->
+          <text x="330" y="90" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#c94f2a" opacity="0.6">✕</text>
+
+          <!-- TX → RIS path (vertical down from tx) -->
+          <line id="path-tx-ris" x1="70" y1="98" x2="70" y2="230"
+            stroke="#3a7ebf" stroke-width="1.5" stroke-dasharray="none"
+            marker-end="url(#arrow-ris)"/>
+
+          <!-- RIS PANEL -->
+          <g id="ris-group">
+            <rect x="30" y="232" width="80" height="80" rx="2" fill="#1a2535" stroke="#3a7ebf" stroke-width="1.5"/>
+            <!-- RIS unit cells -->
+            <g stroke="#3a7ebf" stroke-width="0.5" opacity="0.7">
+              <line x1="50" y1="232" x2="50" y2="312"/>
+              <line x1="70" y1="232" x2="70" y2="312"/>
+              <line x1="90" y1="232" x2="90" y2="312"/>
+              <line x1="30" y1="252" x2="110" y2="252"/>
+              <line x1="30" y1="272" x2="110" y2="272"/>
+              <line x1="30" y1="292" x2="110" y2="292"/>
+            </g>
+            <text x="70" y="325" text-anchor="middle" class="diagram-tag" fill="#3a7ebf" font-size="9">RIS PANEL</text>
+            <text x="70" y="337" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#5a7eaf">N×M ELEMENTS</text>
+          </g>
+
+          <!-- RIS phase indicator -->
+          <rect x="116" y="265" width="72" height="18" rx="1" fill="#1a2535" stroke="#3a7ebf" stroke-width="0.5"/>
+          <text x="152" y="278" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#3a7ebf">φ = 180°</text>
+
+          <!-- RIS → RECEIVER reflected path -->
+          <path id="path-ris-rx" d="M110,272 Q280,240 389,120"
+            stroke="#3a7ebf" stroke-width="2"
+            marker-end="url(#arrow-ris2)" fill="none"/>
+
+          <!-- Path label -->
+          <text x="260" y="225" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#3a7ebf">RIS-REFLECTED PATH</text>
+          <text x="260" y="237" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#3a7ebf" opacity="0.7">(NLOS COVERAGE)</text>
+
+          <!-- VEHICLE / OBJECT -->
+          <g id="vehicle-group" transform="translate(290, 310)">
+            <rect x="-30" y="-16" width="60" height="24" rx="3" fill="#2a2825" stroke="#4a4845" stroke-width="1"/>
+            <rect x="-18" y="-26" width="36" height="16" rx="2" fill="#252320" stroke="#4a4845" stroke-width="1"/>
+            <circle cx="-18" cy="10" r="6" fill="#1a1917" stroke="#4a4845" stroke-width="1"/>
+            <circle cx="18"  cy="10" r="6" fill="#1a1917" stroke="#4a4845" stroke-width="1"/>
+            <text x="0" y="-32" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#a8a59f">TARGET OBJECT</text>
+          </g>
+
+          <!-- Ground line -->
+          <line x1="20" y1="360" x2="500" y2="360" stroke="#333230" stroke-width="1"/>
+          <line x1="20" y1="360" x2="500" y2="360" stroke="#3a3836" stroke-width="0.5" stroke-dasharray="2 6"/>
+
+          <!-- Antenna 1 label -->
+          <text x="155" y="62" font-family="JetBrains Mono,monospace" font-size="8" fill="#a8a59f">ANT. 1 →</text>
+
+          <!-- SIGNAL PULSE MARKERS (JS will place actual circles) -->
+          <circle id="pulse-direct" cx="0" cy="0" r="4" fill="#c94f2a" opacity="0"/>
+          <circle id="pulse-ris" cx="0" cy="0" r="5" fill="#3a7ebf" opacity="0"/>
+
+          <!-- Technical annotations -->
+          <g font-family="JetBrains Mono,monospace" font-size="8" fill="#8c8983">
+            <text x="20" y="400">8–12 GHz OPERATING BAND</text>
+            <text x="320" y="400">PROJECT REFERENCE VISUALIZATION</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="hero-bottom">
+    <div class="container">
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <span class="hero-meta-val">8–12 GHz</span>
+          <span class="hero-meta-key">Operating Band</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-val">Dual Path</span>
+          <span class="hero-meta-key">Direct + RIS-Reflected</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-val">LOS / NLOS</span>
+          <span class="hero-meta-key">Coverage Scenarios</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-val">FR-4 εr 4.4</span>
+          <span class="hero-meta-key">Substrate Material</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-val">22EC711</span>
+          <span class="hero-meta-key">Project Code</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE SENSING PROBLEM -->
+<section class="section-problem section theme-dark" aria-labelledby="problem-heading">
+  <div class="container">
+    <div class="section-problem-inner">
+      <div class="reveal">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="label-accent">The Sensing Problem</span>
+        </div>
+        <h2 class="heading-md" id="problem-heading" style="margin-bottom:var(--sp-6);">
+          When the direct path disappears, conventional sensing fails.
+        </h2>
+        <p class="body-lg" style="margin-bottom:var(--sp-6);">
+          In urban environments, industrial facilities, and complex terrain, physical obstacles block direct signal paths between sensor and target. Traditional radar and LiDAR systems lose contact when line-of-sight is interrupted.
+        </p>
+        <p class="body-base" style="margin-bottom:var(--sp-8);">
+          Signal attenuation, multipath fading, and limited NLOS coverage compound the problem — reducing detection reliability precisely when it matters most: in autonomous navigation and safety-critical sensing.
+        </p>
+        <a href="problem.html" class="btn btn-outline">Explore the Problem →</a>
+      </div>
+
+      <!-- Problem visual -->
+      <div class="reveal reveal-d2">
+        <div class="problem-visual" role="img" aria-label="Conventional system signal blockage diagram">
+          <p class="label-accent" style="margin-bottom:var(--sp-6);">Conventional System</p>
+          <svg viewBox="0 0 360 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <!-- TX -->
+            <rect x="10" y="80" width="60" height="36" rx="2" fill="#f5f4f1" stroke="#d8d5cf" stroke-width="1"/>
+            <text x="40" y="101" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#5c5a55">TX</text>
+
+            <!-- Arrow in -->
+            <line x1="70" y1="98" x2="100" y2="98" stroke="#1a1917" stroke-width="1.5"/>
+            <path d="M96,95 L102,98 L96,101 Z" fill="#1a1917"/>
+
+            <!-- OBSTACLE -->
+            <rect x="102" y="60" width="40" height="78" rx="2" fill="#333230"/>
+            <text x="122" y="102" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#f0ede8" font-weight="600" transform="rotate(-90,122,102)">OBSTACLE</text>
+
+            <!-- X blocked -->
+            <text x="175" y="104" text-anchor="middle" font-size="22" fill="#c94f2a" font-family="JetBrains Mono,monospace">✕</text>
+
+            <!-- Dashed blocked line -->
+            <line x1="142" y1="98" x2="290" y2="98" stroke="#c94f2a" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+
+            <!-- RX -->
+            <rect x="292" y="80" width="60" height="36" rx="2" fill="#f5f4f1" stroke="#d8d5cf" stroke-width="1"/>
+            <text x="322" y="101" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#5c5a55">RX</text>
+
+            <!-- Labels -->
+            <text x="40" y="136" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9b9893">TRANSMITTER</text>
+            <text x="322" y="136" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#9b9893">RECEIVER</text>
+            <text x="175" y="170" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c94f2a">SIGNAL BLOCKED — NO DETECTION</text>
+            <text x="175" y="182" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#9b9893">ILLUSTRATIVE REFERENCE</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ONE SYSTEM. TWO PATHS -->
+<section class="two-paths section theme-light" aria-labelledby="twopaths-heading">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow">
+        <div class="section-eyebrow-line dark"></div>
+        <span class="label-accent">Signal Diversity</span>
+      </div>
+      <h2 class="heading-md inv" id="twopaths-heading" style="color:var(--c-text-inv);margin-bottom:var(--sp-4);">
+        One system. Two paths.
+      </h2>
+      <p style="font-size:var(--text-base);color:var(--c-text-inv-muted);max-width:600px;line-height:1.75;">
+        The proposed RIS-aided system simultaneously exploits both a direct antenna path and an RIS-assisted reflected path, combining signals to achieve coverage and detection even when one path is blocked.
+      </p>
+    </div>
+
+    <div class="two-paths-grid reveal reveal-d2">
+      <div class="path-card">
+        <div class="path-card-icon direct" aria-hidden="true"></div>
+        <p class="label-mono" style="color:var(--c-direct);margin-bottom:var(--sp-3);">Antenna 1 — Direct Path</p>
+        <h3 class="path-card-title">Line-of-Sight Transmission</h3>
+        <p class="path-card-desc">
+          The first antenna provides direct signal propagation between transmitter and receiver.
+          When the environment is unobstructed, this path delivers the primary detection signal
+          with minimal delay and attenuation.
+        </p>
+      </div>
+
+      <div class="path-divider" aria-hidden="true"></div>
+
+      <div class="path-card">
+        <div class="path-card-icon ris" aria-hidden="true"></div>
+        <p class="label-mono" style="color:var(--c-ris);margin-bottom:var(--sp-3);">Antenna 2 — RIS-Reflected Path</p>
+        <h3 class="path-card-title">Intelligent Reflection</h3>
+        <p class="path-card-desc">
+          The Reconfigurable Intelligent Surface reflects and redirects signals around obstacles,
+          providing coverage in non-line-of-sight scenarios. Phase control over RIS elements
+          enables beam steering without active RF components.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY TECHNICAL METRICS -->
+<section class="section theme-dark" style="background:var(--c-surface);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);" aria-labelledby="metrics-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line"></div>
+      <span class="label-accent">Design Parameters</span>
+    </div>
+    <h2 class="heading-md reveal" id="metrics-heading" style="margin-bottom:var(--sp-10);">
+      Key Technical Specifications
+    </h2>
+
+    <div class="metric-band reveal reveal-d2" role="list">
+      <div class="metric-cell" role="listitem">
+        <div class="metric-v accent">8–12 GHz</div>
+        <div class="metric-k">Operating Frequency</div>
+      </div>
+      <div class="metric-cell" role="listitem">
+        <div class="metric-v">10×10 mm</div>
+        <div class="metric-k">Unit-Cell Period</div>
+      </div>
+      <div class="metric-cell" role="listitem">
+        <div class="metric-v">8×8 mm</div>
+        <div class="metric-k">Patch Dimension</div>
+      </div>
+      <div class="metric-cell" role="listitem">
+        <div class="metric-v">FR-4</div>
+        <div class="metric-k">Substrate Material</div>
+      </div>
+      <div class="metric-cell" role="listitem">
+        <div class="metric-v">4.4</div>
+        <div class="metric-k">εr (Rel. Permittivity)</div>
+      </div>
+      <div class="metric-cell" role="listitem">
+        <div class="metric-v">1.6 mm</div>
+        <div class="metric-k">Substrate Height</div>
+      </div>
+      <div class="metric-cell" role="listitem">
+        <div class="metric-v">0.035 mm</div>
+        <div class="metric-k">Copper Thickness</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOS/NLOS COMPARISON -->
+<section class="nlos-section section theme-light" aria-labelledby="nlos-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line"></div>
+      <span class="label-accent">LOS vs NLOS</span>
+    </div>
+    <h2 class="heading-md reveal" id="nlos-heading" style="margin-bottom:var(--sp-4);">
+      Coverage in both environments.
+    </h2>
+    <p class="body-base reveal" style="margin-bottom:0;max-width:600px;">
+      The dual-antenna configuration ensures that signal diversity supports reliable detection
+      regardless of whether a direct line-of-sight exists.
+    </p>
+
+    <div class="nlos-compare">
+      <div class="nlos-panel conventional reveal reveal-d1" role="region" aria-labelledby="conv-panel-title">
+        <p class="nlos-panel-title" id="conv-panel-title">Conventional — Single Antenna</p>
+        <svg viewBox="0 0 300 140" fill="none" aria-hidden="true" style="width:100%;height:auto;margin-bottom:var(--sp-4);">
+          <rect x="8" y="50" width="50" height="32" rx="2" fill="#eeece8" stroke="#d8d5cf"/>
+          <text x="33" y="69" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#5c5a55">TX</text>
+          <rect x="118" y="30" width="36" height="72" rx="2" fill="#333230"/>
+          <text x="136" y="110" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#f0ede8" font-weight="600">BLOCK</text>
+          <line x1="58" y1="66" x2="118" y2="66" stroke="#1a1917" stroke-width="1.5"/>
+          <line x1="154" y1="66" x2="240" y2="66" stroke="#c94f2a" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.5"/>
+          <text x="200" y="58" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c94f2a">✕</text>
+          <rect x="242" y="50" width="50" height="32" rx="2" fill="#eeece8" stroke="#d8d5cf"/>
+          <text x="267" y="69" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#5c5a55">RX</text>
+          <text x="150" y="128" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#c94f2a">NO DETECTION IN NLOS</text>
+        </svg>
+        <ul style="display:flex;flex-direction:column;gap:8px;">
+          <li style="display:flex;gap:8px;align-items:center;font-size:var(--text-sm);color:var(--c-text-muted);">
+            <span style="color:var(--c-accent);font-size:10px;">▸</span> Signal blocked by obstacles
+          </li>
+          <li style="display:flex;gap:8px;align-items:center;font-size:var(--text-sm);color:var(--c-text-muted);">
+            <span style="color:var(--c-accent);font-size:10px;">▸</span> No alternative propagation path
+          </li>
+          <li style="display:flex;gap:8px;align-items:center;font-size:var(--text-sm);color:var(--c-text-muted);">
+            <span style="color:var(--c-accent);font-size:10px;">▸</span> Detection reliability degrades significantly
+          </li>
+        </ul>
+      </div>
+
+      <div class="nlos-panel aided reveal reveal-d2" role="region" aria-labelledby="aided-panel-title">
+        <p class="nlos-panel-title" id="aided-panel-title">RIS-Aided — Dual Antenna</p>
+        <svg viewBox="0 0 300 140" fill="none" aria-hidden="true" style="width:100%;height:auto;margin-bottom:var(--sp-4);">
+          <rect x="8" y="50" width="50" height="32" rx="2" fill="#eeece8" stroke="#d8d5cf"/>
+          <text x="33" y="69" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#5c5a55">TX</text>
+          <rect x="118" y="30" width="36" height="72" rx="2" fill="#333230"/>
+          <!-- RIS path going around -->
+          <path d="M33,82 Q33,130 80,130 Q140,130 155,100 Q170,70 240,66" stroke="#3a7ebf" stroke-width="2" fill="none"/>
+          <path d="M237,63 L242,66 L237,69 Z" fill="#3a7ebf"/>
+          <!-- RIS panel -->
+          <rect x="68" y="118" width="24" height="20" rx="1" fill="#1a2535" stroke="#3a7ebf" stroke-width="1"/>
+          <text x="80" y="148" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#3a7ebf">RIS</text>
+          <rect x="242" y="50" width="50" height="32" rx="2" fill="#eeece8" stroke="#d8d5cf"/>
+          <text x="267" y="69" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#5c5a55">RX</text>
+          <text x="150" y="20" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#4aab6d">OBSTACLE DETECTED VIA RIS PATH</text>
+        </svg>
+        <ul style="display:flex;flex-direction:column;gap:8px;">
+          <li style="display:flex;gap:8px;align-items:center;font-size:var(--text-sm);color:var(--c-text-muted);">
+            <span style="color:var(--c-signal);font-size:10px;">▸</span> RIS redirects signal around obstacles
+          </li>
+          <li style="display:flex;gap:8px;align-items:center;font-size:var(--text-sm);color:var(--c-text-muted);">
+            <span style="color:var(--c-signal);font-size:10px;">▸</span> Dual paths provide signal diversity
+          </li>
+          <li style="display:flex;gap:8px;align-items:center;font-size:var(--text-sm);color:var(--c-text-muted);">
+            <span style="color:var(--c-signal);font-size:10px;">▸</span> Detection maintained in NLOS environments
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECT OBJECTIVES -->
+<section class="objectives-section section theme-dark" aria-labelledby="obj-heading">
+  <div class="container">
+    <div class="grid-2" style="gap:var(--sp-16);align-items:start;">
+      <div class="reveal">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line dark"></div>
+          <span class="label-accent">Objectives</span>
+        </div>
+        <h2 class="heading-md" id="obj-heading" style="color:var(--c-text-inv);margin-bottom:var(--sp-4);">
+          What this project sets out to prove.
+        </h2>
+        <p style="font-size:var(--text-base);color:var(--c-text-inv-muted);line-height:1.75;margin-bottom:var(--sp-8);">
+          A structured engineering investigation into the performance benefits
+          of combining Reconfigurable Intelligent Surfaces with a dual-antenna architecture
+          for enhanced obstacle detection.
+        </p>
+        <a href="about.html" class="btn btn-outline-inv">Project Details →</a>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div class="obj-list">
+          <div class="obj-item">
+            <span class="obj-num">01</span>
+            <p class="obj-text">Design RIS for obstacle detection in V2X environments.</p>
+          </div>
+          <div class="obj-item">
+            <span class="obj-num">02</span>
+            <p class="obj-text">Enhance signal reliability and coverage using RIS-assisted reflection.</p>
+          </div>
+          <div class="obj-item">
+            <span class="obj-num">03</span>
+            <p class="obj-text">Detect and locate obstacles in non-line-of-sight environments.</p>
+          </div>
+          <div class="obj-item">
+            <span class="obj-num">04</span>
+            <p class="obj-text">Compare conventional and RIS-aided dual antenna system performance.</p>
+          </div>
+          <div class="obj-item">
+            <span class="obj-num">05</span>
+            <p class="obj-text">Improve obstacle detection reliability using direct and RIS-assisted signal diversity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section theme-light" aria-labelledby="cta-heading">
+  <div class="container-narrow">
+    <h2 class="cta-title" id="cta-heading">Explore the Detection Lab.</h2>
+    <p class="cta-sub">Interact with the sensing environment. Control frequencies, RIS phase, and path configurations in real time.</p>
+    <a href="detection.html" class="btn btn-white btn-lg">Launch Detection Lab →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-main-container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="index.html" class="footer-logo-link" aria-label="RIS AIDED SENSING Home">
+          <div class="footer-logo-main">RIS AIDED SENSING</div>
+        </a>
+        <p class="footer-desc">
+          An engineering research project investigating RIS-aided dual antenna systems for improved obstacle detection in LOS and NLOS environments.
+        </p>
+        <div class="footer-badge-tag">
+          <span class="footer-badge-dot"></span>
+          <span>ELECTRONICS &amp; COMMUNICATION ENGINEERING</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-hd">Navigation</div>
+        <ul class="footer-nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="problem.html">The Problem</a></li>
+          <li><a href="system.html">Proposed System</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-project-col">
+        <div class="footer-col-hd">Project</div>
+        <ul class="footer-nav-links">
+          <li><a href="simulation.html">Simulation</a></li>
+          <li><a href="detection.html">Detection Lab</a></li>
+          <li><a href="results.html">Results</a></li>
+          <li><a href="about.html#team">Team</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  // Animate hero SVG paths on load
+  window.addEventListener('load', () => {
+    const svg = document.getElementById('hero-svg');
+    if (!svg) return;
+
+    // Animated pulse dots along paths
+    const pulseColors = ['#c94f2a', '#3a7ebf'];
+    const positions = [
+      {cx: 70, cy: 74, dx: 320, dy: 74},   // direct path
+      {cx: 70, cy: 170, dx: 70, dy: 272}     // TX→RIS
+    ];
+
+    let t = 0;
+    const PERIOD = 2400;
+
+    function tick(ts) {
+      t = (ts % PERIOD) / PERIOD;
+
+      // Direct pulse
+      const dp = document.getElementById('pulse-direct');
+      const px = 274 + t * (389 - 274);
+      const py = 74;
+      if (dp) {
+        dp.setAttribute('cx', px); dp.setAttribute('cy', py);
+        dp.setAttribute('opacity', t > 0.05 && t < 0.95 ? '0.85' : '0');
+      }
+
+      // RIS pulse (along downward line)
+      const rp = document.getElementById('pulse-ris');
+      const t2 = (ts % (PERIOD * 1.5)) / (PERIOD * 1.5);
+      if (rp) {
+        if (t2 < 0.33) {
+          // TX → RIS
+          const tp = t2 / 0.33;
+          rp.setAttribute('cx', 70); rp.setAttribute('cy', 98 + tp * (272 - 98));
+          rp.setAttribute('opacity', tp > 0.05 ? '0.85' : '0');
+        } else {
+          // RIS → RX (approximate along path arc)
+          const tp = (t2 - 0.33) / 0.67;
+          const x = 110 + tp * (389 - 110);
+          const y = 272 + tp * (tp - 1) * 100; // simple arc
+          rp.setAttribute('cx', x); rp.setAttribute('cy', y);
+          rp.setAttribute('opacity', '0.85');
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // Animate RIS unit cell phase indicators
+    const risRect = svg.querySelector('#ris-group rect');
+    if (risRect) {
+      let phase = 0;
+      setInterval(() => {
+        phase = (phase + 60) % 360;
+        const phaseText = svg.querySelector('#ris-group + rect + text');
+        // update phase readout
+        const phaseEl = svg.querySelector('text[x="152"]');
+        if (phaseEl) phaseEl.textContent = `φ = ${phase}°`;
+      }, 1400);
+    }
+  });
+</script>
+</body>
+</html>

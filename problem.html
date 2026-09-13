@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Problem — RIS-Aided Dual Antenna | 22EC711</title>
+  <meta name="description" content="Why conventional sensing systems fail in NLOS environments — signal blockage, multipath fading, and limited coverage explained." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style>
+    /* PROBLEM PAGE SPECIFIC */
+
+    .prob-hero {
+      padding-top: calc(var(--nav-h) + var(--sp-20));
+      padding-bottom: var(--sp-16);
+      background: var(--c-bg-dark);
+      color: var(--c-text-inv);
+      border-bottom: 1px solid var(--c-border-dark);
+      position: relative;
+    }
+
+    .prob-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .prob-hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-16);
+      align-items: end;
+    }
+
+    /* Problem number items */
+    .prob-list {
+      display: flex;
+      flex-direction: column;
+      margin-top: var(--sp-12);
+    }
+
+    .prob-item {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: var(--sp-8);
+      padding-block: var(--sp-8);
+      border-bottom: 1px solid var(--c-border);
+      align-items: start;
+    }
+
+    .prob-item:last-child { border-bottom: none; }
+
+    .prob-num-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .prob-num {
+      font-family: var(--font-mono);
+      font-size: var(--text-3xl);
+      font-weight: 300;
+      color: var(--c-border);
+      line-height: 1;
+    }
+
+    .prob-badge {
+      margin-top: 6px;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-accent);
+      border: 1px solid var(--c-accent-dim);
+      padding: 2px 6px;
+      border-radius: 2px;
+      background: var(--c-accent-dim);
+    }
+
+    .prob-content-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--c-text);
+      margin-bottom: var(--sp-3);
+      letter-spacing: -0.015em;
+    }
+
+    .prob-content-desc {
+      font-size: var(--text-sm);
+      color: var(--c-text-muted);
+      line-height: 1.75;
+    }
+
+    /* Large comparison diagram */
+    .comparison-section {
+      background: var(--c-bg-dark);
+      color: var(--c-text-inv);
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      margin-top: var(--sp-12);
+      border: 1px solid var(--c-border-dark);
+    }
+
+    .comparison-panel {
+      padding: var(--sp-10) var(--sp-10);
+    }
+
+    .comp-divider { background: var(--c-border-dark); }
+
+    .comparison-panel-title {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding-bottom: var(--sp-4);
+      border-bottom: 2px solid transparent;
+      margin-bottom: var(--sp-8);
+    }
+
+    .comparison-panel.conventional .comparison-panel-title {
+      color: var(--c-accent);
+      border-bottom-color: var(--c-accent);
+    }
+
+    .comparison-panel.aided .comparison-panel-title {
+      color: var(--c-signal);
+      border-bottom-color: var(--c-signal);
+    }
+
+    /* NLOS explainer */
+    .nlos-explain {
+      background: var(--c-surface);
+      border-top: 1px solid var(--c-border);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .nlos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-16);
+      align-items: center;
+    }
+
+    .nlos-def-block {
+      border-left: 2px solid var(--c-accent);
+      padding-left: var(--sp-6);
+      margin: var(--sp-6) 0;
+    }
+
+    .nlos-def-text {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--c-text);
+      letter-spacing: -0.015em;
+    }
+
+    /* Existing systems */
+    .systems-section {
+      background: var(--c-bg-dark);
+      color: var(--c-text-inv);
+      border-bottom: 1px solid var(--c-border-dark);
+    }
+
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--c-border-dark);
+      margin-top: var(--sp-10);
+      background: var(--c-bg-darker);
+    }
+
+    .system-item {
+      padding: var(--sp-8);
+      border-right: 1px solid var(--c-border-dark);
+      background: var(--c-bg-dark);
+      transition: background 0.2s ease;
+    }
+
+    .system-item:hover {
+      background: var(--c-surface-dark);
+    }
+
+    .system-item:last-child { border-right: none; }
+
+    .system-name {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--c-text-inv);
+      margin-bottom: var(--sp-4);
+    }
+
+    .system-limitation {
+      display: flex;
+      align-items: start;
+      gap: var(--sp-2);
+      font-size: var(--text-sm);
+      color: var(--c-text-inv-muted);
+      margin-bottom: var(--sp-2);
+      line-height: 1.55;
+    }
+
+    @media (max-width: 900px) {
+      .prob-hero-inner { grid-template-columns: 1fr; }
+      .prob-item { grid-template-columns: 64px 1fr; gap: var(--sp-4); }
+      .prob-num { font-size: 2rem; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .comp-divider { height: 1px; }
+      .nlos-grid { grid-template-columns: 1fr; }
+      .systems-grid { grid-template-columns: 1fr; }
+      .system-item { border-right: none; border-bottom: 1px solid var(--c-border-dark); }
+      .system-item:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body class="page-theme">
+
+<!-- HEADER -->
+<header class="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="RIS AIDED SENSING Home">
+      <span class="nav-logo-main">RIS AIDED SENSING</span>
+      <span class="nav-logo-sub">22EC711 · Engineering Project</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="problem.html">Problem</a></li>
+      <li><a href="system.html">System</a></li>
+      <li><a href="simulation.html">Simulation</a></li>
+      <li><a href="detection.html">Detection Lab</a></li>
+      <li><a href="results.html">Results</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-cta-wrap">
+      <a href="detection.html" class="nav-cta">Launch Detection Lab</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<nav id="mobile-menu" class="nav-mobile" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="problem.html">Problem</a>
+  <a href="system.html">System</a>
+  <a href="simulation.html">Simulation</a>
+  <a href="detection.html">Detection Lab</a>
+  <a href="results.html">Results</a>
+  <a href="about.html">About</a>
+</nav>
+
+<!-- HERO -->
+<section class="prob-hero theme-light" aria-labelledby="prob-hero-heading">
+  <div class="container">
+    <div class="prob-hero-inner">
+      <div class="reveal">
+        <div class="eyebrow">
+          <div class="eyebrow-bar"></div>
+          <span class="label-accent">The Problem</span>
+        </div>
+        <h1 class="heading-display" id="prob-hero-heading" style="margin-bottom:var(--sp-6);">
+          When the direct path disappears.
+        </h1>
+        <p class="body-lg" style="max-width:480px;">
+          Conventional sensing systems depend on a clear, uninterrupted line of sight between transmitter and receiver. In real-world environments, this assumption frequently breaks down.
+        </p>
+      </div>
+
+      <!-- Mini diagram top-right -->
+      <div class="reveal reveal-d2" style="text-align:right;">
+        <svg viewBox="0 0 360 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:360px;height:auto;margin-left:auto;" aria-hidden="true">
+          <!-- TX -->
+          <rect x="10" y="70" width="60" height="36" rx="2" fill="var(--c-bg-alt)" stroke="var(--c-border)" stroke-width="1"/>
+          <text x="40" y="91" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="var(--c-text-muted)">TX</text>
+          <!-- Line -->
+          <line x1="70" y1="88" x2="140" y2="88" stroke="var(--c-border)" stroke-width="1.5"/>
+          <!-- Block -->
+          <rect x="140" y="40" width="44" height="90" rx="2" fill="var(--c-bg-dark)"/>
+          <text x="162" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="var(--c-text-faint)" transform="rotate(-90,162,92)">OBSTACLE</text>
+          <!-- Blocked -->
+          <line x1="184" y1="88" x2="290" y2="88" stroke="var(--c-accent)" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.6"/>
+          <text x="240" y="80" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="var(--c-accent)" opacity="0.8">✕</text>
+          <!-- RX -->
+          <rect x="290" y="70" width="60" height="36" rx="2" fill="var(--c-bg-alt)" stroke="var(--c-border)" stroke-width="1"/>
+          <text x="320" y="91" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="var(--c-text-muted)">RX</text>
+          <!-- labels -->
+          <text x="40" y="125" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="var(--c-text-faint)">TRANSMITTER</text>
+          <text x="320" y="125" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="var(--c-text-faint)">RECEIVER</text>
+          <text x="180" y="165" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="var(--c-accent)">CONVENTIONAL — SIGNAL BLOCKED</text>
+          <text x="180" y="177" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="var(--c-text-faint)">ILLUSTRATIVE REFERENCE</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXISTING SYSTEMS -->
+<section class="systems-section section-sm theme-dark" aria-labelledby="existing-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line dark"></div>
+      <span class="label-accent">Existing Approaches</span>
+    </div>
+    <h2 class="heading-md reveal" id="existing-heading" style="color:var(--c-text-inv);margin-bottom:var(--sp-4);">
+      Traditional sensing systems and their limitations.
+    </h2>
+    <p class="body-base reveal" style="color:var(--c-text-inv-muted);margin-bottom:0;max-width:600px;">
+      Each established approach carries fundamental limitations when the sensing environment becomes complex or the direct path is interrupted.
+    </p>
+
+    <div class="systems-grid">
+      <div class="system-item reveal reveal-d1">
+        <p class="label-mono" style="margin-bottom:var(--sp-3);color:var(--c-text-faint);">Type 01</p>
+        <h3 class="system-name">Single-Antenna Radar</h3>
+        <div class="system-limitation">
+          <span style="color:var(--c-accent);margin-top:2px;">—</span>
+          Requires direct LOS path to target
+        </div>
+        <div class="system-limitation">
+          <span style="color:var(--c-accent);margin-top:2px;">—</span>
+          No alternative propagation path
+        </div>
+        <div class="system-limitation">
+          <span style="color:var(--c-accent);margin-top:2px;">—</span>
+          Severe degradation behind obstacles
+        </div>
+      </div>
+
+      <div class="system-item reveal reveal-d2">
+        <p class="label-mono" style="margin-bottom:var(--sp-3);color:var(--c-text-faint);">Type 02</p>
+        <h3 class="system-name">LiDAR</h3>
+        <div class="system-limitation">
+          <span style="color:var(--c-accent);margin-top:2px;">—</span>
+          Optical line-of-sight strictly required
+        </div>
+        <div class="system-limitation">
+          <span style="color:var(--c-accent);margin-top:2px;">—</span>
+          Susceptible to weather and obscurants
+        </div>
+        <div class="system-limitation">
+          <span style="color:var(--c-accent);margin-top:2px;">—</span>
+          Cannot detect beyond solid obstacles
+        </div>
+      </div>
+
+      <div class="system-item reveal reveal-d3">
+        <p class="label-mono" style="margin-bottom:var(--sp-3);color:var(--c-text-faint);">Type 03</p>
+        <h3 class="system-name">Conventional MIMO Radar</h3>
+        <div class="system-limitation">
+          <span style="color:var(--c-accent);margin-top:2px;">—</span>
+          Multipath fading in complex environments
+        </div>
+        <div class="system-limitation">
+          <span style="color:var(--c-accent);margin-top:2px;">—</span>
+          Limited NLOS coverage without relay nodes
+        </div>
+        <div class="system-limitation">
+          <span style="color:var(--c-accent);margin-top:2px;">—</span>
+          High signal attenuation through materials
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 PROBLEMS -->
+<section class="section theme-light" style="background:var(--c-surface);border-top:1px solid var(--c-border);" aria-labelledby="four-problems-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line"></div>
+      <span class="label-accent">Core Challenges</span>
+    </div>
+    <h2 class="heading-md reveal" id="four-problems-heading" style="margin-bottom:var(--sp-4);">
+      Four fundamental problems in conventional sensing.
+    </h2>
+
+    <div class="prob-list">
+      <div class="prob-item reveal">
+        <div class="prob-num-wrap">
+          <span class="prob-num">01</span>
+          <span class="prob-badge">Coverage</span>
+        </div>
+        <div>
+          <h3 class="prob-content-title">Limited NLOS Coverage</h3>
+          <p class="prob-content-desc">
+            Conventional systems cannot sense beyond the line of sight. When an obstacle physically blocks the direct propagation path, the receiver receives no usable signal. In urban environments — where buildings, vehicles, and infrastructure constantly interrupt the LOS — detection zones are severely restricted.
+          </p>
+        </div>
+      </div>
+
+      <div class="prob-item reveal">
+        <div class="prob-num-wrap">
+          <span class="prob-num">02</span>
+          <span class="prob-badge">Attenuation</span>
+        </div>
+        <div>
+          <h3 class="prob-content-title">Signal Attenuation by Obstacles</h3>
+          <p class="prob-content-desc">
+            Even when signals partially penetrate obstacles, they experience significant power loss. At microwave frequencies (8–12 GHz), common building materials and vehicle structures cause substantial attenuation, rapidly reducing the received signal-to-noise ratio below detectable thresholds.
+          </p>
+        </div>
+      </div>
+
+      <div class="prob-item reveal">
+        <div class="prob-num-wrap">
+          <span class="prob-num">03</span>
+          <span class="prob-badge">Fading</span>
+        </div>
+        <div>
+          <h3 class="prob-content-title">Multipath Fading</h3>
+          <p class="prob-content-desc">
+            In complex environments, signals travel multiple paths and arrive at the receiver with different delays and phases. Destructive interference between these multipath components causes deep fades — momentary severe signal drops that can render a reliable detection impossible even with sufficient signal power.
+          </p>
+        </div>
+      </div>
+
+      <div class="prob-item reveal">
+        <div class="prob-num-wrap">
+          <span class="prob-num">04</span>
+          <span class="prob-badge">Accuracy</span>
+        </div>
+        <div>
+          <h3 class="prob-content-title">Lower Detection Accuracy in Complex Environments</h3>
+          <p class="prob-content-desc">
+            The cumulative effect of limited coverage, attenuation, and fading is a significant reduction in obstacle detection accuracy. Single-path systems have no redundancy — when the primary path degrades, there is no fallback mechanism to maintain reliable detection performance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON DIAGRAM -->
+<section class="comparison-section section theme-dark" aria-labelledby="comp-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line dark"></div>
+      <span class="label-accent">Visual Comparison</span>
+    </div>
+    <h2 class="heading-md reveal" id="comp-heading" style="color:var(--c-text-inv);margin-bottom:var(--sp-4);">
+      Conventional system vs. RIS-aided system.
+    </h2>
+    <p style="color:var(--c-text-inv-muted);font-size:var(--text-base);margin-bottom:0;" class="reveal">
+      The architectural difference is fundamental — a single-path dependency versus a resilient dual-path design.
+    </p>
+
+    <div class="comparison-grid reveal reveal-d2">
+      <div class="comparison-panel conventional">
+        <p class="comparison-panel-title">Conventional</p>
+        <svg viewBox="0 0 380 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Conventional sensing system — signal blocked" role="img" style="width:100%;height:auto;margin-bottom:var(--sp-6);">
+          <!-- TX -->
+          <rect x="10" y="110" width="70" height="40" rx="2" fill="#252420" stroke="#4a4845" stroke-width="1"/>
+          <text x="45" y="133" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a8a59f">TX</text>
+          <!-- Path label -->
+          <text x="45" y="165" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6865">TRANSMITTER</text>
+          <!-- Arrow in -->
+          <line x1="80" y1="130" x2="130" y2="130" stroke="#4a4845" stroke-width="1.5"/>
+          <!-- OBSTACLE -->
+          <rect x="130" y="70" width="50" height="120" rx="2" fill="#2e2c2a" stroke="#4a4845" stroke-width="1.5"/>
+          <text x="155" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b6865" transform="rotate(-90,155,135)">OBSTACLE</text>
+          <!-- X blocked -->
+          <line x1="180" y1="130" x2="300" y2="130" stroke="#c94f2a" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+          <text x="245" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="20" fill="#c94f2a" opacity="0.7">✕</text>
+          <text x="245" y="148" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c94f2a">SIGNAL BLOCKED</text>
+          <!-- RX -->
+          <rect x="302" y="110" width="70" height="40" rx="2" fill="#252420" stroke="#4a4845" stroke-width="1"/>
+          <text x="337" y="133" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a8a59f">RX</text>
+          <text x="337" y="165" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6865">RECEIVER</text>
+          <!-- Result -->
+          <text x="190" y="230" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#c94f2a">NO DETECTION IN NLOS</text>
+          <text x="190" y="248" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#4a4845">ILLUSTRATIVE REFERENCE</text>
+        </svg>
+
+        <ul style="display:flex;flex-direction:column;gap:10px;">
+          <li style="display:flex;gap:10px;align-items:start;font-size:var(--text-sm);color:var(--c-text-inv-muted);">
+            <span style="color:var(--c-accent);font-size:16px;line-height:1;">—</span>
+            Single-path dependency
+          </li>
+          <li style="display:flex;gap:10px;align-items:start;font-size:var(--text-sm);color:var(--c-text-inv-muted);">
+            <span style="color:var(--c-accent);font-size:16px;line-height:1;">—</span>
+            No fallback when LOS is lost
+          </li>
+          <li style="display:flex;gap:10px;align-items:start;font-size:var(--text-sm);color:var(--c-text-inv-muted);">
+            <span style="color:var(--c-accent);font-size:16px;line-height:1;">—</span>
+            Zero NLOS coverage without additional infrastructure
+          </li>
+        </ul>
+      </div>
+
+      <div class="comp-divider" aria-hidden="true"></div>
+
+      <div class="comparison-panel aided">
+        <p class="comparison-panel-title">RIS-Aided</p>
+        <svg viewBox="0 0 380 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="RIS-aided sensing system — signal reflected around obstacle" role="img" style="width:100%;height:auto;margin-bottom:var(--sp-6);">
+          <!-- TX -->
+          <rect x="10" y="110" width="70" height="40" rx="2" fill="#252420" stroke="#4a4845" stroke-width="1"/>
+          <text x="45" y="133" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a8a59f">TX</text>
+          <text x="45" y="165" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6865">TRANSMITTER</text>
+          <!-- OBSTACLE -->
+          <rect x="130" y="70" width="50" height="120" rx="2" fill="#2e2c2a" stroke="#4a4845" stroke-width="1.5"/>
+          <text x="155" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#6b6865" transform="rotate(-90,155,135)">OBSTACLE</text>
+          <!-- Direct path (dotted/blocked) -->
+          <line x1="80" y1="126" x2="130" y2="126" stroke="#c94f2a" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+          <text x="105" y="118" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#c94f2a" opacity="0.7">DIR</text>
+          <!-- RIS path (solid, arcing around) -->
+          <path d="M45,150 Q45,220 130,230 Q200,238 250,200 Q290,168 302,130" stroke="#3a7ebf" stroke-width="2" fill="none"/>
+          <path d="M299,127 L304,130 L299,133 Z" fill="#3a7ebf"/>
+          <!-- RIS panel -->
+          <rect x="116" y="220" width="30" height="24" rx="1" fill="#1a2535" stroke="#3a7ebf" stroke-width="1.5"/>
+          <g stroke="#3a7ebf" stroke-width="0.5" opacity="0.6">
+            <line x1="126" y1="220" x2="126" y2="244"/>
+            <line x1="136" y1="220" x2="136" y2="244"/>
+            <line x1="116" y1="232" x2="146" y2="232"/>
+          </g>
+          <text x="131" y="255" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#3a7ebf">RIS</text>
+          <!-- RX -->
+          <rect x="302" y="110" width="70" height="40" rx="2" fill="#252420" stroke="#3a7ebf" stroke-width="1.5"/>
+          <text x="337" y="133" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#a8a59f">RX</text>
+          <text x="337" y="165" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b6865">RECEIVER</text>
+          <!-- Result -->
+          <text x="190" y="30" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#4aab6d">OBSTACLE DETECTED VIA RIS-REFLECTED PATH</text>
+          <text x="190" y="46" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#4a4845">ILLUSTRATIVE REFERENCE</text>
+        </svg>
+
+        <ul style="display:flex;flex-direction:column;gap:10px;">
+          <li style="display:flex;gap:10px;align-items:start;font-size:var(--text-sm);color:var(--c-text-inv-muted);">
+            <span style="color:var(--c-signal);font-size:16px;line-height:1;">—</span>
+            RIS provides alternative propagation path
+          </li>
+          <li style="display:flex;gap:10px;align-items:start;font-size:var(--text-sm);color:var(--c-text-inv-muted);">
+            <span style="color:var(--c-signal);font-size:16px;line-height:1;">—</span>
+            Dual-path signal diversity
+          </li>
+          <li style="display:flex;gap:10px;align-items:start;font-size:var(--text-sm);color:var(--c-text-inv-muted);">
+            <span style="color:var(--c-signal);font-size:16px;line-height:1;">—</span>
+            Detection maintained in NLOS environments
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY NLOS MATTERS -->
+<section class="nlos-explain section theme-light" aria-labelledby="nlos-heading">
+  <div class="container">
+    <div class="nlos-grid">
+      <div class="reveal">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line"></div>
+          <span class="label-accent">Why It Matters</span>
+        </div>
+        <h2 class="heading-md" id="nlos-heading" style="margin-bottom:var(--sp-6);">
+          Why NLOS capability defines modern sensing systems.
+        </h2>
+
+        <div class="nlos-def-block">
+          <p class="nlos-def-text">
+            "Non-Line-of-Sight is not a rare edge case — it is the dominant condition in real-world deployment environments."
+          </p>
+        </div>
+
+        <p class="body-base" style="margin-bottom:var(--sp-4);">
+          Autonomous vehicles navigate environments saturated with obstacles: other vehicles, buildings, guardrails, and pedestrians. Drones operate in urban canyons and around structures. Industrial robots sense around machinery and equipment.
+        </p>
+        <p class="body-base">
+          In every deployment scenario, the ability to detect and locate objects beyond the direct line of sight is not a performance enhancement — it is a fundamental safety requirement. A sensing system that fails in NLOS conditions fails in precisely the situations where reliable detection is most critical.
+        </p>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <svg viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;" aria-label="NLOS environment visualization" role="img">
+          <!-- Urban scene schematic -->
+          <!-- Building 1 -->
+          <rect x="60" y="60" width="80" height="120" rx="2" fill="var(--c-bg-alt)" stroke="var(--c-border)" stroke-width="1.5"/>
+          <text x="100" y="125" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="var(--c-text-faint)">BUILDING</text>
+          <!-- Windows -->
+          <rect x="75" y="75" width="18" height="14" rx="1" fill="var(--c-border)"/>
+          <rect x="107" y="75" width="18" height="14" rx="1" fill="var(--c-border)"/>
+          <rect x="75" y="100" width="18" height="14" rx="1" fill="var(--c-border)"/>
+          <rect x="107" y="100" width="18" height="14" rx="1" fill="var(--c-border)"/>
+          <rect x="75" y="125" width="18" height="14" rx="1" fill="var(--c-border)"/>
+          <rect x="107" y="125" width="18" height="14" rx="1" fill="var(--c-border)"/>
+
+          <!-- Building 2 -->
+          <rect x="240" y="80" width="100" height="100" rx="2" fill="var(--c-bg-alt)" stroke="var(--c-border)" stroke-width="1.5"/>
+          <text x="290" y="135" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="var(--c-text-faint)">BUILDING</text>
+
+          <!-- Road -->
+          <rect x="0" y="200" width="380" height="60" fill="#eeece8" stroke="var(--c-border)" stroke-width="1"/>
+          <line x1="0" y1="230" x2="380" y2="230" stroke="var(--c-border)" stroke-width="1" stroke-dasharray="20 15"/>
+          <text x="190" y="225" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="var(--c-text-faint)">ROAD</text>
+
+          <!-- Vehicle (ego) -->
+          <rect x="40" y="208" width="56" height="22" rx="3" fill="var(--c-bg-dark)" stroke="var(--c-border)" stroke-width="1"/>
+          <rect x="52" y="200" width="32" height="12" rx="2" fill="var(--c-bg-darker)"/>
+          <circle cx="54" cy="232" r="5" fill="var(--c-bg-darker)" stroke="var(--c-border)"/>
+          <circle cx="84" cy="232" r="5" fill="var(--c-bg-darker)" stroke="var(--c-border)"/>
+          <text x="68" y="248" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="var(--c-text-faint)">EGO</text>
+
+          <!-- Obstacle vehicle -->
+          <rect x="140" y="208" width="56" height="22" rx="3" fill="#333230" stroke="#4a4845" stroke-width="1.5"/>
+          <rect x="152" y="200" width="32" height="12" rx="2" fill="#2e2c2a"/>
+          <circle cx="154" cy="232" r="5" fill="#1a1917" stroke="#4a4845"/>
+          <circle cx="184" cy="232" r="5" fill="#1a1917" stroke="#4a4845"/>
+
+          <!-- Target vehicle (behind obstacle) -->
+          <rect x="280" y="208" width="56" height="22" rx="3" fill="var(--c-bg-alt)" stroke="var(--c-border)" stroke-width="1"/>
+          <text x="308" y="222" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="var(--c-text-muted)">TARGET</text>
+
+          <!-- Blocked direct path -->
+          <line x1="97" y1="219" x2="140" y2="219" stroke="var(--c-accent)" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+          <text x="119" y="213" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="var(--c-accent)">✕</text>
+
+          <!-- RIS path arc (over building) -->
+          <path d="M68,207 Q80,140 160,140 Q220,140 280,200" stroke="var(--c-ris)" stroke-width="1.5" fill="none" stroke-dasharray="none"/>
+          <path d="M277,197 L281,200 L277,203 Z" fill="var(--c-ris)"/>
+
+          <!-- RIS panel (on wall) -->
+          <rect x="152" y="175" width="20" height="16" rx="1" fill="#1a2535" stroke="var(--c-ris)" stroke-width="1"/>
+          <text x="162" y="168" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="var(--c-ris)">RIS</text>
+
+          <!-- Annotations -->
+          <text x="190" y="320" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="var(--c-text-faint)">TYPICAL URBAN NLOS SCENARIO</text>
+          <text x="190" y="333" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="var(--c-text-faint)">RIS enables detection of partially hidden target</text>
+          <text x="190" y="350" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="var(--c-border)">ILLUSTRATIVE REFERENCE</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NAV TO NEXT -->
+<div style="background:var(--c-bg-alt);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);padding-block:var(--sp-8);">
+  <div class="container flex-between">
+    <div>
+      <p class="label-mono">Next</p>
+      <p style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;color:var(--c-text);margin-top:4px;">Proposed System Architecture</p>
+    </div>
+    <a href="system.html" class="btn btn-primary">Explore the System →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-main-container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="index.html" class="footer-logo-link" aria-label="RIS AIDED SENSING Home">
+          <div class="footer-logo-main">RIS AIDED SENSING</div>
+        </a>
+        <p class="footer-desc">
+          Engineering research project — RIS-aided dual antenna for obstacle detection in LOS and NLOS environments.
+        </p>
+        <div class="footer-badge-tag">
+          <span class="footer-badge-dot"></span>
+          <span>ELECTRONICS &amp; COMMUNICATION ENGINEERING</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-hd">Navigation</div>
+        <ul class="footer-nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="problem.html">The Problem</a></li>
+          <li><a href="system.html">Proposed System</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-project-col">
+        <div class="footer-col-hd">Project</div>
+        <ul class="footer-nav-links">
+          <li><a href="simulation.html">Simulation</a></li>
+          <li><a href="detection.html">Detection Lab</a></li>
+          <li><a href="results.html">Results</a></li>
+          <li><a href="about.html#team">Team</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

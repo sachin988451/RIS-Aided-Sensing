@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About & References — RIS-Aided Dual Antenna | 22EC711</title>
+  <meta name="description" content="Project team, objectives, novelty, and IEEE references for 22EC711 — RIS-Aided Dual Antenna for Obstacle Detection." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style>
+    /* ABOUT PAGE */
+    .about-hero {
+      padding-top: calc(var(--nav-h) + var(--sp-20));
+      padding-bottom: var(--sp-16);
+      background: var(--c-bg);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .project-info-band {
+      background: var(--c-bg-dark);
+      border-bottom: 1px solid var(--c-border-dark);
+    }
+
+    .project-info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--c-border-dark);
+    }
+
+    .pinfo-cell {
+      padding: var(--sp-8);
+      border-right: 1px solid var(--c-border-dark);
+    }
+
+    .pinfo-cell:last-child { border-right: none; }
+
+    .pinfo-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--c-text-inv-muted);
+      margin-bottom: var(--sp-3);
+    }
+
+    .pinfo-value {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--c-text-inv);
+      line-height: 1.3;
+    }
+
+    .pinfo-sub {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--c-text-inv-muted);
+      margin-top: var(--sp-2);
+      letter-spacing: 0.06em;
+    }
+
+    /* Team section */
+    .team-section {
+      background: var(--c-surface);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--c-border);
+      margin-top: var(--sp-10);
+    }
+
+    .team-card {
+      padding: var(--sp-8);
+      border-right: 1px solid var(--c-border);
+    }
+
+    .team-card:last-child { border-right: none; }
+
+    .team-initials {
+      width: 56px; height: 56px;
+      background: var(--c-bg-dark);
+      border: 1px solid var(--c-border-dark);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--c-text-inv);
+      margin-bottom: var(--sp-6);
+    }
+
+    .team-name {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--c-text);
+      margin-bottom: var(--sp-2);
+      letter-spacing: -0.01em;
+    }
+
+    .team-roll {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.1em;
+      color: var(--c-text-faint);
+    }
+
+    /* Objectives */
+    .obj-section {
+      background: var(--c-bg-dark);
+      border-bottom: 1px solid var(--c-border-dark);
+    }
+
+    /* Novelty */
+    .novelty-section {
+      background: var(--c-bg-alt);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .novelty-list {
+      margin-top: var(--sp-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-4);
+    }
+
+    .novelty-item {
+      display: flex;
+      align-items: start;
+      gap: var(--sp-4);
+      padding: var(--sp-4) var(--sp-6);
+      border: 1px solid var(--c-border);
+      background: var(--c-surface);
+    }
+
+    .novelty-bullet {
+      width: 8px; height: 8px;
+      background: var(--c-accent);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .novelty-text {
+      font-size: var(--text-sm);
+      color: var(--c-text-muted);
+      line-height: 1.75;
+    }
+
+    /* References */
+    .refs-section {
+      background: var(--c-bg);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .ref-item {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: var(--sp-4);
+      padding-block: var(--sp-6);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .ref-item:last-child { border-bottom: none; }
+
+    .ref-num {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--c-accent);
+      padding-top: 2px;
+    }
+
+    .ref-content {}
+
+    .ref-authors {
+      font-size: var(--text-sm);
+      color: var(--c-text-muted);
+      margin-bottom: 4px;
+    }
+
+    .ref-title {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--c-text);
+      margin-bottom: 4px;
+      line-height: 1.45;
+    }
+
+    .ref-venue {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--c-text-faint);
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 900px) {
+      .project-info-grid { grid-template-columns: 1fr; }
+      .pinfo-cell { border-right: none; border-bottom: 1px solid var(--c-border-dark); }
+      .pinfo-cell:last-child { border-bottom: none; }
+      .team-grid { grid-template-columns: 1fr; }
+      .team-card { border-right: none; border-bottom: 1px solid var(--c-border); }
+      .team-card:last-child { border-bottom: none; }
+      .ref-item { grid-template-columns: 32px 1fr; }
+    }
+  </style>
+</head>
+<body class="page-theme">
+
+<!-- HEADER -->
+<header class="site-header" role="banner">
+  <nav class="nav-inner" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="RIS AIDED SENSING Home">
+      <span class="nav-logo-main">RIS AIDED SENSING</span>
+      <span class="nav-logo-sub">22EC711 · Engineering Project</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="problem.html">Problem</a></li>
+      <li><a href="system.html">System</a></li>
+      <li><a href="simulation.html">Simulation</a></li>
+      <li><a href="detection.html">Detection Lab</a></li>
+      <li><a href="results.html">Results</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-cta-wrap">
+      <a href="detection.html" class="nav-cta">Launch Detection Lab</a>
+    </div>
+    <button class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<nav id="mobile-menu" class="nav-mobile" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="problem.html">Problem</a>
+  <a href="system.html">System</a>
+  <a href="simulation.html">Simulation</a>
+  <a href="detection.html">Detection Lab</a>
+  <a href="results.html">Results</a>
+  <a href="about.html">About</a>
+</nav>
+
+<!-- HERO -->
+<section class="about-hero theme-light" aria-labelledby="about-hero-heading">
+  <div class="container">
+    <div class="eyebrow">
+      <div class="eyebrow-bar"></div>
+      <span class="label-accent">About / References</span>
+    </div>
+    <h1 class="heading-display" id="about-hero-heading" style="margin-bottom:var(--sp-6);">
+      The project.
+    </h1>
+    <p class="body-lg" style="max-width:560px;">
+      A structured engineering research investigation into the use of Reconfigurable Intelligent Surfaces and dual antenna configurations for improved obstacle detection in LOS and NLOS environments.
+    </p>
+  </div>
+</section>
+
+<!-- PROJECT INFO -->
+<section class="project-info-band section-sm theme-dark" aria-labelledby="project-info-heading">
+  <div class="container">
+    <h2 class="sr-only" id="project-info-heading">Project Information</h2>
+    <div class="project-info-grid">
+      <div class="pinfo-cell">
+        <div class="pinfo-label">Project Title</div>
+        <div class="pinfo-value">RIS Aided Dual Antenna for Obstacle Detection</div>
+      </div>
+      <div class="pinfo-cell">
+        <div class="pinfo-label">Project Code</div>
+        <div class="pinfo-value" style="font-family:var(--font-mono);">22EC711</div>
+        <div class="pinfo-sub">Electronics & Communication Engineering</div>
+      </div>
+      <div class="pinfo-cell">
+        <div class="pinfo-label">Course</div>
+        <div class="pinfo-value" style="font-size:var(--text-base);">Professional Readiness for Innovation, Employability and Entrepreneurship</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section section theme-light" id="team" aria-labelledby="team-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line"></div>
+      <span class="label-accent">Team</span>
+    </div>
+    <h2 class="heading-md reveal" id="team-heading" style="margin-bottom:0;">
+      Project team members.
+    </h2>
+
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-initials" aria-hidden="true">SR</div>
+        <h3 class="team-name">Sai Rithikaa V</h3>
+        <p class="team-roll">Roll No. 111723109044</p>
+      </div>
+      <div class="team-card reveal reveal-d2">
+        <div class="team-initials" aria-hidden="true">PV</div>
+        <h3 class="team-name">Pooja V</h3>
+        <p class="team-roll">Roll No. 111723109037</p>
+      </div>
+      <div class="team-card reveal reveal-d3">
+        <div class="team-initials" aria-hidden="true">KJ</div>
+        <h3 class="team-name">Keerthy JK</h3>
+        <p class="team-roll">Roll No. 111723109022</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIVES -->
+<section class="obj-section section theme-dark" id="objectives" aria-labelledby="obj-heading">
+  <div class="container">
+    <div class="grid-2" style="gap:var(--sp-16);align-items:start;">
+      <div class="reveal">
+        <div class="section-eyebrow">
+          <div class="section-eyebrow-line dark"></div>
+          <span class="label-accent">Project Objectives</span>
+        </div>
+        <h2 class="heading-md" id="obj-heading" style="color:var(--c-text-inv);margin-bottom:var(--sp-6);">
+          Five structured objectives.
+        </h2>
+        <p style="font-size:var(--text-base);color:var(--c-text-inv-muted);line-height:1.75;">
+          The project is structured around five clearly defined engineering objectives that address the design, evaluation, and comparative analysis of the RIS-aided dual antenna system.
+        </p>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div style="display:flex;flex-direction:column;">
+          <div style="display:flex;gap:var(--sp-6);padding-block:var(--sp-6);border-bottom:1px solid var(--c-border-dark);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-accent);min-width:28px;padding-top:3px;">01</span>
+            <p style="font-size:var(--text-sm);color:var(--c-text-inv-muted);line-height:1.75;">Design RIS for obstacle detection in V2X environments.</p>
+          </div>
+          <div style="display:flex;gap:var(--sp-6);padding-block:var(--sp-6);border-bottom:1px solid var(--c-border-dark);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-accent);min-width:28px;padding-top:3px;">02</span>
+            <p style="font-size:var(--text-sm);color:var(--c-text-inv-muted);line-height:1.75;">Enhance signal reliability and coverage using RIS.</p>
+          </div>
+          <div style="display:flex;gap:var(--sp-6);padding-block:var(--sp-6);border-bottom:1px solid var(--c-border-dark);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-accent);min-width:28px;padding-top:3px;">03</span>
+            <p style="font-size:var(--text-sm);color:var(--c-text-inv-muted);line-height:1.75;">Detect and locate obstacles in NLOS environments.</p>
+          </div>
+          <div style="display:flex;gap:var(--sp-6);padding-block:var(--sp-6);border-bottom:1px solid var(--c-border-dark);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-accent);min-width:28px;padding-top:3px;">04</span>
+            <p style="font-size:var(--text-sm);color:var(--c-text-inv-muted);line-height:1.75;">Compare conventional and RIS-aided dual antenna systems.</p>
+          </div>
+          <div style="display:flex;gap:var(--sp-6);padding-block:var(--sp-6);">
+            <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--c-accent);min-width:28px;padding-top:3px;">05</span>
+            <p style="font-size:var(--text-sm);color:var(--c-text-inv-muted);line-height:1.75;">Improve obstacle detection reliability using direct and RIS-assisted signal diversity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOVELTY -->
+<section class="novelty-section section theme-light" aria-labelledby="novelty-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line"></div>
+      <span class="label-accent">Novelty</span>
+    </div>
+    <h2 class="heading-md reveal" id="novelty-heading" style="margin-bottom:0;">
+      Key contributions.
+    </h2>
+
+    <div class="novelty-list">
+      <div class="novelty-item reveal">
+        <div class="novelty-bullet" aria-hidden="true"></div>
+        <p class="novelty-text">
+          <strong>Intelligent reflection:</strong> RIS intelligently reflects signals to extend coverage beyond line-of-sight, turning the physical environment into a controllable propagation medium.
+        </p>
+      </div>
+      <div class="novelty-item reveal">
+        <div class="novelty-bullet" aria-hidden="true"></div>
+        <p class="novelty-text">
+          <strong>Dual antenna configuration:</strong> The dual antenna design provides simultaneously available direct and RIS-reflected paths, creating spatial signal diversity not achievable with a single antenna.
+        </p>
+      </div>
+      <div class="novelty-item reveal">
+        <div class="novelty-bullet" aria-hidden="true"></div>
+        <p class="novelty-text">
+          <strong>LOS and NLOS detection:</strong> The system maintains obstacle detection performance in both line-of-sight and non-line-of-sight conditions — addressing the primary limitation of conventional sensing systems.
+        </p>
+      </div>
+      <div class="novelty-item reveal">
+        <div class="novelty-bullet" aria-hidden="true"></div>
+        <p class="novelty-text">
+          <strong>Enhanced reliability in dynamic environments:</strong> Signal diversity across two independent propagation paths provides robustness to the path-specific degradation that causes failure in single-path systems.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section class="refs-section section theme-dark" id="references" aria-labelledby="refs-heading">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line"></div>
+      <span class="label-accent">IEEE References</span>
+    </div>
+    <h2 class="heading-md reveal" id="refs-heading" style="margin-bottom:var(--sp-10);">
+      Research foundation.
+    </h2>
+
+    <div>
+      <div class="ref-item reveal">
+        <span class="ref-num">[1]</span>
+        <div class="ref-content">
+          <p class="ref-authors">E. Basar, M. Di Renzo, J. de Rosny, M.-S. Alouini, and R. Zhang,</p>
+          <p class="ref-title">"Wireless Communications Through Reconfigurable Intelligent Surfaces,"</p>
+          <p class="ref-venue">IEEE Access, vol. 7, pp. 116753–116773, 2019.</p>
+        </div>
+      </div>
+
+      <div class="ref-item reveal">
+        <span class="ref-num">[2]</span>
+        <div class="ref-content">
+          <p class="ref-authors">Q. Wu and R. Zhang,</p>
+          <p class="ref-title">"Intelligent Reflecting Surface Aided Wireless Communications for IoT,"</p>
+          <p class="ref-venue">IEEE Internet of Things Journal, vol. 7, no. 5, pp. 3828–3840, 2020.</p>
+        </div>
+      </div>
+
+      <div class="ref-item reveal">
+        <span class="ref-num">[3]</span>
+        <div class="ref-content">
+          <p class="ref-authors">H. Zhang, D. Li, S. Long, and Z. Han,</p>
+          <p class="ref-title">"RIS-Assisted Dual-Antenna Systems for Improved Sensing Performance,"</p>
+          <p class="ref-venue">IEEE Wireless Communications Letters, vol. 10, no. 3, pp. 474–478, 2021.</p>
+        </div>
+      </div>
+
+      <div class="ref-item reveal">
+        <span class="ref-num">[4]</span>
+        <div class="ref-content">
+          <p class="ref-authors">W. He, K. Yu, Y. Chen, and Y. Li,</p>
+          <p class="ref-title">"RIS Enhanced Radar Systems: A Survey,"</p>
+          <p class="ref-venue">IEEE Sensors Journal, vol. 22, no. 12, pp. 11564–11578, 2022.</p>
+        </div>
+      </div>
+
+      <div class="ref-item reveal">
+        <span class="ref-num">[5]</span>
+        <div class="ref-content">
+          <p class="ref-authors">J. Li, X. Mu, Y. Liu, and L. Guo,</p>
+          <p class="ref-title">"Reconfigurable Intelligent Surface Aided Sensing: Challenges and Opportunities,"</p>
+          <p class="ref-venue">IEEE Communications Surveys &amp; Tutorials, vol. 25, no. 1, pp. 100–124, 2023.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Technical Transparency Note -->
+<section style="background:var(--c-bg-alt);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);padding-block:var(--sp-12);" class="theme-light">
+  <div class="container">
+    <div class="section-eyebrow reveal">
+      <div class="section-eyebrow-line"></div>
+      <span class="label-accent">Technical Transparency</span>
+    </div>
+    <h2 class="heading-sm reveal" style="margin-bottom:var(--sp-6);">Visualization & Data Disclosure</h2>
+    <div class="grid-2 reveal" style="gap:var(--sp-8);">
+      <div>
+        <h3 style="font-family:var(--font-display);font-size:var(--text-base);font-weight:600;color:var(--c-text);margin-bottom:var(--sp-3);">What is real project information</h3>
+        <ul style="display:flex;flex-direction:column;gap:var(--sp-2);">
+          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-signal);">✓</span> Design parameters (frequency, substrate, dimensions)</li>
+          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-signal);">✓</span> Team names and roll numbers</li>
+          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-signal);">✓</span> Project objectives and novelty points</li>
+          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-signal);">✓</span> Reference design values (S11 &lt; −30 dB, S21 ≈ −3 dB)</li>
+          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-signal);">✓</span> IEEE references</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-family:var(--font-display);font-size:var(--text-base);font-weight:600;color:var(--c-text);margin-bottom:var(--sp-3);">What is illustrative / reference</h3>
+        <ul style="display:flex;flex-direction:column;gap:var(--sp-2);">
+          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-accent);">◦</span> All S-parameter plots (generated from design parameters)</li>
+          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-accent);">◦</span> System architecture diagrams (conceptual)</li>
+          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-accent);">◦</span> Application scene illustrations</li>
+          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-accent);">◦</span> Detection Lab behavior (demonstrative logic)</li>
+          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-accent);">◦</span> RIS phase state visualization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-main-container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="index.html" class="footer-logo-link" aria-label="RIS AIDED SENSING Home">
+          <div class="footer-logo-main">RIS AIDED SENSING</div>
+        </a>
+        <p class="footer-desc">
+          Engineering research project — RIS-aided dual antenna for obstacle detection in LOS and NLOS environments.
+        </p>
+        <div class="footer-badge-tag">
+          <span class="footer-badge-dot"></span>
+          <span>ELECTRONICS &amp; COMMUNICATION ENGINEERING</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-hd">Navigation</div>
+        <ul class="footer-nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="problem.html">The Problem</a></li>
+          <li><a href="system.html">Proposed System</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-project-col">
+        <div class="footer-col-hd">Project</div>
+        <ul class="footer-nav-links">
+          <li><a href="simulation.html">Simulation</a></li>
+          <li><a href="detection.html">Detection Lab</a></li>
+          <li><a href="results.html">Results</a></li>
+          <li><a href="about.html#team">Team</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;
+}
+</style>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,719 @@
+/* =========================================================
+   RIS SIMULATION WORKSTATION — STYLESHEET
+   Precision RF Laboratory & CST-Inspired Workstation
+   ========================================================= */
+
+.sim-page-wrapper {
+  background: var(--c-bg-darker);
+  color: var(--c-text-inv);
+  min-height: 100vh;
+}
+
+/* --- HERO SECTION --- */
+.sim-hero-section {
+  padding-top: calc(var(--nav-h) + var(--sp-20));
+  padding-bottom: var(--sp-12);
+  background: #0d0d0c;
+  border-bottom: 1px solid var(--c-border-dark);
+}
+
+.sim-title-group {
+  max-width: 900px;
+}
+
+.sim-disclaimer-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 6px 14px;
+  background: rgba(201, 79, 42, 0.08);
+  border: 1px solid rgba(201, 79, 42, 0.35);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  color: var(--c-text-inv-muted);
+  margin-top: var(--sp-4);
+  text-transform: uppercase;
+}
+.sim-disclaimer-banner .dot {
+  width: 7px;
+  height: 7px;
+  background: var(--c-accent);
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.4; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* --- MAIN WORKSTATION GRID --- */
+.sim-workstation-container {
+  padding: var(--sp-8) 0 var(--sp-16);
+}
+
+.sim-workstation-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 1px;
+  background: var(--c-border-dark);
+  border: 1px solid var(--c-border-dark);
+  margin-bottom: var(--sp-12);
+}
+
+/* --- 3D VIEWPORT AREA --- */
+.sim-viewport-panel {
+  background: #0a0a09;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+}
+
+.sim-viewport-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: #111110;
+  border-bottom: 1px solid var(--c-border-dark);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--c-text-inv-muted);
+  z-index: 10;
+}
+
+.sim-viewport-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sim-tool-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  background: #1c1b19;
+  border: 1px solid var(--c-border-dark);
+  color: var(--c-text-inv-muted);
+  text-transform: uppercase;
+  transition: all var(--dur-fast);
+}
+.sim-tool-btn:hover {
+  background: #282623;
+  color: var(--c-text-inv);
+  border-color: #55534f;
+}
+.sim-tool-btn.active {
+  background: rgba(201, 79, 42, 0.15);
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+}
+
+.sim-canvas-wrap {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 540px;
+  overflow: hidden;
+  cursor: grab;
+}
+.sim-canvas-wrap:active {
+  cursor: grabbing;
+}
+
+#sim-three-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Viewport On-Screen Annotations */
+.sim-overlay-info {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  color: #7a7772;
+  background: rgba(14, 14, 13, 0.75);
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+.sim-overlay-info span {
+  color: var(--c-text-inv);
+}
+
+.sim-view-gizmo {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #6a6762;
+  z-index: 5;
+}
+
+.sim-inspect-badge {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 12px;
+  background: rgba(17, 17, 16, 0.85);
+  border: 1px solid var(--c-border-dark);
+  color: var(--c-text-inv-muted);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* --- SIDE CONTROL RACK --- */
+.sim-control-rack {
+  background: #111110;
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-rack-section {
+  padding: var(--sp-6);
+  border-bottom: 1px solid var(--c-border-dark);
+}
+.sim-rack-section:last-child {
+  border-bottom: none;
+}
+
+.sim-rack-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  color: var(--c-text-inv-muted);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-4);
+}
+
+.sim-telemetry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+
+.telemetry-item {
+  background: #161514;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 8px 10px;
+}
+.telemetry-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #726f6a;
+  margin-bottom: 2px;
+}
+.telemetry-value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c-text-inv);
+}
+.telemetry-value.accent {
+  color: var(--c-accent);
+}
+.telemetry-value.signal {
+  color: var(--c-signal);
+}
+
+/* Rotary Phase Dial */
+.phase-dial-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--sp-3);
+}
+
+.phase-dial-svg-container {
+  width: 170px;
+  height: 170px;
+  position: relative;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+}
+.phase-dial-svg-container:active {
+  cursor: grabbing;
+}
+
+.dial-center-readout {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+.dial-deg {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--c-accent);
+  line-height: 1;
+}
+.dial-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #726f6a;
+  margin-top: 4px;
+}
+
+.phase-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  width: 100%;
+  margin-top: var(--sp-4);
+}
+
+.preset-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 0;
+  text-align: center;
+  background: #181715;
+  border: 1px solid var(--c-border-dark);
+  color: var(--c-text-inv-muted);
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+.preset-chip:hover {
+  background: #242220;
+  color: var(--c-text-inv);
+}
+.preset-chip.active {
+  background: rgba(201, 79, 42, 0.2);
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+  font-weight: 600;
+}
+
+/* RF Frequency Tuner Slider */
+.freq-tuner-wrap {
+  margin-top: var(--sp-2);
+}
+
+.freq-readout-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--sp-2);
+}
+
+.freq-main-val {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--c-text-inv);
+}
+.freq-design-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--c-accent);
+  border: 1px solid rgba(201, 79, 42, 0.4);
+  padding: 2px 6px;
+  letter-spacing: 0.08em;
+}
+
+.sim-slider-track {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.sim-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #252421;
+  outline: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.sim-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 22px;
+  background: var(--c-accent);
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.sim-slider::-webkit-slider-thumb:hover {
+  transform: scaleY(1.15);
+}
+
+.sim-slider::-moz-range-thumb {
+  width: 16px;
+  height: 22px;
+  background: var(--c-accent);
+  border: 1px solid #ffffff;
+  cursor: pointer;
+}
+
+.freq-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #6a6762;
+  margin-top: 4px;
+}
+
+.freq-presets-row {
+  display: flex;
+  gap: 6px;
+  margin-top: var(--sp-3);
+}
+.freq-chip {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 0;
+  text-align: center;
+  background: #181715;
+  border: 1px solid var(--c-border-dark);
+  color: var(--c-text-inv-muted);
+  cursor: pointer;
+}
+.freq-chip:hover {
+  background: #22201e;
+  color: var(--c-text-inv);
+}
+.freq-chip.active {
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+}
+
+/* Action Sweep Buttons */
+.sweep-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+
+.sim-action-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 12px;
+  background: #181715;
+  border: 1px solid var(--c-border-dark);
+  color: var(--c-text-inv);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all var(--dur-fast);
+}
+.sim-action-btn:hover {
+  background: #262421;
+  border-color: #66635d;
+}
+.sim-action-btn.running {
+  background: rgba(201, 79, 42, 0.2);
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+  animation: pulse-border 1.5s infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: var(--c-accent); }
+  50% { border-color: #ff8866; }
+}
+
+/* --- SECTIONS (01 - 05) --- */
+.sim-section {
+  padding-block: var(--sp-12);
+  border-bottom: 1px solid var(--c-border-dark);
+}
+
+.sim-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--sp-8);
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+}
+
+.sim-section-tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.16em;
+  color: var(--c-accent);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-2);
+}
+
+/* Section 01: Unit Cell Inspection */
+.unit-cell-inspect-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  border: 1px solid var(--c-border-dark);
+  background: #111110;
+}
+
+.cell-visual-preview {
+  padding: var(--sp-8);
+  border-right: 1px solid var(--c-border-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a09;
+}
+
+.cell-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cell-specs-table tr {
+  border-bottom: 1px solid var(--c-border-dark);
+}
+.cell-specs-table tr:last-child {
+  border-bottom: none;
+}
+
+.cell-specs-table td {
+  padding: 14px 20px;
+  font-size: var(--text-sm);
+}
+
+.cell-specs-table td.spec-name {
+  font-family: var(--font-mono);
+  color: var(--c-text-inv-muted);
+  width: 45%;
+}
+
+.cell-specs-table td.spec-val {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--c-text-inv);
+}
+
+/* Section 02: Frequency Response Graphs */
+.sim-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-6);
+}
+
+.sim-chart-card {
+  background: #111110;
+  border: 1px solid var(--c-border-dark);
+  padding: var(--sp-6);
+  position: relative;
+}
+
+.sim-chart-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--sp-4);
+}
+
+.chart-title {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--c-text-inv);
+}
+.chart-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--c-text-inv-muted);
+  margin-top: 2px;
+}
+
+.chart-ref-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--c-border-dark);
+  color: #8c8983;
+  text-transform: uppercase;
+}
+
+.chart-canvas-container {
+  position: relative;
+  height: 280px;
+  width: 100%;
+}
+
+/* Section 03: Reflection Phase Chart */
+.phase-chart-full-card {
+  background: #111110;
+  border: 1px solid var(--c-border-dark);
+  padding: var(--sp-6);
+}
+
+.phase-chart-canvas-wrap {
+  position: relative;
+  height: 320px;
+  width: 100%;
+}
+
+/* Section 04: 2D Array Matrix */
+.array-2d-view-wrap {
+  background: #111110;
+  border: 1px solid var(--c-border-dark);
+  padding: var(--sp-8);
+}
+
+.array-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.array-cell-2d {
+  aspect-ratio: 1;
+  background: #1a1917;
+  border: 1px solid var(--c-border-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+.array-cell-2d:hover {
+  border-color: var(--c-accent);
+  background: #24221f;
+}
+.array-cell-2d.selected {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 1px var(--c-accent);
+  background: rgba(201, 79, 42, 0.15);
+}
+
+.cell-inner-patch {
+  width: 72%;
+  height: 72%;
+  background: #b07d4b;
+  transition: all 0.3s;
+}
+
+/* Section 05: Parameter Specifications */
+.spec-grid-full {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--c-border-dark);
+  background: #111110;
+}
+
+.spec-cell-item {
+  padding: var(--sp-6);
+  border-right: 1px solid var(--c-border-dark);
+  border-bottom: 1px solid var(--c-border-dark);
+}
+.spec-cell-item:nth-child(3n) {
+  border-right: none;
+}
+.spec-cell-item:nth-last-child(-n+3) {
+  border-bottom: none;
+}
+
+.spec-p-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-text-inv-muted);
+  margin-bottom: var(--sp-2);
+}
+.spec-p-value {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--c-text-inv);
+}
+.spec-p-note {
+  font-size: 12px;
+  color: #7a7772;
+  margin-top: 4px;
+}
+
+/* Fallback Viewport for non-WebGL */
+.sim-fallback-box {
+  display: none;
+  padding: var(--sp-12);
+  text-align: center;
+  background: #0d0d0c;
+  color: var(--c-text-inv-muted);
+}
+.sim-fallback-box svg {
+  margin: 0 auto var(--sp-6);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .sim-workstation-grid {
+    grid-template-columns: 1fr;
+  }
+  .unit-cell-inspect-grid {
+    grid-template-columns: 1fr;
+  }
+  .cell-visual-preview {
+    border-right: none;
+    border-bottom: 1px solid var(--c-border-dark);
+  }
+  .sim-charts-grid {
+    grid-template-columns: 1fr;
+  }
+  .spec-grid-full {
+    grid-template-columns: 1fr 1fr;
+  }
+  .spec-cell-item:nth-child(3n) {
+    border-right: 1px solid var(--c-border-dark);
+  }
+  .spec-cell-item:nth-child(2n) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .spec-grid-full {
+    grid-template-columns: 1fr;
+  }
+  .spec-cell-item {
+    border-right: none !important;
+  }
+  .phase-presets-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
