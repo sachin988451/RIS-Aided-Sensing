@@ -88,7 +88,7 @@
     <div class="container">
       <div class="sim-section-header">
         <div>
-          <div class="sim-section-tag">01 // Architecture</div>
+          <div class="sim-section-tag">01 - Architecture</div>
           <h2 class="heading-sm" style="color:var(--c-text-inv);">Unit Cell Electromagnetic Geometry</h2>
         </div>
         <div style="font-family:var(--font-mono); font-size:12px; color:var(--c-text-inv-muted);">
@@ -157,7 +157,7 @@
     <div class="container">
       <div class="sim-section-header">
         <div>
-          <div class="sim-section-tag">02 // S-Parameters</div>
+          <div class="sim-section-tag">02 - S-Parameters</div>
           <h2 class="heading-sm" style="color:var(--c-text);">Frequency Response &amp; Return Loss</h2>
         </div>
         <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-muted);">
@@ -202,7 +202,7 @@
     <div class="container">
       <div class="sim-section-header">
         <div>
-          <div class="sim-section-tag">03 // Phase Shift</div>
+          <div class="sim-section-tag">03 - Phase Shift</div>
           <h2 class="heading-sm" style="color:var(--c-text-inv);">Reflection Phase vs Frequency</h2>
         </div>
         <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
@@ -230,20 +230,44 @@
     <div class="container">
       <div class="sim-section-header">
         <div>
-          <div class="sim-section-tag">04 // Metasurface Topology</div>
+          <div class="sim-section-tag">04 - Metasurface Topology</div>
           <h2 class="heading-sm" style="color:var(--c-text);">2D Planar Array Element Matrix</h2>
         </div>
         <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-muted);">
-          Click any cell below to inspect
+          Click any cell to inspect element number, coordinates &amp; phase degree
+        </div>
+      </div>
+
+      <!-- Live Element Telemetry Banner -->
+      <div class="matrix-selected-banner">
+        <div class="matrix-banner-item">
+          <span class="matrix-banner-key">Selected Cell</span>
+          <span class="matrix-banner-val" id="mat-cell-id">Cell [4, 4] (#28)</span>
+        </div>
+        <div class="matrix-banner-item">
+          <span class="matrix-banner-key">Reflection Phase</span>
+          <span class="matrix-banner-val accent" id="mat-cell-phase">225°</span>
+        </div>
+        <div class="matrix-banner-item">
+          <span class="matrix-banner-key">Element Dimension</span>
+          <span class="matrix-banner-val">8.0 × 8.0 mm</span>
+        </div>
+        <div class="matrix-banner-item">
+          <span class="matrix-banner-key">Cell Periodicity</span>
+          <span class="matrix-banner-val">10 × 10 mm</span>
+        </div>
+        <div class="matrix-banner-item">
+          <span class="matrix-banner-key">Substrate &amp; Cladding</span>
+          <span class="matrix-banner-val">FR-4 / 35 µm Cu</span>
         </div>
       </div>
 
       <div class="array-2d-view-wrap">
         <div class="array-matrix-grid" id="array-matrix-2d">
-          <!-- Generated procedurally by simulation.js -->
+          <!-- Generated procedurally by simulation.js with cell numbers & degrees -->
         </div>
-        <div style="text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--c-text-muted); margin-top:var(--sp-4);">
-          8×8 UNIT CELL ARRAY (10 × 10 mm PERIODICITY · 8 × 8 mm COPPER PATCHES)
+        <div class="array-meta-footer">
+          <span>8×8 UNIT CELL ARRAY · 64 ACTIVE METASURFACE ELEMENTS · 8–12 GHz OPERATING BAND</span>
         </div>
       </div>
     </div>
@@ -254,7 +278,7 @@
     <div class="container">
       <div class="sim-section-header">
         <div>
-          <div class="sim-section-tag">05 // Design Specifications</div>
+          <div class="sim-section-tag">05 - Design Specifications</div>
           <h2 class="heading-sm" style="color:var(--c-text-inv);">Verified Project Parameters</h2>
         </div>
         <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">

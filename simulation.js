@@ -725,13 +725,21 @@
   }
 
   function updateInspectionPanel() {
+    const cellPhase = (simState.phase + ((simState.selectedCell.col - 1) * 15)) % 360;
+    const cellIdText = `Cell [${simState.selectedCell.row}, ${simState.selectedCell.col}] (#${simState.selectedCell.index + 1})`;
+
     if (el.inspectCellId) {
-      el.inspectCellId.textContent = `Cell [${simState.selectedCell.row}, ${simState.selectedCell.col}] (#${simState.selectedCell.index + 1})`;
+      el.inspectCellId.textContent = cellIdText;
     }
     if (el.inspectCellPhase) {
-      const cellPhase = (simState.phase + (simState.selectedCell.col * 15)) % 360;
       el.inspectCellPhase.textContent = `${cellPhase}° (Reflection State)`;
     }
+
+    // Section 04 Matrix Telemetry Banner updates
+    const matCellId = document.getElementById('mat-cell-id');
+    const matCellPhase = document.getElementById('mat-cell-phase');
+    if (matCellId) matCellId.textContent = cellIdText;
+    if (matCellPhase) matCellPhase.textContent = `${cellPhase}°`;
   }
 
   /* =========================================================
@@ -750,11 +758,27 @@
         const cellEl = document.createElement('div');
         cellEl.className = 'array-cell-2d';
         cellEl.setAttribute('data-index', idx);
-        cellEl.setAttribute('title', `Cell [${r + 1}, ${c + 1}]`);
+        cellEl.setAttribute('data-row', r + 1);
+        cellEl.setAttribute('data-col', c + 1);
+        cellEl.setAttribute('title', `Element #${idx + 1} — Row ${r + 1}, Col ${c + 1}`);
 
+        // Cell Number Indicator (01 - 64)
+        const numTag = document.createElement('span');
+        numTag.className = 'cell-num-tag';
+        numTag.textContent = String(idx + 1).padStart(2, '0');
+        cellEl.appendChild(numTag);
+
+        // Inner Copper Patch
         const patchInner = document.createElement('div');
         patchInner.className = 'cell-inner-patch';
         cellEl.appendChild(patchInner);
+
+        // Reflection Phase Degree Tag
+        const degTag = document.createElement('span');
+        degTag.className = 'cell-deg-tag';
+        const cellPhase = (simState.phase + (c * 15)) % 360;
+        degTag.textContent = `${cellPhase}°`;
+        cellEl.appendChild(degTag);
 
         const currentIdx = idx;
         const currR = r + 1;
@@ -790,13 +814,21 @@
     cells.forEach((c, idx) => {
       const col = idx % 8;
       const cellPhase = (simState.phase + (col * 15)) % 360;
+      
       const patch = c.querySelector('.cell-inner-patch');
       if (patch) {
-        const scale = 0.65 + (Math.sin((cellPhase * Math.PI) / 180) * 0.15);
+        const scale = 0.58 + (Math.sin((cellPhase * Math.PI) / 180) * 0.14);
         patch.style.transform = `scale(${scale})`;
-        patch.style.backgroundColor = cellPhase > 180 ? '#c98144' : '#8f562d';
+        patch.style.backgroundColor = cellPhase >= 180 ? '#c98144' : '#8f562d';
+      }
+
+      const degTag = c.querySelector('.cell-deg-tag');
+      if (degTag) {
+        degTag.textContent = `${cellPhase}°`;
       }
     });
+
+    updateInspectionPanel();
   }
 
   /* =========================================================

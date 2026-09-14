@@ -92,12 +92,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      background: #141311;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
     }
 
     #hero-svg {
       width: 100%;
-      max-width: 560px;
+      max-width: 600px;
       height: auto;
+      display: block;
     }
 
     /* Annotation labels */
@@ -370,7 +376,7 @@
       <div>
         <div class="hero-eyebrow" aria-hidden="true">
           <div class="hero-eyebrow-bar"></div>
-          <span style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:0.16em;text-transform:uppercase;color:var(--c-text-inv-muted);">22EC711 / Engineering Project</span>
+          <span style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:0.16em;text-transform:uppercase;color:var(--c-text-inv-muted);">22EC711 : Engineering Project</span>
         </div>
         <h1 class="hero-title">
           Seeing Beyond<br><em>the Line of Sight.</em>
@@ -387,116 +393,142 @@
 
       <!-- Diagram -->
       <div class="hero-diagram-wrap" aria-hidden="true">
-        <svg id="hero-svg" viewBox="0 0 520 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg id="hero-svg" viewBox="0 0 600 360" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <marker id="arrow-direct" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-              <path d="M0,0 L8,3 L0,6 Z" fill="#c94f2a"/>
+            <!-- Sleek Arrow Markers -->
+            <marker id="arrow-ris" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0.5 L5,3 L0,5.5 Z" fill="#3a7ebf"/>
             </marker>
-            <marker id="arrow-ris" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-              <path d="M0,0 L8,3 L0,6 Z" fill="#3a7ebf"/>
+            <marker id="arrow-ris2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <path d="M0,0.5 L5,3 L0,5.5 Z" fill="#3a7ebf"/>
             </marker>
-            <marker id="arrow-ris2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-              <path d="M0,0 L8,3 L0,6 Z" fill="#3a7ebf"/>
-            </marker>
+            
+            <!-- Subtle Grid Background Texture -->
+            <pattern id="grid-sm" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+              <path d="M24,0 L0,0 L0,24" stroke="rgba(255,255,255,0.03)" stroke-width="0.75" fill="none"/>
+            </pattern>
           </defs>
 
-          <!-- Grid texture -->
-          <pattern id="grid-sm" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-            <path d="M20,0 L0,0 L0,20" stroke="rgba(255,255,255,0.04)" stroke-width="0.5" fill="none"/>
-          </pattern>
-          <rect width="520" height="420" fill="url(#grid-sm)"/>
+          <!-- Grid Background -->
+          <rect width="600" height="360" fill="url(#grid-sm)" rx="8"/>
 
-          <!-- TRANSMITTER (top-left) -->
+          <!-- ========================================================
+               1. TRANSMITTER (TX NODE - TOP LEFT)
+               ======================================================== -->
           <g id="tx-group">
-            <rect x="20" y="50" width="100" height="48" rx="2" fill="#252420" stroke="#4a4845" stroke-width="1"/>
-            <text x="70" y="69" text-anchor="middle" class="diagram-tag" fill="#a8a59f" font-size="9">TRANSMITTER</text>
-            <text x="70" y="85" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#f0ede8">TX</text>
+            <rect x="25" y="32" width="110" height="52" rx="6" fill="#181715" stroke="#3a3732" stroke-width="1.2"/>
+            <text x="80" y="54" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="13" font-weight="700" fill="#ffffff">TX NODE</text>
+            <text x="80" y="71" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" font-weight="600" fill="#c94f2a">Transmitter</text>
+            <!-- Ports -->
+            <circle cx="135" cy="52" r="3.5" fill="#c94f2a"/>
+            <circle cx="80" cy="84" r="3.5" fill="#3a7ebf"/>
           </g>
 
-          <!-- Antenna symbol at TX -->
-          <line x1="120" y1="74" x2="148" y2="74" stroke="#4a4845" stroke-width="1" stroke-dasharray="3 3"/>
-
-          <!-- OBSTACLE (center-top) -->
+          <!-- ========================================================
+               2. OBSTACLE (CENTER TOP)
+               ======================================================== -->
           <g id="obstacle-group">
-            <rect x="218" y="30" width="56" height="90" rx="2" fill="#2e2c2a" stroke="#4a4845" stroke-width="1.5"/>
-            <text x="246" y="78" text-anchor="middle" class="diagram-tag" fill="#f0ede8" font-size="9" font-weight="600">OBSTACLE</text>
-            <text x="246" y="92" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="18" fill="#8c8983">▐</text>
+            <rect x="268" y="24" width="64" height="74" rx="5" fill="#1b1a18" stroke="#3d3a35" stroke-width="1.2"/>
+            <rect x="268" y="24" width="64" height="4" rx="2" fill="#c94f2a"/>
+            <text x="300" y="65" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="700" fill="#ffffff">OBSTACLE</text>
           </g>
 
-          <!-- RECEIVER (top-right) -->
+          <!-- ========================================================
+               3. RECEIVER (RX NODE - TOP RIGHT)
+               ======================================================== -->
           <g id="rx-group">
-            <rect x="390" y="50" width="100" height="48" rx="2" fill="#252420" stroke="#4a4845" stroke-width="1"/>
-            <text x="440" y="69" text-anchor="middle" class="diagram-tag" fill="#a8a59f" font-size="9">RECEIVER</text>
-            <text x="440" y="85" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="10" fill="#f0ede8">RX</text>
+            <rect x="465" y="32" width="110" height="52" rx="6" fill="#181715" stroke="#3a3732" stroke-width="1.2"/>
+            <text x="520" y="54" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="13" font-weight="700" fill="#ffffff">RX NODE</text>
+            <text x="520" y="71" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" font-weight="600" fill="#4aab6d">Receiver</text>
+            <!-- Ports -->
+            <circle cx="465" cy="52" r="3.5" fill="#4aab6d"/>
+            <circle cx="520" cy="84" r="3.5" fill="#3a7ebf"/>
           </g>
 
-          <!-- DIRECT PATH — dashed (blocked) -->
-          <line id="path-direct" x1="274" y1="74" x2="389" y2="74"
-            stroke="#c94f2a" stroke-width="1.5" stroke-dasharray="5 4"
-            marker-end="url(#arrow-direct)" opacity="0.5"/>
-          <text x="330" y="67" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#c94f2a" opacity="0.7">DIRECT / LOS</text>
+          <!-- ========================================================
+               4. DIRECT LOS PATH (BLOCKED BY OBSTACLE)
+               ======================================================== -->
+          <!-- Active Line TX -> Obstacle -->
+          <line id="path-direct-1" x1="135" y1="52" x2="268" y2="52" stroke="#c94f2a" stroke-width="2" stroke-dasharray="4 3"/>
+          <text x="201" y="44" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" font-weight="600" fill="#ff8a6a">Direct LOS</text>
 
-          <!-- X symbol = blocked -->
-          <text x="330" y="90" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="14" fill="#c94f2a" opacity="0.6">✕</text>
+          <!-- Blocked Path past Obstacle -->
+          <line x1="332" y1="52" x2="465" y2="52" stroke="#402620" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <text x="398" y="44" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" font-weight="700" fill="#e05555">✕ Blocked</text>
 
-          <!-- TX → RIS path (vertical down from tx) -->
-          <line id="path-tx-ris" x1="70" y1="98" x2="70" y2="230"
-            stroke="#3a7ebf" stroke-width="1.5" stroke-dasharray="none"
-            marker-end="url(#arrow-ris)"/>
+          <!-- ========================================================
+               5. INCIDENT BEAM (TX -> RIS)
+               ======================================================== -->
+          <line id="path-tx-ris" x1="80" y1="84" x2="80" y2="175" stroke="#3a7ebf" stroke-width="2.5" marker-end="url(#arrow-ris)"/>
+          <text x="92" y="132" font-family="JetBrains Mono,monospace" font-size="8.5" font-weight="600" fill="#75b2f5">Incident Beam</text>
 
-          <!-- RIS PANEL -->
+          <!-- ========================================================
+               6. RIS METASURFACE PANEL (BOTTOM LEFT)
+               ======================================================== -->
           <g id="ris-group">
-            <rect x="30" y="232" width="80" height="80" rx="2" fill="#1a2535" stroke="#3a7ebf" stroke-width="1.5"/>
-            <!-- RIS unit cells -->
-            <g stroke="#3a7ebf" stroke-width="0.5" opacity="0.7">
-              <line x1="50" y1="232" x2="50" y2="312"/>
-              <line x1="70" y1="232" x2="70" y2="312"/>
-              <line x1="90" y1="232" x2="90" y2="312"/>
-              <line x1="30" y1="252" x2="110" y2="252"/>
-              <line x1="30" y1="272" x2="110" y2="272"/>
-              <line x1="30" y1="292" x2="110" y2="292"/>
+            <rect x="25" y="175" width="110" height="116" rx="6" fill="#111c29" stroke="#2a5c91" stroke-width="1.2"/>
+            <text x="80" y="194" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="9.5" font-weight="700" letter-spacing="0.06em" fill="#64a5eb">RIS PANEL</text>
+            
+            <!-- 3x4 Array of Metasurface Cells -->
+            <g transform="translate(34, 203)">
+              <rect x="0"  y="0"  width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+              <rect x="24" y="0"  width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+              <rect x="48" y="0"  width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+              <rect x="72" y="0"  width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+
+              <rect x="0"  y="18" width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+              <rect x="24" y="18" width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+              <rect x="48" y="18" width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+              <rect x="72" y="18" width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+
+              <rect x="0"  y="36" width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+              <rect x="24" y="36" width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+              <rect x="48" y="36" width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
+              <rect x="72" y="36" width="18" height="14" fill="#b87b47" stroke="#664422" rx="1.5"/>
             </g>
-            <text x="70" y="325" text-anchor="middle" class="diagram-tag" fill="#3a7ebf" font-size="9">RIS PANEL</text>
-            <text x="70" y="337" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#5a7eaf">N×M ELEMENTS</text>
+
+            <!-- Dynamic Phase Text -->
+            <text id="hero-phase-text" x="80" y="278" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" fill="#78b9ff">φ = 180°</text>
           </g>
 
-          <!-- RIS phase indicator -->
-          <rect x="116" y="265" width="72" height="18" rx="1" fill="#1a2535" stroke="#3a7ebf" stroke-width="0.5"/>
-          <text x="152" y="278" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#3a7ebf">φ = 180°</text>
-
-          <!-- RIS → RECEIVER reflected path -->
-          <path id="path-ris-rx" d="M110,272 Q280,240 389,120"
-            stroke="#3a7ebf" stroke-width="2"
-            marker-end="url(#arrow-ris2)" fill="none"/>
-
-          <!-- Path label -->
-          <text x="260" y="225" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#3a7ebf">RIS-REFLECTED PATH</text>
-          <text x="260" y="237" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#3a7ebf" opacity="0.7">(NLOS COVERAGE)</text>
-
-          <!-- VEHICLE / OBJECT -->
-          <g id="vehicle-group" transform="translate(290, 310)">
-            <rect x="-30" y="-16" width="60" height="24" rx="3" fill="#2a2825" stroke="#4a4845" stroke-width="1"/>
-            <rect x="-18" y="-26" width="36" height="16" rx="2" fill="#252320" stroke="#4a4845" stroke-width="1"/>
-            <circle cx="-18" cy="10" r="6" fill="#1a1917" stroke="#4a4845" stroke-width="1"/>
-            <circle cx="18"  cy="10" r="6" fill="#1a1917" stroke="#4a4845" stroke-width="1"/>
-            <text x="0" y="-32" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#a8a59f">TARGET OBJECT</text>
+          <!-- ========================================================
+               7. TARGET OBJECT IN BLIND SPOT
+               ======================================================== -->
+          <g id="vehicle-group" transform="translate(300, 205)">
+            <!-- Target Title -->
+            <text x="24" y="0" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" font-weight="700" fill="#ffffff">TARGET</text>
+            <!-- Vehicle Chassis -->
+            <rect x="0" y="14" width="48" height="18" rx="2" fill="#292723" stroke="#4a4640" stroke-width="1"/>
+            <rect x="10" y="6" width="28" height="9" rx="2" fill="#1f1d1a" stroke="#4a4640" stroke-width="1"/>
+            <!-- Wheels -->
+            <circle cx="11" cy="32" r="4.5" fill="#121211" stroke="#555" stroke-width="1"/>
+            <circle cx="37" cy="32" r="4.5" fill="#121211" stroke="#555" stroke-width="1"/>
+            <text x="24" y="47" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" font-weight="600" fill="#6ba8ea">Blind Spot</text>
           </g>
 
-          <!-- Ground line -->
-          <line x1="20" y1="360" x2="500" y2="360" stroke="#333230" stroke-width="1"/>
-          <line x1="20" y1="360" x2="500" y2="360" stroke="#3a3836" stroke-width="0.5" stroke-dasharray="2 6"/>
+          <!-- ========================================================
+               8. REFLECTED SENSING BEAM (RIS -> TARGET -> RX)
+               ======================================================== -->
+          <path id="path-ris-rx" d="M 135,233 C 215,233 260,233 300,233 C 380,233 520,195 520,84" stroke="#3a7ebf" stroke-width="2.5" marker-end="url(#arrow-ris2)" fill="none"/>
+          <text x="210" y="222" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8.5" font-weight="600" fill="#75b2f5">Reflected Beam →</text>
 
-          <!-- Antenna 1 label -->
-          <text x="155" y="62" font-family="JetBrains Mono,monospace" font-size="8" fill="#a8a59f">ANT. 1 →</text>
+          <!-- ========================================================
+               9. ANIMATED PULSES (CONTROLLED VIA JS)
+               ======================================================== -->
+          <circle id="pulse-direct" cx="135" cy="52" r="4" fill="#c94f2a" opacity="0"/>
+          <circle id="pulse-ris" cx="80" cy="84" r="4.5" fill="#3a7ebf" opacity="0"/>
 
-          <!-- SIGNAL PULSE MARKERS (JS will place actual circles) -->
-          <circle id="pulse-direct" cx="0" cy="0" r="4" fill="#c94f2a" opacity="0"/>
-          <circle id="pulse-ris" cx="0" cy="0" r="5" fill="#3a7ebf" opacity="0"/>
-
-          <!-- Technical annotations -->
-          <g font-family="JetBrains Mono,monospace" font-size="8" fill="#8c8983">
-            <text x="20" y="400">8–12 GHz OPERATING BAND</text>
-            <text x="320" y="400">PROJECT REFERENCE VISUALIZATION</text>
+          <!-- ========================================================
+               10. CLEAN BOTTOM LEGEND
+               ======================================================== -->
+          <g transform="translate(35, 332)">
+            <!-- Legend 1 -->
+            <circle cx="4" cy="0" r="3.5" fill="#c94f2a"/>
+            <text x="14" y="3.5" font-family="JetBrains Mono,monospace" font-size="8.5" font-weight="600" fill="#9c9993">Direct LOS: Blocked</text>
+            
+            <!-- Legend 2 -->
+            <circle cx="260" cy="0" r="3.5" fill="#3a7ebf"/>
+            <text x="270" y="3.5" font-family="JetBrains Mono,monospace" font-size="8.5" font-weight="600" fill="#75b2f5">RIS Path: Active Sensing</text>
           </g>
         </svg>
       </div>
@@ -859,44 +891,44 @@
     const svg = document.getElementById('hero-svg');
     if (!svg) return;
 
-    // Animated pulse dots along paths
-    const pulseColors = ['#c94f2a', '#3a7ebf'];
-    const positions = [
-      {cx: 70, cy: 74, dx: 320, dy: 74},   // direct path
-      {cx: 70, cy: 170, dx: 70, dy: 272}     // TX→RIS
-    ];
+    const dp = document.getElementById('pulse-direct');
+    const rp = document.getElementById('pulse-ris');
+    const risCurve = document.getElementById('path-ris-rx');
+    const phaseEl = document.getElementById('hero-phase-text');
 
-    let t = 0;
-    const PERIOD = 2400;
+    const curveLength = risCurve ? risCurve.getTotalLength() : 0;
+    const PERIOD = 2200;
 
     function tick(ts) {
-      t = (ts % PERIOD) / PERIOD;
+      const t = (ts % PERIOD) / PERIOD;
 
-      // Direct pulse
-      const dp = document.getElementById('pulse-direct');
-      const px = 274 + t * (389 - 274);
-      const py = 74;
+      // 1. Direct LOS pulse: TX (135, 52) -> Obstacle (268, 52) then blocked
       if (dp) {
-        dp.setAttribute('cx', px); dp.setAttribute('cy', py);
-        dp.setAttribute('opacity', t > 0.05 && t < 0.95 ? '0.85' : '0');
+        if (t < 0.55) {
+          const prog = t / 0.55;
+          dp.setAttribute('cx', 135 + prog * (268 - 135));
+          dp.setAttribute('cy', 52);
+          dp.setAttribute('opacity', prog < 0.85 ? '0.9' : String(0.9 * (1 - (prog - 0.85) * 6.6)));
+        } else {
+          dp.setAttribute('opacity', '0');
+        }
       }
 
-      // RIS pulse (along downward line)
-      const rp = document.getElementById('pulse-ris');
-      const t2 = (ts % (PERIOD * 1.5)) / (PERIOD * 1.5);
+      // 2. RIS-Aided path pulse:
+      // Stage A (0 to 0.28): Incident wave TX (80, 84) -> RIS (80, 175)
+      // Stage B (0.28 to 1.0): Reflected wave along curve to RX (520, 84)
       if (rp) {
-        if (t2 < 0.33) {
-          // TX → RIS
-          const tp = t2 / 0.33;
-          rp.setAttribute('cx', 70); rp.setAttribute('cy', 98 + tp * (272 - 98));
-          rp.setAttribute('opacity', tp > 0.05 ? '0.85' : '0');
-        } else {
-          // RIS → RX (approximate along path arc)
-          const tp = (t2 - 0.33) / 0.67;
-          const x = 110 + tp * (389 - 110);
-          const y = 272 + tp * (tp - 1) * 100; // simple arc
-          rp.setAttribute('cx', x); rp.setAttribute('cy', y);
-          rp.setAttribute('opacity', '0.85');
+        if (t < 0.28) {
+          const prog = t / 0.28;
+          rp.setAttribute('cx', 80);
+          rp.setAttribute('cy', 84 + prog * (175 - 84));
+          rp.setAttribute('opacity', '0.9');
+        } else if (risCurve && curveLength > 0) {
+          const prog = (t - 0.28) / 0.72;
+          const pt = risCurve.getPointAtLength(prog * curveLength);
+          rp.setAttribute('cx', pt.x);
+          rp.setAttribute('cy', pt.y);
+          rp.setAttribute('opacity', '0.95');
         }
       }
 
@@ -904,16 +936,12 @@
     }
     requestAnimationFrame(tick);
 
-    // Animate RIS unit cell phase indicators
-    const risRect = svg.querySelector('#ris-group rect');
-    if (risRect) {
-      let phase = 0;
+    // 3. Dynamic RIS phase angle cycle
+    if (phaseEl) {
+      let phase = 180;
       setInterval(() => {
         phase = (phase + 60) % 360;
-        const phaseText = svg.querySelector('#ris-group + rect + text');
-        // update phase readout
-        const phaseEl = svg.querySelector('text[x="152"]');
-        if (phaseEl) phaseEl.textContent = `φ = ${phase}°`;
+        phaseEl.textContent = `φ = ${phase}°`;
       }, 1400);
     }
   });
