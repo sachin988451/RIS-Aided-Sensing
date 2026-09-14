@@ -4,17 +4,26 @@
    ========================================================= */
 
 .sim-page-wrapper {
-  background: var(--c-bg-darker);
-  color: var(--c-text-inv);
+  background: var(--c-surface);
+  color: var(--c-text);
   min-height: 100vh;
 }
 
-/* --- HERO SECTION --- */
+/* --- HERO SECTION (WHITE / LIGHT) --- */
 .sim-hero-section {
   padding-top: calc(var(--nav-h) + var(--sp-20));
   padding-bottom: var(--sp-12);
-  background: #0d0d0c;
-  border-bottom: 1px solid var(--c-border-dark);
+  background: var(--c-surface);
+  color: var(--c-text);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.sim-hero-section .heading-display {
+  color: var(--c-text);
+}
+
+.sim-hero-section .body-lg {
+  color: var(--c-text-muted);
 }
 
 .sim-title-group {
@@ -31,7 +40,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: 0.08em;
-  color: var(--c-text-inv-muted);
+  color: var(--c-text-muted);
   margin-top: var(--sp-4);
   text-transform: uppercase;
 }
@@ -450,10 +459,37 @@
   50% { border-color: #ff8866; }
 }
 
-/* --- SECTIONS (01 - 05) --- */
+/* --- SECTIONS (01 - 05) ALTERNATING THEMES --- */
 .sim-section {
   padding-block: var(--sp-12);
+}
+
+.sim-section.theme-dark {
+  background: var(--c-bg-dark);
+  color: var(--c-text-inv);
   border-bottom: 1px solid var(--c-border-dark);
+}
+
+.sim-section.theme-dark .sim-section-header h2 {
+  color: var(--c-text-inv);
+}
+
+.sim-section.theme-dark .sim-section-header > div:last-child {
+  color: var(--c-text-inv-muted);
+}
+
+.sim-section.theme-light {
+  background: var(--c-surface);
+  color: var(--c-text);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.sim-section.theme-light .sim-section-header h2 {
+  color: var(--c-text);
+}
+
+.sim-section.theme-light .sim-section-header > div:last-child {
+  color: var(--c-text-muted);
 }
 
 .sim-section-header {
@@ -528,6 +564,26 @@
   gap: var(--sp-6);
 }
 
+.sim-section.theme-light .sim-chart-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.sim-section.theme-light .chart-title {
+  color: var(--c-text);
+}
+
+.sim-section.theme-light .chart-sub {
+  color: var(--c-text-muted);
+}
+
+.sim-section.theme-light .chart-ref-tag {
+  background: var(--c-bg-alt);
+  border: 1px solid var(--c-border);
+  color: var(--c-text-muted);
+}
+
 .sim-chart-card {
   background: #111110;
   border: 1px solid var(--c-border-dark);
@@ -586,6 +642,27 @@
 }
 
 /* Section 04: 2D Array Matrix */
+.sim-section.theme-light .array-2d-view-wrap {
+  background: var(--c-bg-alt);
+  border: 1px solid var(--c-border);
+}
+
+.sim-section.theme-light .array-cell-2d {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+}
+
+.sim-section.theme-light .array-cell-2d:hover {
+  border-color: var(--c-accent);
+  background: #fdf5f2;
+}
+
+.sim-section.theme-light .array-cell-2d.selected {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 1px var(--c-accent);
+  background: rgba(201, 79, 42, 0.12);
+}
+
 .array-2d-view-wrap {
   background: #111110;
   border: 1px solid var(--c-border-dark);

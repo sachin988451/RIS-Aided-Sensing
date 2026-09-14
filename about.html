@@ -153,54 +153,6 @@
       line-height: 1.75;
     }
 
-    /* References */
-    .refs-section {
-      background: var(--c-bg);
-      border-bottom: 1px solid var(--c-border);
-    }
-
-    .ref-item {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: var(--sp-4);
-      padding-block: var(--sp-6);
-      border-bottom: 1px solid var(--c-border);
-    }
-
-    .ref-item:last-child { border-bottom: none; }
-
-    .ref-num {
-      font-family: var(--font-mono);
-      font-size: var(--text-sm);
-      font-weight: 600;
-      color: var(--c-accent);
-      padding-top: 2px;
-    }
-
-    .ref-content {}
-
-    .ref-authors {
-      font-size: var(--text-sm);
-      color: var(--c-text-muted);
-      margin-bottom: 4px;
-    }
-
-    .ref-title {
-      font-family: var(--font-display);
-      font-size: var(--text-base);
-      font-weight: 600;
-      color: var(--c-text);
-      margin-bottom: 4px;
-      line-height: 1.45;
-    }
-
-    .ref-venue {
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      color: var(--c-text-faint);
-      letter-spacing: 0.06em;
-    }
-
     @media (max-width: 900px) {
       .project-info-grid { grid-template-columns: 1fr; }
       .pinfo-cell { border-right: none; border-bottom: 1px solid var(--c-border-dark); }
@@ -208,7 +160,6 @@
       .team-grid { grid-template-columns: 1fr; }
       .team-card { border-right: none; border-bottom: 1px solid var(--c-border); }
       .team-card:last-child { border-bottom: none; }
-      .ref-item { grid-template-columns: 32px 1fr; }
     }
   </style>
 </head>
@@ -254,7 +205,7 @@
   <div class="container">
     <div class="eyebrow">
       <div class="eyebrow-bar"></div>
-      <span class="label-accent">About / References</span>
+      <span class="label-accent">About the Project</span>
     </div>
     <h1 class="heading-display" id="about-hero-heading" style="margin-bottom:var(--sp-6);">
       The project.
@@ -398,99 +349,6 @@
         <p class="novelty-text">
           <strong>Enhanced reliability in dynamic environments:</strong> Signal diversity across two independent propagation paths provides robustness to the path-specific degradation that causes failure in single-path systems.
         </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- REFERENCES -->
-<section class="refs-section section theme-dark" id="references" aria-labelledby="refs-heading">
-  <div class="container">
-    <div class="section-eyebrow reveal">
-      <div class="section-eyebrow-line"></div>
-      <span class="label-accent">IEEE References</span>
-    </div>
-    <h2 class="heading-md reveal" id="refs-heading" style="margin-bottom:var(--sp-10);">
-      Research foundation.
-    </h2>
-
-    <div>
-      <div class="ref-item reveal">
-        <span class="ref-num">[1]</span>
-        <div class="ref-content">
-          <p class="ref-authors">E. Basar, M. Di Renzo, J. de Rosny, M.-S. Alouini, and R. Zhang,</p>
-          <p class="ref-title">"Wireless Communications Through Reconfigurable Intelligent Surfaces,"</p>
-          <p class="ref-venue">IEEE Access, vol. 7, pp. 116753–116773, 2019.</p>
-        </div>
-      </div>
-
-      <div class="ref-item reveal">
-        <span class="ref-num">[2]</span>
-        <div class="ref-content">
-          <p class="ref-authors">Q. Wu and R. Zhang,</p>
-          <p class="ref-title">"Intelligent Reflecting Surface Aided Wireless Communications for IoT,"</p>
-          <p class="ref-venue">IEEE Internet of Things Journal, vol. 7, no. 5, pp. 3828–3840, 2020.</p>
-        </div>
-      </div>
-
-      <div class="ref-item reveal">
-        <span class="ref-num">[3]</span>
-        <div class="ref-content">
-          <p class="ref-authors">H. Zhang, D. Li, S. Long, and Z. Han,</p>
-          <p class="ref-title">"RIS-Assisted Dual-Antenna Systems for Improved Sensing Performance,"</p>
-          <p class="ref-venue">IEEE Wireless Communications Letters, vol. 10, no. 3, pp. 474–478, 2021.</p>
-        </div>
-      </div>
-
-      <div class="ref-item reveal">
-        <span class="ref-num">[4]</span>
-        <div class="ref-content">
-          <p class="ref-authors">W. He, K. Yu, Y. Chen, and Y. Li,</p>
-          <p class="ref-title">"RIS Enhanced Radar Systems: A Survey,"</p>
-          <p class="ref-venue">IEEE Sensors Journal, vol. 22, no. 12, pp. 11564–11578, 2022.</p>
-        </div>
-      </div>
-
-      <div class="ref-item reveal">
-        <span class="ref-num">[5]</span>
-        <div class="ref-content">
-          <p class="ref-authors">J. Li, X. Mu, Y. Liu, and L. Guo,</p>
-          <p class="ref-title">"Reconfigurable Intelligent Surface Aided Sensing: Challenges and Opportunities,"</p>
-          <p class="ref-venue">IEEE Communications Surveys &amp; Tutorials, vol. 25, no. 1, pp. 100–124, 2023.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Technical Transparency Note -->
-<section style="background:var(--c-bg-alt);border-top:1px solid var(--c-border);border-bottom:1px solid var(--c-border);padding-block:var(--sp-12);" class="theme-light">
-  <div class="container">
-    <div class="section-eyebrow reveal">
-      <div class="section-eyebrow-line"></div>
-      <span class="label-accent">Technical Transparency</span>
-    </div>
-    <h2 class="heading-sm reveal" style="margin-bottom:var(--sp-6);">Visualization & Data Disclosure</h2>
-    <div class="grid-2 reveal" style="gap:var(--sp-8);">
-      <div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-base);font-weight:600;color:var(--c-text);margin-bottom:var(--sp-3);">What is real project information</h3>
-        <ul style="display:flex;flex-direction:column;gap:var(--sp-2);">
-          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-signal);">✓</span> Design parameters (frequency, substrate, dimensions)</li>
-          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-signal);">✓</span> Team names and roll numbers</li>
-          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-signal);">✓</span> Project objectives and novelty points</li>
-          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-signal);">✓</span> Reference design values (S11 &lt; −30 dB, S21 ≈ −3 dB)</li>
-          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-signal);">✓</span> IEEE references</li>
-        </ul>
-      </div>
-      <div>
-        <h3 style="font-family:var(--font-display);font-size:var(--text-base);font-weight:600;color:var(--c-text);margin-bottom:var(--sp-3);">What is illustrative / reference</h3>
-        <ul style="display:flex;flex-direction:column;gap:var(--sp-2);">
-          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-accent);">◦</span> All S-parameter plots (generated from design parameters)</li>
-          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-accent);">◦</span> System architecture diagrams (conceptual)</li>
-          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-accent);">◦</span> Application scene illustrations</li>
-          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-accent);">◦</span> Detection Lab behavior (demonstrative logic)</li>
-          <li style="font-size:var(--text-sm);color:var(--c-text-muted);display:flex;gap:var(--sp-2);"><span style="color:var(--c-accent);">◦</span> RIS phase state visualization</li>
-        </ul>
       </div>
     </div>
   </div>

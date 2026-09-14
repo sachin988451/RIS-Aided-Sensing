@@ -57,6 +57,7 @@
 </nav>
 
 <!-- EDITORIAL HERO / WORKSTATION HEADER -->
+<!-- EDITORIAL HERO / WORKSTATION HEADER (WHITE / LIGHT) -->
 <section class="sim-hero-section theme-light">
   <div class="container">
     <div class="sim-title-group">
@@ -64,10 +65,10 @@
         <div class="eyebrow-bar"></div>
         <span class="label-accent">CST-Inspired RF Workstation · 22EC711</span>
       </div>
-      <h1 class="heading-display" style="color: var(--c-text-inv); margin-bottom: var(--sp-3);">
+      <h1 class="heading-display" style="color: var(--c-text); margin-bottom: var(--sp-3);">
         Inside the Simulation.
       </h1>
-      <p class="body-lg" style="color: var(--c-text-inv-muted); max-width: 720px;">
+      <p class="body-lg" style="color: var(--c-text-muted); max-width: 720px;">
         Explore how frequency and RIS phase influence the reflected signal across the 8–12 GHz operating band.
       </p>
       
@@ -79,239 +80,251 @@
   </div>
 </section>
 
-<!-- MAIN WORKSTATION WORKSPACE -->
-<main class="container sim-workstation-container">
+<!-- MAIN WORKSTATION WORKSPACE WITH ALTERNATING THEMES -->
+<main class="sim-main-content">
 
-
-
-  <!-- SECTION 01: UNIT CELL INSPECTION -->
+  <!-- SECTION 01: UNIT CELL INSPECTION (DARK) -->
   <section class="sim-section theme-dark" id="sec-01">
-    <div class="sim-section-header">
-      <div>
-        <div class="sim-section-tag">01 // Architecture</div>
-        <h2 class="heading-sm" style="color:var(--c-text-inv);">Unit Cell Electromagnetic Geometry</h2>
-      </div>
-      <div style="font-family:var(--font-mono); font-size:12px; color:var(--c-text-inv-muted);">
-        Interactive Selection Mode
-      </div>
-    </div>
-
-    <div class="unit-cell-inspect-grid">
-      <div class="cell-visual-preview">
-        <svg viewBox="0 0 200 200" width="180" height="180">
-          <!-- Outer Substrate Cell (10x10 mm) -->
-          <rect x="20" y="20" width="160" height="160" fill="#2b3327" stroke="#4a5544" stroke-width="2" />
-          <!-- Inner Metallic Copper Patch (8x8 mm) -->
-          <rect x="36" y="36" width="128" height="128" fill="#c98144" stroke="#e0995c" stroke-width="1.5" />
-          
-          <!-- Dimensions Annotations -->
-          <line x1="20" y1="12" x2="180" y2="12" stroke="#666" stroke-width="1" />
-          <text x="100" y="9" font-family="JetBrains Mono" font-size="9" fill="#aaa" text-anchor="middle">Period: 10 mm</text>
-          
-          <line x1="188" y1="36" x2="188" y2="164" stroke="#c94f2a" stroke-width="1" />
-          <text x="194" y="104" font-family="JetBrains Mono" font-size="9" fill="#c94f2a" text-anchor="start">Patch: 8 mm</text>
-        </svg>
-        <div style="font-family:var(--font-mono); font-size:11px; color:#888; margin-top:8px;">
-          CROSS-SECTION (TOP VIEW)
-        </div>
-      </div>
-
-      <table class="cell-specs-table">
-        <tbody>
-          <tr>
-            <td class="spec-name">Unit Cell Period</td>
-            <td class="spec-val">10 × 10 mm</td>
-          </tr>
-          <tr>
-            <td class="spec-name">Conductive Patch Size</td>
-            <td class="spec-val" id="inspect-cell-patch">8 × 8 mm (Copper)</td>
-          </tr>
-          <tr>
-            <td class="spec-name">Substrate Material</td>
-            <td class="spec-val">FR-4 Dielectric</td>
-          </tr>
-          <tr>
-            <td class="spec-name">Relative Permittivity (εr)</td>
-            <td class="spec-val" id="inspect-cell-eps">4.4</td>
-          </tr>
-          <tr>
-            <td class="spec-name">Substrate Thickness (h)</td>
-            <td class="spec-val">1.6 mm</td>
-          </tr>
-          <tr>
-            <td class="spec-name">Copper Cladding Thickness</td>
-            <td class="spec-val">0.035 mm (35 µm)</td>
-          </tr>
-          <tr>
-            <td class="spec-name">Current Cell Phase State</td>
-            <td class="spec-val" style="color:var(--c-accent);" id="inspect-cell-phase">180° (Reflection State)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- SECTION 02: FREQUENCY RESPONSE (S11 & S21 GRAPHS) -->
-  <section class="sim-section theme-light" id="sec-02">
-    <div class="sim-section-header">
-      <div>
-        <div class="sim-section-tag">02 // S-Parameters</div>
-        <h2 class="heading-sm" style="color:var(--c-text-inv);">Frequency Response & Return Loss</h2>
-      </div>
-      <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
-        * Reference / illustrative data based on project parameters
-      </div>
-    </div>
-
-    <div class="sim-charts-grid">
-      <!-- S11 Card -->
-      <div class="sim-chart-card">
-        <div class="sim-chart-card-header">
-          <div>
-            <div class="chart-title">S11 (Return Loss) vs Frequency</div>
-            <div class="chart-sub">Project Target: S11 @ 10 GHz &lt; −30 dB</div>
-          </div>
-          <div class="chart-ref-tag">Illustrative Reference</div>
-        </div>
-        <div class="chart-canvas-container">
-          <canvas id="chart-s11"></canvas>
-        </div>
-      </div>
-
-      <!-- S21 Card -->
-      <div class="sim-chart-card">
-        <div class="sim-chart-card-header">
-          <div>
-            <div class="chart-title">S21 (Transmission / Reflected) vs Frequency</div>
-            <div class="chart-sub">Project Reference: S21 @ 10 GHz ≈ −3 dB</div>
-          </div>
-          <div class="chart-ref-tag">Illustrative Reference</div>
-        </div>
-        <div class="chart-canvas-container">
-          <canvas id="chart-s21"></canvas>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 03: REFLECTION PHASE RESPONSE -->
-  <section class="sim-section theme-dark" id="sec-03">
-    <div class="sim-section-header">
-      <div>
-        <div class="sim-section-tag">03 // Phase Shift</div>
-        <h2 class="heading-sm" style="color:var(--c-text-inv);">Reflection Phase vs Frequency</h2>
-      </div>
-      <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
-        Phase Agility across 8–12 GHz Band
-      </div>
-    </div>
-
-    <div class="phase-chart-full-card">
-      <div class="sim-chart-card-header">
+    <div class="container">
+      <div class="sim-section-header">
         <div>
-          <div class="chart-title">Continuous Reflection Phase Transition</div>
-          <div class="chart-sub">Configured Phase States: 0°, 60°, 120°, 180°, 240°, 300°</div>
+          <div class="sim-section-tag">01 // Architecture</div>
+          <h2 class="heading-sm" style="color:var(--c-text-inv);">Unit Cell Electromagnetic Geometry</h2>
         </div>
-        <div class="chart-ref-tag">Illustrative Reference</div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--c-text-inv-muted);">
+          Interactive Selection Mode
+        </div>
       </div>
-      <div class="phase-chart-canvas-wrap">
-        <canvas id="chart-phase"></canvas>
+
+      <div class="unit-cell-inspect-grid">
+        <div class="cell-visual-preview">
+          <svg viewBox="0 0 200 200" width="180" height="180">
+            <!-- Outer Substrate Cell (10x10 mm) -->
+            <rect x="20" y="20" width="160" height="160" fill="#2b3327" stroke="#4a5544" stroke-width="2" />
+            <!-- Inner Metallic Copper Patch (8x8 mm) -->
+            <rect x="36" y="36" width="128" height="128" fill="#c98144" stroke="#e0995c" stroke-width="1.5" />
+            
+            <!-- Dimensions Annotations -->
+            <line x1="20" y1="12" x2="180" y2="12" stroke="#666" stroke-width="1" />
+            <text x="100" y="9" font-family="JetBrains Mono" font-size="9" fill="#aaa" text-anchor="middle">Period: 10 mm</text>
+            
+            <line x1="188" y1="36" x2="188" y2="164" stroke="#c94f2a" stroke-width="1" />
+            <text x="194" y="104" font-family="JetBrains Mono" font-size="9" fill="#c94f2a" text-anchor="start">Patch: 8 mm</text>
+          </svg>
+          <div style="font-family:var(--font-mono); font-size:11px; color:#888; margin-top:8px;">
+            CROSS-SECTION (TOP VIEW)
+          </div>
+        </div>
+
+        <table class="cell-specs-table">
+          <tbody>
+            <tr>
+              <td class="spec-name">Unit Cell Period</td>
+              <td class="spec-val">10 × 10 mm</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Conductive Patch Size</td>
+              <td class="spec-val" id="inspect-cell-patch">8 × 8 mm (Copper)</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Substrate Material</td>
+              <td class="spec-val">FR-4 Dielectric</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Relative Permittivity (εr)</td>
+              <td class="spec-val" id="inspect-cell-eps">4.4</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Substrate Thickness (h)</td>
+              <td class="spec-val">1.6 mm</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Copper Cladding Thickness</td>
+              <td class="spec-val">0.035 mm (35 µm)</td>
+            </tr>
+            <tr>
+              <td class="spec-name">Current Cell Phase State</td>
+              <td class="spec-val" style="color:var(--c-accent);" id="inspect-cell-phase">180° (Reflection State)</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 04: 2D METASURFACE MATRIX -->
+  <!-- SECTION 02: FREQUENCY RESPONSE (S11 & S21 GRAPHS) (LIGHT) -->
+  <section class="sim-section theme-light" id="sec-02">
+    <div class="container">
+      <div class="sim-section-header">
+        <div>
+          <div class="sim-section-tag">02 // S-Parameters</div>
+          <h2 class="heading-sm" style="color:var(--c-text);">Frequency Response &amp; Return Loss</h2>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-muted);">
+          * Reference / illustrative data based on project parameters
+        </div>
+      </div>
+
+      <div class="sim-charts-grid">
+        <!-- S11 Card -->
+        <div class="sim-chart-card">
+          <div class="sim-chart-card-header">
+            <div>
+              <div class="chart-title">S11 (Return Loss) vs Frequency</div>
+              <div class="chart-sub">Project Target: S11 @ 10 GHz &lt; −30 dB</div>
+            </div>
+            <div class="chart-ref-tag">Illustrative Reference</div>
+          </div>
+          <div class="chart-canvas-container">
+            <canvas id="chart-s11"></canvas>
+          </div>
+        </div>
+
+        <!-- S21 Card -->
+        <div class="sim-chart-card">
+          <div class="sim-chart-card-header">
+            <div>
+              <div class="chart-title">S21 (Transmission / Reflected) vs Frequency</div>
+              <div class="chart-sub">Project Reference: S21 @ 10 GHz ≈ −3 dB</div>
+            </div>
+            <div class="chart-ref-tag">Illustrative Reference</div>
+          </div>
+          <div class="chart-canvas-container">
+            <canvas id="chart-s21"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 03: REFLECTION PHASE RESPONSE (DARK) -->
+  <section class="sim-section theme-dark" id="sec-03">
+    <div class="container">
+      <div class="sim-section-header">
+        <div>
+          <div class="sim-section-tag">03 // Phase Shift</div>
+          <h2 class="heading-sm" style="color:var(--c-text-inv);">Reflection Phase vs Frequency</h2>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
+          Phase Agility across 8–12 GHz Band
+        </div>
+      </div>
+
+      <div class="phase-chart-full-card">
+        <div class="sim-chart-card-header">
+          <div>
+            <div class="chart-title">Continuous Reflection Phase Transition</div>
+            <div class="chart-sub">Configured Phase States: 0°, 60°, 120°, 180°, 240°, 300°</div>
+          </div>
+          <div class="chart-ref-tag">Illustrative Reference</div>
+        </div>
+        <div class="phase-chart-canvas-wrap">
+          <canvas id="chart-phase"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 04: 2D METASURFACE MATRIX (LIGHT) -->
   <section class="sim-section theme-light" id="sec-04">
-    <div class="sim-section-header">
-      <div>
-        <div class="sim-section-tag">04 // Metasurface Topology</div>
-        <h2 class="heading-sm" style="color:var(--c-text-inv);">2D Planar Array Element Matrix</h2>
+    <div class="container">
+      <div class="sim-section-header">
+        <div>
+          <div class="sim-section-tag">04 // Metasurface Topology</div>
+          <h2 class="heading-sm" style="color:var(--c-text);">2D Planar Array Element Matrix</h2>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-muted);">
+          Click any cell below to inspect
+        </div>
       </div>
-      <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
-        Click any cell below or on the 3D model to inspect
-      </div>
-    </div>
 
-    <div class="array-2d-view-wrap">
-      <div class="array-matrix-grid" id="array-matrix-2d">
-        <!-- Generated procedurally by simulation.js -->
-      </div>
-      <div style="text-align:center; font-family:var(--font-mono); font-size:11px; color:#777; margin-top:var(--sp-4);">
-        8×8 UNIT CELL ARRAY (10 × 10 mm PERIODICITY · 8 × 8 mm COPPER PATCHES)
+      <div class="array-2d-view-wrap">
+        <div class="array-matrix-grid" id="array-matrix-2d">
+          <!-- Generated procedurally by simulation.js -->
+        </div>
+        <div style="text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--c-text-muted); margin-top:var(--sp-4);">
+          8×8 UNIT CELL ARRAY (10 × 10 mm PERIODICITY · 8 × 8 mm COPPER PATCHES)
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 05: TECHNICAL PARAMETER SPECIFICATIONS -->
-  <section class="sim-section theme-dark" id="sec-05" style="border-bottom:none;">
-    <div class="sim-section-header">
-      <div>
-        <div class="sim-section-tag">05 // Design Specifications</div>
-        <h2 class="heading-sm" style="color:var(--c-text-inv);">Verified Project Parameters</h2>
+  <!-- SECTION 05: TECHNICAL PARAMETER SPECIFICATIONS (DARK) -->
+  <section class="sim-section theme-dark" id="sec-05">
+    <div class="container">
+      <div class="sim-section-header">
+        <div>
+          <div class="sim-section-tag">05 // Design Specifications</div>
+          <h2 class="heading-sm" style="color:var(--c-text-inv);">Verified Project Parameters</h2>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
+          Project Code: 22EC711
+        </div>
       </div>
-      <div style="font-family:var(--font-mono); font-size:11px; color:var(--c-text-inv-muted);">
-        Project Code: 22EC711
-      </div>
-    </div>
 
-    <div class="spec-grid-full">
-      <div class="spec-cell-item">
-        <div class="spec-p-label">Operating Frequency Band</div>
-        <div class="spec-p-value">8 – 12 GHz</div>
-        <div class="spec-p-note">X-Band RF radar / sensing spectrum</div>
-      </div>
-      <div class="spec-cell-item">
-        <div class="spec-p-label">Design Frequency (f0)</div>
-        <div class="spec-p-value" style="color:var(--c-accent);">10.00 GHz</div>
-        <div class="spec-p-note">Optimal resonance and impedance match point</div>
-      </div>
-      <div class="spec-cell-item">
-        <div class="spec-p-label">Unit Cell Periodicity</div>
-        <div class="spec-p-value">10 × 10 mm</div>
-        <div class="spec-p-note">Sub-wavelength spatial period at 10 GHz</div>
-      </div>
-      <div class="spec-cell-item">
-        <div class="spec-p-label">Patch Dimensions</div>
-        <div class="spec-p-value">8 × 8 mm</div>
-        <div class="spec-p-note">Conductive square copper radiator</div>
-      </div>
-      <div class="spec-cell-item">
-        <div class="spec-p-label">Substrate Material & εr</div>
-        <div class="spec-p-value">FR-4 (εr = 4.4)</div>
-        <div class="spec-p-note">Cost-effective dielectric substrate</div>
-      </div>
-      <div class="spec-cell-item">
-        <div class="spec-p-label">Substrate Height (h)</div>
-        <div class="spec-p-value">1.6 mm</div>
-        <div class="spec-p-note">Standard industrial PCB fabrication height</div>
-      </div>
-      <div class="spec-cell-item">
-        <div class="spec-p-label">Copper Thickness (t)</div>
-        <div class="spec-p-value">0.035 mm (35 µm)</div>
-        <div class="spec-p-note">1 oz copper foil standard</div>
-      </div>
-      <div class="spec-cell-item">
-        <div class="spec-p-label">Reference S11 @ 10 GHz</div>
-        <div class="spec-p-value" style="color:var(--c-signal);">&lt; −30 dB</div>
-        <div class="spec-p-note">Deep return loss resonance at design frequency</div>
-      </div>
-      <div class="spec-cell-item">
-        <div class="spec-p-label">Reference S21 @ 10 GHz</div>
-        <div class="spec-p-value" style="color:var(--c-ris);">≈ −3 dB</div>
-        <div class="spec-p-note">Reference transmission / reflected amplitude</div>
+      <div class="spec-grid-full">
+        <div class="spec-cell-item">
+          <div class="spec-p-label">Operating Frequency Band</div>
+          <div class="spec-p-value">8 – 12 GHz</div>
+          <div class="spec-p-note">X-Band RF radar / sensing spectrum</div>
+        </div>
+        <div class="spec-cell-item">
+          <div class="spec-p-label">Design Frequency (f0)</div>
+          <div class="spec-p-value" style="color:var(--c-accent);">10.00 GHz</div>
+          <div class="spec-p-note">Optimal resonance and impedance match point</div>
+        </div>
+        <div class="spec-cell-item">
+          <div class="spec-p-label">Unit Cell Periodicity</div>
+          <div class="spec-p-value">10 × 10 mm</div>
+          <div class="spec-p-note">Sub-wavelength spatial period at 10 GHz</div>
+        </div>
+        <div class="spec-cell-item">
+          <div class="spec-p-label">Patch Dimensions</div>
+          <div class="spec-p-value">8 × 8 mm</div>
+          <div class="spec-p-note">Conductive square copper radiator</div>
+        </div>
+        <div class="spec-cell-item">
+          <div class="spec-p-label">Substrate Material &amp; εr</div>
+          <div class="spec-p-value">FR-4 (εr = 4.4)</div>
+          <div class="spec-p-note">Cost-effective dielectric substrate</div>
+        </div>
+        <div class="spec-cell-item">
+          <div class="spec-p-label">Substrate Height (h)</div>
+          <div class="spec-p-value">1.6 mm</div>
+          <div class="spec-p-note">Standard industrial PCB fabrication height</div>
+        </div>
+        <div class="spec-cell-item">
+          <div class="spec-p-label">Copper Thickness (t)</div>
+          <div class="spec-p-value">0.035 mm (35 µm)</div>
+          <div class="spec-p-note">1 oz copper foil standard</div>
+        </div>
+        <div class="spec-cell-item">
+          <div class="spec-p-label">Reference S11 @ 10 GHz</div>
+          <div class="spec-p-value" style="color:var(--c-signal);">&lt; −30 dB</div>
+          <div class="spec-p-note">Deep return loss resonance at design frequency</div>
+        </div>
+        <div class="spec-cell-item">
+          <div class="spec-p-label">Reference S21 @ 10 GHz</div>
+          <div class="spec-p-value" style="color:var(--c-ris);">≈ −3 dB</div>
+          <div class="spec-p-note">Reference transmission / reflected amplitude</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Technical Transparency Disclosure Box -->
-  <div style="background:#111110; border:1px solid var(--c-border-dark); padding:var(--sp-6); margin-top:var(--sp-8);">
-    <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; color:var(--c-accent); text-transform:uppercase; margin-bottom:var(--sp-2);">
-      Project Simulation Reference Disclosure
+  <!-- Technical Transparency Disclosure Box (LIGHT) -->
+  <section class="sim-section theme-light" style="padding-top: var(--sp-8); padding-bottom: var(--sp-12); border-bottom: none;">
+    <div class="container">
+      <div style="background:var(--c-bg-alt); border:1px solid var(--c-border); padding:var(--sp-6);">
+        <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; color:var(--c-accent); text-transform:uppercase; margin-bottom:var(--sp-2);">
+          Project Simulation Reference Disclosure
+        </div>
+        <p style="font-size:var(--text-sm); color:var(--c-text-muted); line-height:1.7;">
+          This page is an interactive technical visualization developed to illustrate the electromagnetic principles and design specifications of Project 22EC711 (RIS-Aided Dual Antenna for Obstacle Detection). All S-parameter curves, wavefront fields, and phase states are visual reference representations generated from the project's design parameters (8–12 GHz band, 10 GHz design point, FR-4 substrate, S11 &lt; −30 dB, S21 ≈ −3 dB) and are not real-time CST Microwave Studio solver outputs.
+        </p>
+      </div>
     </div>
-    <p style="font-size:var(--text-sm); color:var(--c-text-inv-muted); line-height:1.7;">
-      This page is an interactive technical visualization developed to illustrate the electromagnetic principles and design specifications of Project 22EC711 (RIS-Aided Dual Antenna for Obstacle Detection). All S-parameter curves, wavefront fields, and phase states are visual reference representations generated from the project's design parameters (8–12 GHz band, 10 GHz design point, FR-4 substrate, S11 &lt; −30 dB, S21 ≈ −3 dB) and are not real-time CST Microwave Studio solver outputs.
-    </p>
-  </div>
+  </section>
 
 </main>
 

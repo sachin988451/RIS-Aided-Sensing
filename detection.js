@@ -479,7 +479,7 @@
   function updatePhaseUI() {
     if (el.dialValDisp) el.dialValDisp.textContent = `${labState.phase}°`;
     if (el.dialPointer) {
-      el.dialPointer.setAttribute('transform', `rotate(${labState.phase} 75 75)`);
+      el.dialPointer.setAttribute('transform', `rotate(${labState.phase} 100 100)`);
     }
     el.phaseChips.forEach(c => {
       const val = parseInt(c.getAttribute('data-phase'), 10);

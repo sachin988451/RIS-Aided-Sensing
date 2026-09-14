@@ -85,8 +85,8 @@
   </div>
 </section>
 
-<!-- SYSTEM STATUS INSTRUMENT BAR -->
-<section class="det-status-banner theme-dark" aria-label="System Telemetry Status">
+<!-- SYSTEM STATUS INSTRUMENT BAR (LIGHT) -->
+<section class="det-status-banner theme-light" aria-label="System Telemetry Status">
   <div class="container">
     <div class="det-status-container">
       
@@ -119,459 +119,530 @@
   </div>
 </section>
 
-<!-- MAIN CONTAINER -->
-<main class="container">
+<!-- MAIN DETECTION LAB CONTENT (FULL-WIDTH SECTIONS WITH CONTAINERS) -->
+<main class="det-main-content">
 
-  <!-- MAIN DETECTION CHAMBER (FULL-WIDTH INTERACTIVE SVG) -->
-  <section class="det-chamber-wrap theme-light" aria-labelledby="chamber-heading">
-    <div class="det-chamber-card">
-      
-      <div class="det-chamber-header">
-        <div class="det-chamber-header-title">
-          <span>RF CHAMBER</span> // WIRELESS PROPAGATION & OBSTACLE SENSING
-        </div>
-        <div class="det-chamber-meta">
-          COORDINATE GRID: 800 × 480 · 8–12 GHz SPECTRUM
-        </div>
-      </div>
-
-      <div class="det-svg-canvas-container">
+  <!-- SECTION: MAIN DETECTION CHAMBER (LIGHT) -->
+  <section class="det-section theme-light det-chamber-section" aria-labelledby="chamber-heading">
+    <div class="container">
+      <div class="det-chamber-card">
         
-        <!-- On-Screen Telemetry Annotations -->
-        <div class="det-hud-overlay">
-          <div>ANTENNA 1: <span>DIRECT PATH (TX1 &rarr; RX)</span></div>
-          <div>ANTENNA 2: <span>RIS-ASSISTED (TX2 &rarr; RIS &rarr; RX)</span></div>
-          <div>SAMPLING: <span>CONTINUOUS SENSING PROBE</span></div>
-        </div>
-
-        <div class="det-hud-legend">
-          <div class="legend-item"><span class="legend-line direct"></span> Direct Channel</div>
-          <div class="legend-item"><span class="legend-line ris"></span> RIS-Assisted Channel</div>
-        </div>
-
-        <!-- Master SVG Sensing Scene -->
-        <svg id="det-chamber-svg" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <!-- Obstacle Hatch Pattern -->
-            <pattern id="obs-hatch" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="0" x2="0" y2="10" stroke="#ff8866" stroke-width="2" />
-            </pattern>
-            <!-- RIS Texture Pattern -->
-            <pattern id="ris-tex-bg" width="16" height="16" patternUnits="userSpaceOnUse">
-              <rect width="14" height="14" fill="#b3773f" stroke="#664422" />
-            </pattern>
-          </defs>
-
-          <!-- Reference Coordinate Grids & Bench Lines -->
-          <line x1="40" y1="440" x2="760" y2="440" stroke="#d0ccc4" stroke-width="1.5" />
-          <line x1="120" y1="60" x2="120" y2="440" stroke="#e0dcd5" stroke-dasharray="3,3" />
-          <line x1="680" y1="60" x2="680" y2="440" stroke="#e0dcd5" stroke-dasharray="3,3" />
-          <line x1="400" y1="60" x2="400" y2="440" stroke="#e0dcd5" stroke-dasharray="3,3" />
-
-          <!-- ========================================================
-               1. TRANSMITTER NODE (TX) [X: 120, Y: 160]
-               ======================================================== -->
-          <g id="svg-tx-node" transform="translate(120, 160)">
-            <!-- TX Base Tower -->
-            <rect x="-18" y="25" width="36" height="70" fill="#2d2b28" stroke="#1a1917" />
-            <line x1="-18" y1="45" x2="18" y2="75" stroke="#44413d" />
-            <line x1="18" y1="45" x2="-18" y2="75" stroke="#44413d" />
-            
-            <!-- TX Radiator Head -->
-            <circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#1a1917" stroke-width="2" />
-            <circle cx="0" cy="0" r="10" fill="#c94f2a" />
-            <circle cx="0" cy="0" r="4" fill="#ffffff" />
-            
-            <!-- TX Wavefront Pulse Ripples -->
-            <circle cx="0" cy="0" r="30" fill="none" stroke="#c94f2a" stroke-width="1" opacity="0.4" />
-            
-            <!-- Labels -->
-            <text x="0" y="-32" font-family="Space Grotesk" font-size="12" font-weight="700" fill="#1a1917" text-anchor="middle">TRANSMITTER</text>
-            <text x="0" y="-18" font-family="JetBrains Mono" font-size="9" fill="#c94f2a" font-weight="600" text-anchor="middle">TX (DUAL PORT)</text>
-          </g>
-
-          <!-- ========================================================
-               2. RECEIVER NODE (RX) [X: 680, Y: 160]
-               ======================================================== -->
-          <g id="svg-rx-node" transform="translate(680, 160)">
-            <!-- RX Base Tower -->
-            <rect x="-18" y="25" width="36" height="70" fill="#2d2b28" stroke="#1a1917" />
-            <line x1="-18" y1="45" x2="18" y2="75" stroke="#44413d" />
-            <line x1="18" y1="45" x2="-18" y2="75" stroke="#44413d" />
-            
-            <!-- RX Sensor Horn -->
-            <path d="M-15,-15 L15,0 L-15,15 Z" fill="#ffffff" stroke="#1a1917" stroke-width="2" transform="rotate(180)" />
-            <circle cx="0" cy="0" r="10" fill="#4aab6d" />
-            <circle cx="0" cy="0" r="4" fill="#ffffff" />
-            
-            <!-- Dynamic Capture Field Ring -->
-            <circle id="svg-rx-field" cx="0" cy="0" r="28" fill="none" stroke="#4aab6d" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.8" />
-
-            <!-- Labels -->
-            <text x="0" y="-32" font-family="Space Grotesk" font-size="12" font-weight="700" fill="#1a1917" text-anchor="middle">RECEIVER</text>
-            <text x="0" y="-18" font-family="JetBrains Mono" font-size="9" fill="#2e7d4d" font-weight="600" text-anchor="middle">RX DUAL SENSOR</text>
-          </g>
-
-          <!-- ========================================================
-               3. RECONFIGURABLE INTELLIGENT SURFACE (RIS) [X: 400, Y: 360]
-               ======================================================== -->
-          <g id="svg-ris-node" transform="translate(400, 360)">
-            <!-- Base Stand -->
-            <rect x="-6" y="32" width="12" height="60" fill="#3a3733" stroke="#1a1917" />
-            <!-- Substrate Plate (FR-4 Dielectric) -->
-            <rect x="-70" y="-30" width="140" height="64" fill="#283625" stroke="#1a2418" stroke-width="2" rx="2" />
-            
-            <!-- 8x4 Array of Metallic Copper Unit Cells -->
-            <g id="svg-ris-cells" transform="translate(-60, -22)">
-              <!-- Dynamically populated / styled by detection.js -->
-            </g>
-
-            <!-- Angle Normal Leader Line -->
-            <line x1="0" y1="-30" x2="0" y2="-60" stroke="#3a7ebf" stroke-width="1.5" stroke-dasharray="3,3" />
-            <text x="0" y="-66" font-family="JetBrains Mono" font-size="8" fill="#2a659e" font-weight="600" text-anchor="middle">NORMAL (θr = θi + Δψ)</text>
-
-            <!-- Labels -->
-            <text x="0" y="52" font-family="Space Grotesk" font-size="12" font-weight="700" fill="#1a1917" text-anchor="middle">RECONFIGURABLE SURFACE (RIS)</text>
-            <text x="0" y="66" font-family="JetBrains Mono" font-size="9" fill="#3a7ebf" font-weight="600" text-anchor="middle">N×M ELEMENT PHASE METASURFACE</text>
-          </g>
-
-          <!-- ========================================================
-               4. PROPAGATION PATH TRACES (LINES)
-               ======================================================== -->
-          <!-- Direct Path Line (TX 120,160 -> RX 680,160) -->
-          <line id="svg-direct-line" x1="120" y1="160" x2="680" y2="160" stroke="var(--c-direct)" stroke-width="2.5" />
-          
-          <!-- RIS Path 1: TX (120,160) -> RIS (400,360) -->
-          <line id="svg-ris-path-1" x1="120" y1="160" x2="400" y2="360" stroke="var(--c-ris)" stroke-width="2" />
-          
-          <!-- RIS Path 2: RIS (400,360) -> RX (680,160) -->
-          <line id="svg-ris-path-2" x1="400" y1="360" x2="680" y2="160" stroke="var(--c-ris)" stroke-width="2" />
-
-          <!-- Dynamic Travelling Pulses Layer -->
-          <g id="svg-pulses-container">
-            <!-- Animated circles appended by detection.js loop -->
-          </g>
-
-          <!-- ========================================================
-               5. PHYSICAL OBSTACLE OBSTRUCTION [X: 360..440, Y: 100..220]
-               ======================================================== -->
-          <g id="svg-obstacle-group" class="det-obstacle-group" transform="translate(0, -140)">
-            <!-- Shadow -->
-            <rect x="355" y="95" width="90" height="130" fill="rgba(0,0,0,0.12)" rx="4" />
-            <!-- Physical Barrier Body (Architectural Monolith) -->
-            <rect x="360" y="100" width="80" height="120" fill="#2d2b27" stroke="#1a1917" stroke-width="2" rx="3" />
-            
-            <!-- Structural Warning Striping -->
-            <rect x="360" y="100" width="80" height="14" fill="#c94f2a" />
-            <line x1="360" y1="114" x2="440" y2="114" stroke="#ffffff" stroke-width="1" />
-            
-            <!-- Interior Hazard Hatching -->
-            <rect x="368" y="122" width="64" height="88" fill="url(#obs-hatch)" opacity="0.3" />
-            <rect x="368" y="122" width="64" height="88" fill="none" stroke="#554d46" stroke-width="1" />
-            
-            <!-- Label on Obstacle -->
-            <text x="400" y="160" font-family="Space Grotesk" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">OBSTACLE</text>
-            <text x="400" y="176" font-family="JetBrains Mono" font-size="9" fill="#ffb49e" font-weight="600" text-anchor="middle">NLOS BARRIER</text>
-          </g>
-
-        </svg>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- SCENARIO PRESETS BAR -->
-  <section class="det-presets-section theme-dark" aria-labelledby="preset-heading">
-    <div class="det-presets-heading">
-      <div class="det-presets-kicker">
-        Test Scenarios // Instant Configuration
-      </div>
-      <div class="det-presets-note">
-        Select preset to observe automated physical transitions
-      </div>
-    </div>
-
-    <div class="det-presets-grid">
-      <!-- Preset 1 -->
-      <button type="button" class="scenario-chip active" data-scenario="open-space">
-        <div class="scen-title">01 // Open Space</div>
-        <div class="scen-desc">LOS · Clear · Dual Paths</div>
-      </button>
-      <!-- Preset 2 -->
-      <button type="button" class="scenario-chip" data-scenario="blocked-path">
-        <div class="scen-title">02 // Blocked Path</div>
-        <div class="scen-desc">NLOS · Barrier In-Path · RIS On</div>
-      </button>
-      <!-- Preset 3 -->
-      <button type="button" class="scenario-chip" data-scenario="ris-only">
-        <div class="scen-title">03 // RIS Only</div>
-        <div class="scen-desc">NLOS · Direct Muted · Pure Reflected</div>
-      </button>
-      <!-- Preset 4 -->
-      <button type="button" class="scenario-chip" data-scenario="dual-path">
-        <div class="scen-title">04 // Dual Path</div>
-        <div class="scen-desc">Both Channels · Maximum Diversity</div>
-      </button>
-      <!-- Preset 5 -->
-      <button type="button" class="scenario-chip" data-scenario="no-path">
-        <div class="scen-title">05 // No Path</div>
-        <div class="scen-desc">NLOS · All Channels Severed</div>
-      </button>
-    </div>
-  </section>
-
-  <!-- WORKBENCH CONTROLS GRID (3 PANELS) -->
-  <section class="det-workbench-grid theme-light" aria-labelledby="workbench-heading">
-    
-    <!-- PANEL 1: ENVIRONMENT & OBSTACLE -->
-    <div class="det-wb-panel">
-      <div class="wb-panel-header">
-        <span>01 // Propagation Space</span>
-        <span class="det-physical-label">PHYSICAL</span>
-      </div>
-
-      <div class="det-control-group">
-        <div class="det-control-label">
-          Line of Sight Mode
-        </div>
-        <div class="tactile-seg-group">
-          <button id="btn-env-los" class="tactile-seg-btn active">LOS (Direct Open)</button>
-          <button id="btn-env-nlos" class="tactile-seg-btn">NLOS (Obstructed)</button>
-        </div>
-      </div>
-
-      <div class="det-control-group">
-        <div class="det-control-label">
-          Physical Obstacle State
-        </div>
-        <div class="tactile-seg-group">
-          <button id="btn-obs-clear" class="tactile-seg-btn active">CLEAR (Free)</button>
-          <button id="btn-obs-blocked" class="tactile-seg-btn">BLOCKED (In-Path)</button>
-        </div>
-      </div>
-
-      <div>
-        <div class="det-control-label">
-          Active Antenna Channels
-        </div>
-        <div class="tactile-seg-group">
-          <button id="btn-path-direct" class="tactile-seg-btn">Direct</button>
-          <button id="btn-path-ris" class="tactile-seg-btn">RIS</button>
-          <button id="btn-path-both" class="tactile-seg-btn active">Both (Dual)</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- PANEL 2: RIS ROTARY PHASE CONTROLLER -->
-    <div class="det-wb-panel">
-      <div class="wb-panel-header">
-        <span>02 // RIS Phase Dial</span>
-        <span>0° &rarr; 360°</span>
-      </div>
-
-      <div class="det-dial-wrap">
-        <div id="det-dial-container" class="det-dial-container" title="Drag to adjust reflection angle">
-          <svg viewBox="0 0 150 150" width="150" height="150">
-            <!-- Dial Track -->
-            <circle cx="75" cy="75" r="66" fill="#131211" stroke="#2a2825" stroke-width="5" />
-            <!-- Ticks -->
-            <line x1="75" y1="12" x2="75" y2="20" stroke="#555" stroke-width="2" />
-            <line x1="138" y1="75" x2="130" y2="75" stroke="#555" stroke-width="2" />
-            <line x1="75" y1="138" x2="75" y2="130" stroke="#555" stroke-width="2" />
-            <line x1="12" y1="75" x2="20" y2="75" stroke="#555" stroke-width="2" />
-            
-            <text x="75" y="28" font-family="JetBrains Mono" font-size="8" fill="#777" text-anchor="middle">0°</text>
-            <text x="126" y="78" font-family="JetBrains Mono" font-size="8" fill="#777" text-anchor="middle">90°</text>
-            <text x="75" y="128" font-family="JetBrains Mono" font-size="8" fill="#777" text-anchor="middle">180°</text>
-            <text x="24" y="78" font-family="JetBrains Mono" font-size="8" fill="#777" text-anchor="middle">270°</text>
-            
-            <!-- Rotary Needle -->
-            <g id="det-dial-pointer" transform="rotate(180 75 75)">
-              <line x1="75" y1="75" x2="75" y2="22" stroke="#c94f2a" stroke-width="3" stroke-linecap="round" />
-              <circle cx="75" cy="22" r="3.5" fill="#ffffff" />
-            </g>
-
-            <!-- Center Pivot -->
-            <circle cx="75" cy="75" r="24" fill="#181715" stroke="#333" stroke-width="1.5" />
-          </svg>
-
-          <div class="det-dial-center">
-            <div class="det-dial-val" id="det-dial-val-disp">180°</div>
-            <div class="det-dial-lbl">REFLECTION</div>
+        <div class="det-chamber-header">
+          <div class="det-chamber-header-title">
+            <span>RF CHAMBER</span> : WIRELESS PROPAGATION &amp; OBSTACLE SENSING
+          </div>
+          <div class="det-chamber-meta">
+            COORDINATE GRID: 800 × 480 · 8–12 GHz SPECTRUM
           </div>
         </div>
 
-        <div class="det-phase-presets-row">
-          <button class="det-phase-chip" data-phase="0">0°</button>
-          <button class="det-phase-chip" data-phase="60">60°</button>
-          <button class="det-phase-chip" data-phase="120">120°</button>
-          <button class="det-phase-chip active" data-phase="180">180°</button>
-          <button class="det-phase-chip" data-phase="240">240°</button>
-          <button class="det-phase-chip" data-phase="300">300°</button>
+        <div class="det-svg-canvas-container">
+          
+          <!-- On-Screen Telemetry Annotations -->
+          <div class="det-hud-overlay">
+            <div>ANTENNA 1: <span>DIRECT PATH (TX1 &rarr; RX)</span></div>
+            <div>ANTENNA 2: <span>RIS-ASSISTED (TX2 &rarr; RIS &rarr; RX)</span></div>
+            <div>SAMPLING: <span>CONTINUOUS SENSING PROBE</span></div>
+          </div>
+
+          <div class="det-hud-legend">
+            <div class="legend-item"><span class="legend-line direct"></span> Direct Channel</div>
+            <div class="legend-item"><span class="legend-line ris"></span> RIS-Assisted Channel</div>
+          </div>
+
+          <!-- Master SVG Sensing Scene -->
+          <svg id="det-chamber-svg" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <!-- Obstacle Hatch Pattern -->
+              <pattern id="obs-hatch" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                <line x1="0" y1="0" x2="0" y2="10" stroke="#ff8866" stroke-width="2" />
+              </pattern>
+              <!-- RIS Texture Pattern -->
+              <pattern id="ris-tex-bg" width="16" height="16" patternUnits="userSpaceOnUse">
+                <rect width="14" height="14" fill="#b3773f" stroke="#664422" />
+              </pattern>
+            </defs>
+
+            <!-- Reference Coordinate Grids & Bench Lines -->
+            <line x1="40" y1="440" x2="760" y2="440" stroke="#d0ccc4" stroke-width="1.5" />
+            <line x1="120" y1="60" x2="120" y2="440" stroke="#e0dcd5" stroke-dasharray="3,3" />
+            <line x1="680" y1="60" x2="680" y2="440" stroke="#e0dcd5" stroke-dasharray="3,3" />
+            <line x1="400" y1="60" x2="400" y2="440" stroke="#e0dcd5" stroke-dasharray="3,3" />
+
+            <!-- ========================================================
+                 1. TRANSMITTER NODE (TX) [X: 120, Y: 160]
+                 ======================================================== -->
+            <g id="svg-tx-node" transform="translate(120, 160)">
+              <!-- TX Base Tower -->
+              <rect x="-18" y="25" width="36" height="70" fill="#2d2b28" stroke="#1a1917" />
+              <line x1="-18" y1="45" x2="18" y2="75" stroke="#44413d" />
+              <line x1="18" y1="45" x2="-18" y2="75" stroke="#44413d" />
+              
+              <!-- TX Radiator Head -->
+              <circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#1a1917" stroke-width="2" />
+              <circle cx="0" cy="0" r="10" fill="#c94f2a" />
+              <circle cx="0" cy="0" r="4" fill="#ffffff" />
+              
+              <!-- TX Wavefront Pulse Ripples -->
+              <circle cx="0" cy="0" r="30" fill="none" stroke="#c94f2a" stroke-width="1" opacity="0.4" />
+              
+              <!-- Labels (Moved upwards with clean backdrop) -->
+              <rect x="-65" y="-62" width="130" height="28" fill="#ffffff" stroke="#e0dcd5" stroke-width="1" rx="3" opacity="0.95" />
+              <text x="0" y="-48" font-family="Space Grotesk" font-size="11" font-weight="700" fill="#1a1917" text-anchor="middle">TRANSMITTER</text>
+              <text x="0" y="-37" font-family="JetBrains Mono" font-size="8.5" fill="#c94f2a" font-weight="600" text-anchor="middle">TX (DUAL PORT)</text>
+            </g>
+
+            <!-- ========================================================
+                 2. RECEIVER NODE (RX) [X: 680, Y: 160]
+                 ======================================================== -->
+            <g id="svg-rx-node" transform="translate(680, 160)">
+              <!-- RX Base Tower -->
+              <rect x="-18" y="25" width="36" height="70" fill="#2d2b28" stroke="#1a1917" />
+              <line x1="-18" y1="45" x2="18" y2="75" stroke="#44413d" />
+              <line x1="18" y1="45" x2="-18" y2="75" stroke="#44413d" />
+              
+              <!-- RX Sensor Horn -->
+              <path d="M-15,-15 L15,0 L-15,15 Z" fill="#ffffff" stroke="#1a1917" stroke-width="2" transform="rotate(180)" />
+              <circle cx="0" cy="0" r="10" fill="#4aab6d" />
+              <circle cx="0" cy="0" r="4" fill="#ffffff" />
+              
+              <!-- Dynamic Capture Field Ring -->
+              <circle id="svg-rx-field" cx="0" cy="0" r="28" fill="none" stroke="#4aab6d" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.8" />
+
+              <!-- Labels (Moved upwards with clean backdrop) -->
+              <rect x="-65" y="-62" width="130" height="28" fill="#ffffff" stroke="#e0dcd5" stroke-width="1" rx="3" opacity="0.95" />
+              <text x="0" y="-48" font-family="Space Grotesk" font-size="11" font-weight="700" fill="#1a1917" text-anchor="middle">RECEIVER</text>
+              <text x="0" y="-37" font-family="JetBrains Mono" font-size="8.5" fill="#2e7d4d" font-weight="600" text-anchor="middle">RX DUAL SENSOR</text>
+            </g>
+
+            <!-- ========================================================
+                 3. RECONFIGURABLE INTELLIGENT SURFACE (RIS) [X: 400, Y: 360]
+                 ======================================================== -->
+            <g id="svg-ris-node" transform="translate(400, 360)">
+              <!-- Base Stand -->
+              <rect x="-6" y="32" width="12" height="60" fill="#3a3733" stroke="#1a1917" />
+              <!-- Substrate Plate (FR-4 Dielectric) -->
+              <rect x="-70" y="-30" width="140" height="64" fill="#283625" stroke="#1a2418" stroke-width="2" rx="2" />
+              
+              <!-- 8x4 Array of Metallic Copper Unit Cells -->
+              <g id="svg-ris-cells" transform="translate(-60, -22)">
+                <!-- Dynamically populated / styled by detection.js -->
+              </g>
+
+              <!-- Angle Normal Leader Line -->
+              <line x1="0" y1="-30" x2="0" y2="-60" stroke="#3a7ebf" stroke-width="1.5" stroke-dasharray="3,3" />
+              <text x="0" y="-66" font-family="JetBrains Mono" font-size="8" fill="#2a659e" font-weight="600" text-anchor="middle">NORMAL (θr = θi + Δψ)</text>
+
+              <!-- Right-Side Labels (Positioned on the right to prevent overlap with RIS stand) -->
+              <g transform="translate(85, -16)">
+                <rect x="0" y="0" width="180" height="34" fill="#ffffff" stroke="#e0dcd5" stroke-width="1" rx="3" opacity="0.95" />
+                <line x1="-15" y1="17" x2="0" y2="17" stroke="#3a7ebf" stroke-width="1.5" stroke-dasharray="2,2" />
+                <text x="10" y="14" font-family="Space Grotesk" font-size="11" font-weight="700" fill="#1a1917" text-anchor="start">RECONFIGURABLE SURFACE (RIS)</text>
+                <text x="10" y="26" font-family="JetBrains Mono" font-size="8.5" fill="#3a7ebf" font-weight="600" text-anchor="start">N×M ELEMENT PHASE METASURFACE</text>
+              </g>
+            </g>
+
+            <!-- ========================================================
+                 4. PROPAGATION PATH TRACES (LINES)
+                 ======================================================== -->
+            <!-- Direct Path Line (TX 120,160 -> RX 680,160) -->
+            <line id="svg-direct-line" x1="120" y1="160" x2="680" y2="160" stroke="var(--c-direct)" stroke-width="2.5" />
+            
+            <!-- RIS Path 1: TX (120,160) -> RIS (400,360) -->
+            <line id="svg-ris-path-1" x1="120" y1="160" x2="400" y2="360" stroke="var(--c-ris)" stroke-width="2" />
+            
+            <!-- RIS Path 2: RIS (400,360) -> RX (680,160) -->
+            <line id="svg-ris-path-2" x1="400" y1="360" x2="680" y2="160" stroke="var(--c-ris)" stroke-width="2" />
+
+            <!-- Dynamic Travelling Pulses Layer -->
+            <g id="svg-pulses-container">
+              <!-- Animated circles appended by detection.js loop -->
+            </g>
+
+            <!-- ========================================================
+                 5. PHYSICAL OBSTACLE OBSTRUCTION [X: 360..440, Y: 100..220]
+                 ======================================================== -->
+            <g id="svg-obstacle-group" class="det-obstacle-group" transform="translate(0, -140)">
+              <!-- Shadow -->
+              <rect x="355" y="95" width="90" height="130" fill="rgba(0,0,0,0.12)" rx="4" />
+              <!-- Physical Barrier Body (Architectural Monolith) -->
+              <rect x="360" y="100" width="80" height="120" fill="#2d2b27" stroke="#1a1917" stroke-width="2" rx="3" />
+              
+              <!-- Structural Warning Striping -->
+              <rect x="360" y="100" width="80" height="14" fill="#c94f2a" />
+              <line x1="360" y1="114" x2="440" y2="114" stroke="#ffffff" stroke-width="1" />
+              
+              <!-- Interior Hazard Hatching -->
+              <rect x="368" y="122" width="64" height="88" fill="url(#obs-hatch)" opacity="0.3" />
+              <rect x="368" y="122" width="64" height="88" fill="none" stroke="#554d46" stroke-width="1" />
+              
+              <!-- Label on Obstacle -->
+              <text x="400" y="160" font-family="Space Grotesk" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">OBSTACLE</text>
+              <text x="400" y="176" font-family="JetBrains Mono" font-size="9" fill="#ffb49e" font-weight="600" text-anchor="middle">NLOS BARRIER</text>
+            </g>
+
+          </svg>
+
         </div>
       </div>
     </div>
-
-    <!-- PANEL 3: RF FREQUENCY TUNER -->
-    <div class="det-wb-panel">
-      <div class="wb-panel-header">
-        <span>03 // RF Frequency</span>
-        <span>8–12 GHz</span>
-      </div>
-
-      <div class="det-freq-val-row">
-        <div class="det-freq-disp" id="det-freq-disp">10.00 GHz</div>
-        <div class="det-design-point">
-          DESIGN POINT
-        </div>
-      </div>
-
-      <div class="sim-slider-track det-slider-offset">
-        <input type="range" id="det-freq-slider" class="sim-slider" min="8.00" max="12.00" step="0.05" value="10.00" />
-      </div>
-
-      <div class="freq-ticks">
-        <span>8.0</span>
-        <span>9.0</span>
-        <span class="det-frequency-design-point">10.0</span>
-        <span>11.0</span>
-        <span>12.0 GHz</span>
-      </div>
-
-      <div class="det-freq-preset-btns">
-        <button class="det-freq-btn" data-freq="8.00">8.00 GHz</button>
-        <button class="det-freq-btn active" data-freq="10.00">10.00 GHz</button>
-        <button class="det-freq-btn" data-freq="12.00">12.00 GHz</button>
-      </div>
-
-      <div class="det-frequency-note">
-        * Operating in X-band microwave sensing spectrum. 10 GHz optimizes impedance matching and reflection efficiency.
-      </div>
-    </div>
-
   </section>
 
-  <!-- TWO-CHANNEL OSCILLOSCOPE MONITOR -->
-  <section class="det-channels-grid theme-dark" aria-labelledby="channel-monitor-heading">
-    
-    <!-- Channel 01: Direct Antenna -->
-    <div class="det-channel-card">
-      <div class="det-channel-header">
+  <!-- SECTION: SCENARIO PRESETS BAR (DARK) -->
+  <section class="det-section theme-dark det-presets-section" id="sec-scenarios" aria-labelledby="preset-heading">
+    <div class="container">
+      <div class="det-section-header">
         <div>
-          <span class="det-channel-label-direct">CHANNEL 01</span> // DIRECT ANTENNA (LOS)
+          <div class="det-section-tag">01 - Scenario Configuration</div>
+          <h2 class="heading-sm" style="color:var(--c-text-inv);">Test Scenarios &amp; Instant Presets</h2>
         </div>
-        <div id="badge-ch1" class="ch-state-badge active">ACTIVE</div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--c-text-inv-muted);">
+          Select preset to observe automated physical transitions
+        </div>
       </div>
-      <div class="scope-canvas-wrap">
-        <canvas id="scope-direct-canvas"></canvas>
-      </div>
-      <div class="det-scope-meta">
-        <span>MODE: DIRECT PROPAGATION</span>
-        <span>PORT: TX1 &rarr; RX</span>
+
+      <div class="det-presets-grid">
+        <!-- Preset 1 -->
+        <button type="button" class="scenario-chip active" data-scenario="open-space">
+          <div class="scen-title">01 - Open Space</div>
+          <div class="scen-desc">LOS · Clear · Dual Paths</div>
+        </button>
+        <!-- Preset 2 -->
+        <button type="button" class="scenario-chip" data-scenario="blocked-path">
+          <div class="scen-title">02 - Blocked Path</div>
+          <div class="scen-desc">NLOS · Barrier In-Path · RIS On</div>
+        </button>
+        <!-- Preset 3 -->
+        <button type="button" class="scenario-chip" data-scenario="ris-only">
+          <div class="scen-title">03 - RIS Only</div>
+          <div class="scen-desc">NLOS · Direct Muted · Pure Reflected</div>
+        </button>
+        <!-- Preset 4 -->
+        <button type="button" class="scenario-chip" data-scenario="dual-path">
+          <div class="scen-title">04 - Dual Path</div>
+          <div class="scen-desc">Both Channels · Maximum Diversity</div>
+        </button>
+        <!-- Preset 5 -->
+        <button type="button" class="scenario-chip" data-scenario="no-path">
+          <div class="scen-title">05 - No Path</div>
+          <div class="scen-desc">NLOS · All Channels Severed</div>
+        </button>
       </div>
     </div>
+  </section>
 
-    <!-- Channel 02: RIS-Assisted Antenna -->
-    <div class="det-channel-card">
-      <div class="det-channel-header">
+  <!-- SECTION: WORKBENCH CONTROLS (LIGHT) -->
+  <section class="det-section theme-light det-controls-section" id="sec-controls" aria-labelledby="workbench-heading">
+    <div class="container">
+      <div class="det-section-header">
         <div>
-          <span class="det-channel-label-ris">CHANNEL 02</span> // RIS METASURFACE ANTENNA (NLOS)
+          <div class="det-section-tag">02 - Physical Parameter Controls</div>
+          <h2 class="heading-sm" style="color:var(--c-text);">Interactive Chamber Workbench</h2>
         </div>
-        <div id="badge-ch2" class="ch-state-badge active">ACTIVE</div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--c-text-muted);">
+          Adjust live propagation space, RIS rotary phase &amp; RF frequency
+        </div>
       </div>
-      <div class="scope-canvas-wrap">
-        <canvas id="scope-ris-canvas"></canvas>
-      </div>
-      <div class="det-scope-meta">
-        <span>MODE: PHASED REFLECTION</span>
-        <span>PORT: TX2 &rarr; RIS &rarr; RX</span>
+
+      <div class="det-workbench-grid">
+        
+        <!-- PANEL 1: ENVIRONMENT & OBSTACLE -->
+        <div class="det-wb-panel">
+          <div class="wb-panel-header">
+            <span>01 : Propagation Space</span>
+            <span class="det-physical-label">PHYSICAL</span>
+          </div>
+
+          <div class="det-control-group">
+            <div class="det-control-label">
+              Line of Sight Mode
+            </div>
+            <div class="tactile-seg-group">
+              <button id="btn-env-los" class="tactile-seg-btn active">LOS (Direct Open)</button>
+              <button id="btn-env-nlos" class="tactile-seg-btn">NLOS (Obstructed)</button>
+            </div>
+          </div>
+
+          <div class="det-control-group">
+            <div class="det-control-label">
+              Physical Obstacle State
+            </div>
+            <div class="tactile-seg-group">
+              <button id="btn-obs-clear" class="tactile-seg-btn active">CLEAR (Free)</button>
+              <button id="btn-obs-blocked" class="tactile-seg-btn">BLOCKED (In-Path)</button>
+            </div>
+          </div>
+
+          <div class="det-control-group">
+            <div class="det-control-label">
+              Active Antenna Channels
+            </div>
+            <div class="tactile-seg-group">
+              <button id="btn-path-direct" class="tactile-seg-btn">Direct</button>
+              <button id="btn-path-ris" class="tactile-seg-btn">RIS</button>
+              <button id="btn-path-both" class="tactile-seg-btn active">Both (Dual)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 2: RIS ROTARY PHASE CONTROLLER -->
+        <div class="det-wb-panel">
+          <div class="wb-panel-header">
+            <span>02 : RIS Phase Dial</span>
+            <span class="det-physical-label">0° &rarr; 360°</span>
+          </div>
+
+          <div class="det-dial-wrap">
+            <div id="det-dial-container" class="det-dial-container" title="Drag to adjust reflection angle">
+              <svg viewBox="0 0 200 200" width="176" height="176">
+                <!-- Dial Track & Bezel -->
+                <circle cx="100" cy="100" r="92" fill="#141312" stroke="#2c2a27" stroke-width="4" />
+                <circle cx="100" cy="100" r="88" fill="none" stroke="#201e1c" stroke-width="1" />
+                
+                <!-- Minor Radial Ticks (30 deg intervals) -->
+                <line x1="142" y1="27" x2="139" y2="32" stroke="#44413c" stroke-width="1.5" />
+                <line x1="173" y1="58" x2="168" y2="61" stroke="#44413c" stroke-width="1.5" />
+                <line x1="173" y1="142" x2="168" y2="139" stroke="#44413c" stroke-width="1.5" />
+                <line x1="142" y1="173" x2="139" y2="168" stroke="#44413c" stroke-width="1.5" />
+                <line x1="58" y1="173" x2="61" y2="168" stroke="#44413c" stroke-width="1.5" />
+                <line x1="27" y1="142" x2="32" y2="139" stroke="#44413c" stroke-width="1.5" />
+                <line x1="27" y1="58" x2="32" y2="61" stroke="#44413c" stroke-width="1.5" />
+                <line x1="58" y1="27" x2="61" y2="32" stroke="#44413c" stroke-width="1.5" />
+
+                <!-- Major Cardinal Ticks (0, 90, 180, 270) -->
+                <line x1="100" y1="13" x2="100" y2="23" stroke="#7a756c" stroke-width="2" stroke-linecap="round" />
+                <line x1="187" y1="100" x2="177" y2="100" stroke="#7a756c" stroke-width="2" stroke-linecap="round" />
+                <line x1="100" y1="187" x2="100" y2="177" stroke="#7a756c" stroke-width="2" stroke-linecap="round" />
+                <line x1="13" y1="100" x2="23" y2="100" stroke="#7a756c" stroke-width="2" stroke-linecap="round" />
+                
+                <!-- Cardinal Numbers (Well spaced, outside center hub) -->
+                <text x="100" y="37" font-family="JetBrains Mono" font-size="9.5" fill="#8c877e" font-weight="600" text-anchor="middle">0°</text>
+                <text x="163" y="103.5" font-family="JetBrains Mono" font-size="9.5" fill="#8c877e" font-weight="600" text-anchor="middle">90°</text>
+                <text x="100" y="169" font-family="JetBrains Mono" font-size="9.5" fill="#8c877e" font-weight="600" text-anchor="middle">180°</text>
+                <text x="37" y="103.5" font-family="JetBrains Mono" font-size="9.5" fill="#8c877e" font-weight="600" text-anchor="middle">270°</text>
+                
+                <!-- Rotary Pointer Needle -->
+                <g id="det-dial-pointer" transform="rotate(180 100 100)">
+                  <line x1="100" y1="100" x2="100" y2="28" stroke="#c94f2a" stroke-width="3" stroke-linecap="round" />
+                  <circle cx="100" cy="28" r="4" fill="#ffffff" stroke="#c94f2a" stroke-width="1.5" />
+                </g>
+
+                <!-- Center Pivot Hub (Spacious 80px diameter circle) -->
+                <circle cx="100" cy="100" r="40" fill="#1a1917" stroke="#35322d" stroke-width="1.5" />
+              </svg>
+
+              <div class="det-dial-center">
+                <div class="det-dial-val" id="det-dial-val-disp">180°</div>
+                <div class="det-dial-lbl">REFLECTION</div>
+              </div>
+            </div>
+
+            <div class="det-phase-presets-row">
+              <button class="det-phase-chip" data-phase="0">0°</button>
+              <button class="det-phase-chip" data-phase="60">60°</button>
+              <button class="det-phase-chip" data-phase="120">120°</button>
+              <button class="det-phase-chip active" data-phase="180">180°</button>
+              <button class="det-phase-chip" data-phase="240">240°</button>
+              <button class="det-phase-chip" data-phase="300">300°</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 3: RF FREQUENCY TUNER -->
+        <div class="det-wb-panel">
+          <div class="wb-panel-header">
+            <span>03 : RF Frequency</span>
+            <span class="det-physical-label">8–12 GHz</span>
+          </div>
+
+          <div class="det-freq-content-wrap">
+            <div class="det-freq-val-row">
+              <div class="det-freq-disp" id="det-freq-disp">10.00 GHz</div>
+              <div class="det-design-point">
+                DESIGN POINT
+              </div>
+            </div>
+
+            <div class="sim-slider-track det-slider-offset">
+              <input type="range" id="det-freq-slider" class="sim-slider" min="8.00" max="12.00" step="0.05" value="10.00" />
+            </div>
+
+            <div class="freq-ticks">
+              <span>8.0</span>
+              <span>9.0</span>
+              <span class="det-frequency-design-point">10.0</span>
+              <span>11.0</span>
+              <span>12.0 GHz</span>
+            </div>
+
+            <div class="det-freq-preset-btns">
+              <button class="det-freq-btn" data-freq="8.00">8.00 GHz</button>
+              <button class="det-freq-btn active" data-freq="10.00">10.00 GHz</button>
+              <button class="det-freq-btn" data-freq="12.00">12.00 GHz</button>
+            </div>
+          </div>
+
+          <div class="det-frequency-note">
+            * Operating in X-band microwave sensing spectrum. 10 GHz optimizes impedance matching and reflection efficiency.
+          </div>
+        </div>
       </div>
     </div>
-
   </section>
 
-  <!-- SYSTEM FLOW PIPELINE (01 - 06) -->
-  <section class="det-flow-section theme-light" aria-labelledby="pipeline-heading">
-    <div class="det-flow-kicker">
-      Dual-Antenna Sensing Pipeline // Active Execution Stages
-    </div>
+  <!-- SECTION: WAVEFORM TELEMETRY & PIPELINE (DARK) -->
+  <section class="det-section theme-dark det-pipeline-section" id="sec-pipeline" aria-labelledby="channel-monitor-heading">
+    <div class="container">
+      <div class="det-section-header">
+        <div>
+          <div class="det-section-tag">03 - Dual-Channel Waveform Telemetry</div>
+          <h2 class="heading-sm" style="color:var(--c-text-inv);">Two-Channel Oscilloscope Monitor</h2>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--c-text-inv-muted);">
+          Continuous dual-channel RF probe response
+        </div>
+      </div>
 
-    <div class="det-flow-pipeline">
-      <div class="flow-step-card active">
-        <div class="flow-step-num">01</div>
-        <div class="flow-step-title">TRANSMIT</div>
-        <div class="flow-step-state">ACTIVE (TX1/TX2)</div>
+      <!-- TWO-CHANNEL OSCILLOSCOPE MONITOR -->
+      <div class="det-channels-grid">
+        <!-- Channel 01: Direct Antenna -->
+        <div class="det-channel-card">
+          <div class="det-channel-header">
+            <div>
+              <span class="det-channel-label-direct">CHANNEL 01</span> : DIRECT ANTENNA (LOS)
+            </div>
+            <div id="badge-ch1" class="ch-state-badge active">ACTIVE</div>
+          </div>
+          <div class="scope-canvas-wrap">
+            <canvas id="scope-direct-canvas"></canvas>
+          </div>
+          <div class="det-scope-meta">
+            <span>MODE: DIRECT PROPAGATION</span>
+            <span>PORT: TX1 &rarr; RX</span>
+          </div>
+        </div>
+
+        <!-- Channel 02: RIS-Assisted Antenna -->
+        <div class="det-channel-card">
+          <div class="det-channel-header">
+            <div>
+              <span class="det-channel-label-ris">CHANNEL 02</span> : RIS METASURFACE ANTENNA (NLOS)
+            </div>
+            <div id="badge-ch2" class="ch-state-badge active">ACTIVE</div>
+          </div>
+          <div class="scope-canvas-wrap">
+            <canvas id="scope-ris-canvas"></canvas>
+          </div>
+          <div class="det-scope-meta">
+            <span>MODE: PHASED REFLECTION</span>
+            <span>PORT: TX2 &rarr; RIS &rarr; RX</span>
+          </div>
+        </div>
       </div>
-      <div class="flow-step-card active">
-        <div class="flow-step-num">02</div>
-        <div class="flow-step-title">PROPAGATE</div>
-        <div class="flow-step-state">DUAL CHANNELS</div>
+
+      <!-- SYSTEM FLOW PIPELINE (01 - 06) -->
+      <div class="det-section-header" style="margin-top: var(--sp-12);">
+        <div>
+          <div class="det-section-tag">04 - Active Execution Stages</div>
+          <h2 class="heading-sm" style="color:var(--c-text-inv);">Dual-Antenna Sensing Pipeline</h2>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--c-text-inv-muted);">
+          End-to-end signal propagation cycle
+        </div>
       </div>
-      <div class="flow-step-card active">
-        <div class="flow-step-num">03</div>
-        <div class="flow-step-title">REFLECT</div>
-        <div class="flow-step-state">PHASE 180°</div>
-      </div>
-      <div class="flow-step-card active">
-        <div class="flow-step-num">04</div>
-        <div class="flow-step-title">RECEIVE</div>
-        <div class="flow-step-state">SIGNAL CAPTURE</div>
-      </div>
-      <div class="flow-step-card active">
-        <div class="flow-step-num">05</div>
-        <div class="flow-step-title">COMBINE</div>
-        <div class="flow-step-state">SPATIAL DIVERSITY</div>
-      </div>
-      <div class="flow-step-card active">
-        <div class="flow-step-num">06</div>
-        <div class="flow-step-title">DETECT</div>
-        <div class="flow-step-state">CLEAR PASS</div>
+
+      <div class="det-flow-pipeline">
+        <div class="flow-step-card active">
+          <div class="flow-step-num">01</div>
+          <div class="flow-step-title">TRANSMIT</div>
+          <div class="flow-step-state">ACTIVE (TX1/TX2)</div>
+        </div>
+        <div class="flow-step-card active">
+          <div class="flow-step-num">02</div>
+          <div class="flow-step-title">PROPAGATE</div>
+          <div class="flow-step-state">DUAL CHANNELS</div>
+        </div>
+        <div class="flow-step-card active">
+          <div class="flow-step-num">03</div>
+          <div class="flow-step-title">REFLECT</div>
+          <div class="flow-step-state">PHASE 180°</div>
+        </div>
+        <div class="flow-step-card active">
+          <div class="flow-step-num">04</div>
+          <div class="flow-step-title">RECEIVE</div>
+          <div class="flow-step-state">SIGNAL CAPTURE</div>
+        </div>
+        <div class="flow-step-card active">
+          <div class="flow-step-num">05</div>
+          <div class="flow-step-title">COMBINE</div>
+          <div class="flow-step-state">SPATIAL DIVERSITY</div>
+        </div>
+        <div class="flow-step-card active">
+          <div class="flow-step-num">06</div>
+          <div class="flow-step-title">DETECT</div>
+          <div class="flow-step-state">CLEAR PASS</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- EVENT LOG & DYNAMIC EXPLANATION ROW -->
-  <section class="det-info-grid theme-dark" aria-labelledby="telemetry-log-heading">
-    
-    <!-- Left: Event Log -->
-    <div class="det-log-card">
-      <div class="wb-panel-header">
-        <span>Simulation Event Log</span>
-        <span class="det-status-signal">STREAMING</span>
+  <!-- SECTION: EVENT LOG & DYNAMIC EXPLANATION (LIGHT) -->
+  <section class="det-section theme-light det-analysis-section" id="sec-analysis" aria-labelledby="telemetry-log-heading">
+    <div class="container">
+      <div class="det-section-header">
+        <div>
+          <div class="det-section-tag">05 - Physical Diagnostics</div>
+          <h2 class="heading-sm" style="color:var(--c-text);">Event Log &amp; Physical Mechanism</h2>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:12px; color:var(--c-text-muted);">
+          Real-time system state telemetry and physical analysis
+        </div>
       </div>
-      <div id="event-log-terminal" class="event-log-terminal">
-        <!-- Log lines dynamically appended by detection.js -->
+
+      <div class="det-info-grid">
+        <!-- Left: Event Log -->
+        <div class="det-log-card">
+          <div class="wb-panel-header">
+            <span>Simulation Event Log</span>
+            <span class="det-status-signal">STREAMING</span>
+          </div>
+          <div id="event-log-terminal" class="event-log-terminal">
+            <!-- Log lines dynamically appended by detection.js -->
+          </div>
+        </div>
+
+        <!-- Right: "What is Happening?" Dynamic Panel -->
+        <div class="det-explain-card">
+          <div class="wb-panel-header">
+            <span>Physical Mechanism Explanation</span>
+            <span class="det-status-accent">INSIGHT</span>
+          </div>
+          <div class="explain-content-box">
+            <div class="explain-headline" id="explain-headline">
+              Optimal Direct &amp; Reflected Dual-Path Sensing
+            </div>
+            <p class="explain-text" id="explain-text">
+              The propagation chamber is clear of obstructions. Both Antenna 1 (Direct Path) and Antenna 2 (RIS-Reflected Path) concurrently observe the channel, providing maximum spatial signal diversity and robust baseline verification across the 8–12 GHz band.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <!-- Right: "What is Happening?" Dynamic Panel -->
-    <div class="det-explain-card">
-      <div class="wb-panel-header">
-        <span>Physical Mechanism Explanation</span>
-        <span class="det-status-accent">INSIGHT</span>
-      </div>
-      <div class="explain-content-box">
-        <div class="explain-headline" id="explain-headline">
-          Optimal Direct & Reflected Dual-Path Sensing
+  <!-- SECTION: TECHNICAL PROJECT DISCLOSURE (LIGHT) -->
+  <section class="det-section theme-light" style="padding-top: 0; padding-bottom: var(--sp-12); border-bottom: none;">
+    <div class="container">
+      <div class="det-disclosure">
+        <div class="det-disclosure-title">
+          Project Sensing Concept Disclosure
         </div>
-        <p class="explain-text" id="explain-text">
-          The propagation chamber is clear of obstructions. Both Antenna 1 (Direct Path) and Antenna 2 (RIS-Reflected Path) concurrently observe the channel, providing maximum spatial signal diversity and robust baseline verification across the 8–12 GHz band.
+        <p class="det-disclosure-text">
+          This Detection Lab is a conceptual interactive demonstration designed to illustrate the operational principles of Project 22EC711 (RIS-Aided Dual Antenna for Obstacle Detection). All signal pulse dynamics, scenario responses, and oscilloscope waveforms are deterministic visual models based on the dual-antenna RIS architecture and do not represent live hardware sensor telemetry.
         </p>
       </div>
     </div>
-
   </section>
-
-  <!-- Technical Project Disclosure Note -->
-  <div class="det-disclosure">
-    <div class="det-disclosure-title">
-      Project Sensing Concept Disclosure
-    </div>
-    <p class="det-disclosure-text">
-      This Detection Lab is a conceptual interactive demonstration designed to illustrate the operational principles of Project 22EC711 (RIS-Aided Dual Antenna for Obstacle Detection). All signal pulse dynamics, scenario responses, and oscilloscope waveforms are deterministic visual models based on the dual-antenna RIS architecture and do not represent live hardware sensor telemetry.
-    </p>
-  </div>
-
 </main>
 
 <!-- FOOTER -->
